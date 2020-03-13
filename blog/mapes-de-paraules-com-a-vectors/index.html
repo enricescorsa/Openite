@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="A blog about data &amp; landscapes.">
+
+
+    <meta property="twitter:site" content="@EnricEscorsa">
+
+<meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/mapes-de-paraules-com-a-vectors/" />
+<meta property="og:title" content="Mapes de paraules com a vectors" />
+<meta property="twitter:title" content="Mapes de paraules com a vectors">
+
+    <meta property="og:image" content="//images/image.jpg">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="//images/image.jpg">
+
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
+
+<title>
+
+
+     Enric Escorsa O&#39;Callaghan - Mapes de paraules com a vectors 
+
+</title>
+<link rel="canonical" href="/blog/mapes-de-paraules-com-a-vectors/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('/fonts/Nexa Bold.otf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+a,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.header .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.header .container .logo {
+  
+  max-width: 100px;
+  
+  margin-left: -2em;
+}
+div.header .name {
+  padding-top: 20px;
+  font-size: 28px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  
+  text-transform: uppercase;
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 16px;
+  height: 16px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.footer .container .icons {
+  flex-grow: 0.5;
+  text-align: end;
+}
+div.main .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  
+  
+}
+div.main .content .page-heading {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  text-transform: uppercase;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  margin-bottom: 16px;
+}
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: list-item;
+  list-style: disc inside;
+}
+div.main .container .content .post-item .meta {
+  font-size: 14px;
+  color: #666666;
+  display: none;
+  min-width: 100px;
+}
+div.main .container .content .see-more {
+  font-style: italic;
+  float: right;
+  font-size: 0.9em;
+  margin-top: 2em;
+  color: #313537;
+}
+div.main .container .content .see-more:hover {
+  color: #666;
+}
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item .meta {
+    display: block;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #428bca;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #2a6496;
+}
+img {
+  max-width: 100%;
+}
+div.main .content {
+    width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Menlo', monospace;
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code {
+  color: #428bca !important;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: justify;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #7a7a7a;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+
+.wf-raleway-n4-active body, 
+.wf-raleway-n4-active div.header nav ul a,
+.wf-raleway-n7-active div.main .content .page-heading,
+.wf-raleway-n2-active div.main .container.f04 .content .num,
+.wf-raleway-n7-active div.main .content .markdown h1,
+.wf-raleway-n7-active div.main .content .markdown h2,
+.wf-raleway-n7-active div.main .content .markdown h3,
+.wf-raleway-n7-active div.main .content .markdown h4,
+.wf-raleway-n7-active div.main .content .markdown h5,
+.wf-raleway-n7-active div.main .content .markdown h6 {
+      font-family: 'Raleway';
+}
+
+.wf-merriweather-n3-active div.main .content .markdown {
+      font-family: 'Merriweather';
+}
+
+.wf-ubuntu-mono-n4-active div.main .content .markdown code,
+.wf-ubuntu-mono-n4-active div.main .content .markdown pre {
+      font-family: 'Ubuntu Mono';
+}
+
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+-webkit-justify-content: center;
+-moz-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+padding-top: 0 !important;
+}
+section {
+padding: 0 16px;
+margin-left: 100px;
+margin-right: 100px;
+
+max-width: 750px;
+
+}
+div.column {
+padding: 0 16px;
+
+max-width: 750px;
+
+}
+div.header {
+background-color: transparent;
+}
+div.header .container {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.header .container .logo {
+margin: 0;
+}
+div.header-home .container .logo {
+max-width: 216px;
+margin-left: 24px;
+}
+div.header-home .name-home {
+padding-top: 30px;
+font-size: 40px;
+}
+div.header-home nav ul a {
+font-size: 18px;
+}
+div.header .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.header .name {
+color: #333333;
+}
+div.header nav {
+font-size: 14px;
+margin-bottom: 0;
+}
+div.header nav ul {
+text-align: left;
+}
+div.header nav ul a {
+color: #666666;
+}
+div.header nav ul a:hover {
+color: #333333;
+}
+div.footer {
+background-color: transparent;
+}
+div.footer .container {
+flex-direction: row;
+}
+div.footer .container a {
+margin-left: 3px;
+margin-right: 3px;
+color: #666666;
+}
+div.footer .container a:hover {
+color: #333333;
+}
+div.footer .container a .icon {
+font-size: 18px;
+}
+div.footer .container a .icon.larger {
+font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+display: initial;
+}
+div.main .container.f04 {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.main .container.f04 .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+margin: 0 0 10px 0;
+font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+margin-bottom: 30px;
+}
+.container {
+padding: 0 30px;
+}
+div.header {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.footer {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.main {
+padding-top: 0;
+}
+div.main .content {
+  
+  font-size: 16px;
+  
+}
+div.main .container .content .post-item {
+display: flex;
+list-style: none;
+padding-left: 1.5em;
+}
+div.main .container .content .post-item .meta {
+display: block;
+}
+div.main .content .markdown blockquote {
+padding-right: 5rem;
+padding-left: 1.25rem;
+}
+div.main .content .navigation {
+-webkit-flex-direction: row;
+-moz-flex-direction: row;
+-ms-flex-direction: row;
+flex-direction: row;
+}
+div.main .content .navigation div {
+margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 769px)">
+  div.main .content .markdown figure {
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown img {
+max-width: 110%;
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown pre {
+width: 110%;
+margin-left: -4%;
+}
+
+</style>
+
+<noscript>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+</noscript>
+
+
+  <style type="text/css" media="screen">
+    .hljs{display:block;background:white;padding:0.5em;color:#333333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-string,.hljs-variable,.hljs-template-variable,.hljs-strong,.hljs-emphasis,.hljs-quote{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-literal,.hljs-symbol,.hljs-bullet,.hljs-attribute{color:#0086b3}.hljs-section,.hljs-name{color:#63a35c}.hljs-tag{color:#333333}.hljs-title,.hljs-attr,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);animation:a .5s both}@keyframes a{0%{filter:blur(20px)}to{filter:blur(0)}}
+
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    /*!
+ * Social Share Kit v1.0.7 (http://socialsharekit.com)
+ * Copyright 2015 Social Share Kit / Kaspars Sprogis.
+ * Licensed under Creative Commons Attribution-NonCommercial 3.0 license:
+ * https://github.com/darklow/social-share-kit/blob/master/LICENSE
+ * ---
+ */@font-face{font-family:'social-share-kit';src:url('/fonts/social-share-kit.eot');src:url('/fonts/social-share-kit.eot?#iefix') format('embedded-opentype'),url('/fonts/social-share-kit.woff') format('woff'),url('/fonts/social-share-kit.ttf') format('truetype'),url('/fonts/social-share-kit.svg#social-share-kit') format('svg');font-weight:normal;font-style:normal}.ssk:before{display:inline-block;font-family:"social-share-kit" !important;font-style:normal !important;font-weight:normal !important;font-variant:normal !important;text-transform:none !important;speak:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.ssk-facebook:before{content:"a";text-indent:4px;margin-right:-4px}.ssk-twitter:before{content:"b"}.ssk-google-plus:before{content:"v"}.ssk-google-plus-old:before{content:"c"}.ssk-email:before{content:"d";top:-1px;position:relative}.ssk-pinterest:before{content:"e"}.ssk-tumblr:before{content:"f"}.ssk-linkedin:before{content:"g"}.ssk-github:before{content:"h"}.ssk-vk:before{content:"i"}.ssk-instagram:before{content:"j"}.ssk-amazon:before{content:"k"}.ssk-skype:before{content:"s"}.ssk-youtube:before{content:"x"}.ssk-vimeo:before{content:"u"}.ssk-ebay:before{content:"p"}.ssk-apple:before{content:"l"}.ssk-behance:before{content:"q"}.ssk-dribble:before{content:"n"}.ssk-android:before{content:"o"}.ssk-whatsapp:before{content:"m"}.ssk-reddit:before{content:"r"}.ssk-reddit2:before{content:"t"}.ssk-link:before{content:"w"}.ssk{background-color:#757575;color:white;display:inline-block;font-size:22px;line-height:1px;margin-right:2px;margin-bottom:2px;padding:7px;text-align:center;text-decoration:none;transition:background-color .1s;-webkit-transition:background-color .1s;-moz-transition:background-color .1s;-ms-transition:background-color .1s;-o-transition:background-color .1s}.ssk:before,.ssk .glyphicon,.ssk .fa{position:relative;font-size:22px;top:0;vertical-align:middle}.ssk.ssk-xs,.ssk-xs>.ssk{padding:4px}.ssk.ssk-xs:before,.ssk-xs>.ssk:before,.ssk.ssk-xs .glyphicon,.ssk-xs>.ssk .glyphicon,.ssk.ssk-xs .fa,.ssk-xs>.ssk .fa{font-size:15px}.ssk.ssk-sm,.ssk-sm>.ssk{padding:5px}.ssk.ssk-sm:before,.ssk-sm>.ssk:before,.ssk.ssk-sm .glyphicon,.ssk-sm>.ssk .glyphicon,.ssk.ssk-sm .fa,.ssk-sm>.ssk .fa{font-size:20px}.ssk.ssk-lg,.ssk-lg>.ssk{padding:9px}.ssk.ssk-lg:before,.ssk-lg>.ssk:before,.ssk.ssk-lg .glyphicon,.ssk-lg>.ssk .glyphicon,.ssk.ssk-lg .fa,.ssk-lg>.ssk .fa{font-size:28px}.ssk:last-child{margin-right:0}.ssk:hover{background-color:#424242}.ssk:hover,.ssk:focus{color:#fff;text-decoration:none}.ssk.ssk-round,.ssk-round .ssk{border-radius:50%}.ssk.ssk-round:before,.ssk-round .ssk:before{text-indent:0;margin-right:0}.ssk.ssk-rounded,.ssk-rounded .ssk{border-radius:15%}.ssk.ssk-icon{color:#757575;padding:2px;font-size:24px}.ssk.ssk-icon,.ssk.ssk-icon:hover{background-color:transparent}.ssk.ssk-icon:hover{color:#424242}.ssk.ssk-icon.ssk-xs,.ssk-xs>.ssk.ssk-icon{font-size:16px}.ssk.ssk-icon.ssk-sm,.ssk-sm>.ssk.ssk-icon{font-size:20px}.ssk.ssk-icon.ssk-lg,.ssk-lg>.ssk.ssk-icon{font-size:28px}.ssk.ssk-text{overflow:hidden;font-size:17px;line-height:normal;padding-right:10px}.ssk.ssk-text:before,.ssk.ssk-text .glyphicon,.ssk.ssk-text .fa{margin:-7px 10px -7px -7px;padding:7px;background-color:rgba(0,0,0,0.15);vertical-align:bottom;text-indent:0}.ssk-block .ssk.ssk-text{display:block;margin-right:0;text-align:left}.ssk.ssk-text.ssk-xs,.ssk-xs>.ssk.ssk-text{font-size:12px;padding-right:6px}.ssk.ssk-text.ssk-xs:before,.ssk-xs>.ssk.ssk-text:before,.ssk.ssk-text.ssk-xs .glyphicon,.ssk-xs>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-xs .fa,.ssk-xs>.ssk.ssk-text .fa{margin:-4px 6px -4px -4px;padding:4px}.ssk.ssk-text.ssk-sm,.ssk-sm>.ssk.ssk-text{font-size:16px;padding-right:7px}.ssk.ssk-text.ssk-sm:before,.ssk-sm>.ssk.ssk-text:before,.ssk.ssk-text.ssk-sm .glyphicon,.ssk-sm>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-sm .fa,.ssk-sm>.ssk.ssk-text .fa{margin:-5px 7px -5px -5px;padding:5px}.ssk.ssk-text.ssk-lg,.ssk-lg>.ssk.ssk-text{font-size:22px;padding-right:13px}.ssk.ssk-text.ssk-lg:before,.ssk-lg>.ssk.ssk-text:before,.ssk.ssk-text.ssk-lg .glyphicon,.ssk-lg>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-lg .fa,.ssk-lg>.ssk.ssk-text .fa{margin:-9px 13px -9px -9px;padding:9px}.ssk-group,.ssk-sticky{font-size:0}.ssk-sticky{top:0;position:fixed;z-index:2000}.ssk-sticky .ssk{transition:padding .1s ease-out;-webkit-transition:padding .1s ease-out;-moz-transition:padding .1s ease-out;-ms-transition:padding .1s ease-out;-o-transition:padding .1s ease-out;margin:0}@media (min-width:768px){.ssk-sticky.ssk-left .ssk,.ssk-sticky.ssk-right .ssk{display:block;clear:both}.ssk-sticky.ssk-left.ssk-center,.ssk-sticky.ssk-right.ssk-center{top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%)}.ssk-sticky.ssk-left{left:0}.ssk-sticky.ssk-left .ssk{float:left}.ssk-sticky.ssk-left .ssk:hover{padding-left:15px}.ssk-sticky.ssk-right{right:0}.ssk-sticky.ssk-right .ssk{float:right}.ssk-sticky.ssk-right .ssk:hover{padding-right:15px}}.ssk-sticky.ssk-bottom{font-size:0;top:auto;bottom:0}.ssk-sticky.ssk-bottom.ssk-center{left:50%;right:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-moz-transform:translateX(-50%);-ms-transform:translateX(-50%);-o-transform:translateX(-50%)}.ssk-sticky.ssk-bottom .ssk{vertical-align:bottom}.ssk-sticky.ssk-bottom .ssk:hover{padding-bottom:15px}.ssk-sticky.ssk-round.ssk-xs .ssk:hover{padding:8px}.ssk-sticky.ssk-round.ssk-sm .ssk:hover{padding:9px}.ssk-sticky.ssk-round .ssk:hover{padding:11px}.ssk-sticky.ssk-round.ssk-lg .ssk:hover{padding:13px}@media (max-width:767px){.ssk-sticky{left:0;right:0;bottom:0;top:auto;width:100%;display:flex !important;flex-direction:row;flex-wrap:nowrap}.ssk-sticky.ssk-sticky-hide-xs{display:none !important}.ssk-sticky .ssk{flex:1;width:auto}.ssk-sticky .ssk .ssk-num{display:none}}.ssk-count{padding-top:20px}.ssk-count .ssk{position:relative}.ssk-count .ssk-num{border-radius:4px;color:#8f8f8f;background-color:rgba(50,50,50,0.03);display:block;font-size:12px;left:0;line-height:20px;position:absolute;right:0;text-align:center;top:-20px}@media (min-width:768px){.ssk-count.ssk-sticky{padding-top:0}.ssk-count.ssk-sticky.ssk-left .ssk-num,.ssk-count.ssk-sticky.ssk-right .ssk-num{top:20%;background-color:transparent}.ssk-count.ssk-sticky.ssk-left .ssk-num{left:100%;margin-left:5px}.ssk-count.ssk-sticky.ssk-right .ssk-num{right:115%;margin-left:-100%;text-align:right}}.ssk-facebook{background-color:#3B5998}.ssk-grayscale>.ssk-facebook{background-color:#757575}.ssk-facebook:hover{background-color:#2d4373}.ssk-facebook:hover{background-color:#2d4373}.ssk-grayscale>.ssk-facebook:hover{background-color:#3B5998}.ssk-facebook.ssk-icon{color:#3B5998}.ssk-facebook.ssk-icon:hover{color:#2d4373}.ssk-facebook.ssk-icon:before{text-indent:0;margin-right:0}.ssk-twitter{background-color:#1DA1F2}.ssk-grayscale>.ssk-twitter{background-color:#757575}.ssk-twitter:hover{background-color:#0c85d0}.ssk-twitter:hover{background-color:#0c85d0}.ssk-grayscale>.ssk-twitter:hover{background-color:#1DA1F2}.ssk-twitter.ssk-icon{color:#1DA1F2}.ssk-twitter.ssk-icon:hover{color:#0c85d0}.ssk-google-plus{background-color:#EA4335}.ssk-grayscale>.ssk-google-plus{background-color:#757575}.ssk-google-plus:hover{background-color:#d62516}.ssk-google-plus:hover{background-color:#d62516}.ssk-grayscale>.ssk-google-plus:hover{background-color:#EA4335}.ssk-google-plus.ssk-icon{color:#EA4335}.ssk-google-plus.ssk-icon:hover{color:#d62516}.ssk-pinterest{background-color:#BD081C}.ssk-grayscale>.ssk-pinterest{background-color:#757575}.ssk-pinterest:hover{background-color:#8c0615}.ssk-pinterest:hover{background-color:#8c0615}.ssk-grayscale>.ssk-pinterest:hover{background-color:#BD081C}.ssk-pinterest.ssk-icon{color:#BD081C}.ssk-pinterest.ssk-icon:hover{color:#8c0615}.ssk-tumblr{background-color:#395773}.ssk-grayscale>.ssk-tumblr{background-color:#757575}.ssk-tumblr:hover{background-color:#283d51}.ssk-tumblr:hover{background-color:#283d51}.ssk-grayscale>.ssk-tumblr:hover{background-color:#395773}.ssk-tumblr.ssk-icon{color:#395773}.ssk-tumblr.ssk-icon:hover{color:#283d51}.ssk-email{background-color:#757575}.ssk-grayscale>.ssk-email{background-color:#757575}.ssk-email:hover{background-color:#5b5b5b}.ssk-email:hover{background-color:#5b5b5b}.ssk-grayscale>.ssk-email:hover{background-color:#757575}.ssk-grayscale>.ssk-email:hover{background-color:#5b5b5b}.ssk-email.ssk-icon{color:#757575}.ssk-email.ssk-icon:hover{color:#5b5b5b}.ssk-vk{background-color:#54769a}.ssk-grayscale>.ssk-vk{background-color:#757575}.ssk-vk:hover{background-color:#425d79}.ssk-vk:hover{background-color:#425d79}.ssk-grayscale>.ssk-vk:hover{background-color:#54769a}.ssk-vk.ssk-icon{color:#54769a}.ssk-vk.ssk-icon:hover{color:#425d79}.ssk-linkedin{background-color:#1c87bd}.ssk-grayscale>.ssk-linkedin{background-color:#757575}.ssk-linkedin:hover{background-color:#156791}.ssk-linkedin:hover{background-color:#156791}.ssk-grayscale>.ssk-linkedin:hover{background-color:#1c87bd}.ssk-linkedin.ssk-icon{color:#1c87bd}.ssk-linkedin.ssk-icon:hover{color:#156791}.ssk-whatsapp{background-color:#34AF23}.ssk-grayscale>.ssk-whatsapp{background-color:#757575}.ssk-whatsapp:hover{background-color:#27851a}.ssk-whatsapp:hover{background-color:#27851a}.ssk-grayscale>.ssk-whatsapp:hover{background-color:#34AF23}.ssk-whatsapp.ssk-icon{color:#34AF23}.ssk-whatsapp.ssk-icon:hover{color:#27851a}.ssk-reddit{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit{background-color:#757575}.ssk-reddit:hover{background-color:#3a80c1}.ssk-reddit:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit:hover{background-color:#5f99cf}.ssk-reddit.ssk-icon{color:#5f99cf}.ssk-reddit.ssk-icon:hover{color:#3a80c1}.ssk-reddit2{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit2{background-color:#757575}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit2:hover{background-color:#5f99cf}.ssk-reddit2.ssk-icon{color:#5f99cf}.ssk-reddit2.ssk-icon:hover{color:#3a80c1}.ssk-turquoise{background-color:#1abc9c}.ssk-turquoise:hover{background-color:#148f77}.ssk-emerald{background-color:#2ecc71}.ssk-emerald:hover{background-color:#25a25a}.ssk-peter-river{background-color:#3498db}.ssk-peter-river:hover{background-color:#217dbb}.ssk-belize-hole{background-color:#2980b9}.ssk-belize-hole:hover{background-color:#20638f}.ssk-amethyst{background-color:#9b59b6}.ssk-amethyst:hover{background-color:#804399}.ssk-wisteria{background-color:#8e44ad}.ssk-wisteria:hover{background-color:#703688}.ssk-wet-asphalt{background-color:#34495e}.ssk-wet-asphalt:hover{background-color:#222f3d}.ssk-midnight-blue{background-color:#2c3e50}.ssk-midnight-blue:hover{background-color:#1a242f}.ssk-green-sea{background-color:#16a085}.ssk-green-sea:hover{background-color:#107360}.ssk-nephritis{background-color:#27ae60}.ssk-nephritis:hover{background-color:#1e8449}.ssk-sunflower{background-color:#f1c40f}.ssk-sunflower:hover{background-color:#c29d0b}.ssk-orange{background-color:#f39c12}.ssk-orange:hover{background-color:#c87f0a}.ssk-carrot{background-color:#e67e22}.ssk-carrot:hover{background-color:#bf6516}.ssk-pumpkin{background-color:#d35400}.ssk-pumpkin:hover{background-color:#a04000}.ssk-alizarin{background-color:#e74c3c}.ssk-alizarin:hover{background-color:#d62c1a}.ssk-pomegranate{background-color:#c0392b}.ssk-pomegranate:hover{background-color:#962d22}.ssk-clouds{background-color:#cfd9db}.ssk-clouds:hover{background-color:#b1c2c6}.ssk-concrete{background-color:#95a5a6}.ssk-concrete:hover{background-color:#798d8f}.ssk-silver{background-color:#bdc3c7}.ssk-silver:hover{background-color:#a1aab0}.ssk-asbestos{background-color:#7f8c8d}.ssk-asbestos:hover{background-color:#667273}.ssk-dark-gray{background-color:#555}.ssk-dark-gray:hover{background-color:#3b3b3b}.ssk-black{background-color:#333}.ssk-black:hover{background-color:#1a1a1a}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    a {
+    color: #527fc1f;
+}
+
+a:hover {
+    color: #1a3152;
+}
+
+div.main .content .markdown, div.header .name, div.header nav ul a:hover {
+    color: #181d2a;
+}
+
+div.header nav ul a {
+    color: #6a7a8b;
+}
+
+div.main .content .markdown code {
+    background-color: #f9f9f9;
+    color: #527fc1f;
+}
+
+div.main .content .markdown pre, div.main .content .markdown pre code {
+    background-color: #282a36;
+    color: #87a5d2;
+}
+
+.hljs, .hljs-subst, .hljs-variable {
+    color: #87a5d2;
+}
+
+.hljs-type {
+    color: #97d28b;
+}
+
+.hljs-quote {
+    color: #ffcb8d;
+}
+
+.hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-template-tag, .hljs-deletion {
+    color: #96c2d7;
+}
+
+.hljs-comment {
+    color: #6a7a8b;
+}
+
+.hljs-regexp, .hljs-symbol, .hljs-template-variable {
+    color: #ffcb8d;
+}
+
+.hljs-keyword, .hljs-attribute, .hljs-meta-keyword, .hljs-doctag, .hljs-name {
+    color: #97d28b;
+}
+
+.hljs-link, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-title, .hljs-section {
+    color: #ff8e91;
+}
+
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+    color: #97d28b;
+}
+
+.ssk {
+    background-color: #6a7a8b;
+}
+
+  </style>
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/Enric_Escorsa.png"
+
+>
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <a href="/"><img class="logo" src="/img/logo.png" alt="logo"></a>
+        
+        <div class="content">
+            <a href="/"><div class="name"><h1>Enric Escorsa O&#39;Callaghan</h1></div></a>
+            <nav>
+                <ul>
+                    
+                            <li><a href="/blog/">Blog</a></li>
+                    
+                    
+                        
+                            
+                        
+                    
+                        
+                            
+                            <li><a href="/projects">projects</a></li>
+                            
+                        
+                    
+                    
+                        
+                            <li><a href="/about/">About</a></li>
+                        
+                    
+                        
+                    
+                        
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    Draft::Mapes de paraules com a vectors
+    
+
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Fri May 19 2017 00:00:00 UTC">May 19, 2017</div>
+                    
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">13 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/deeplearning">deeplearning</a> </li>
+                          
+                            <li class="middot"><a href="/tags/dl">dl</a> </li>
+                          
+                            <li class="middot"><a href="/tags/lda">lda</a> </li>
+                          
+                            <li class="middot"><a href="/tags/neural-networks">neural networks</a> </li>
+                          
+                            <li class="middot"><a href="/tags/nlp">nlp</a> </li>
+                          
+                            <li class="middot"><a href="/tags/r">r</a> </li>
+                          
+                            <li class="middot"><a href="/tags/t-sne">t-sne</a> </li>
+                          
+                            <li class="middot"><a href="/tags/text-mining">text mining</a> </li>
+                          
+                            <li class="middot"><a href="/tags/tools">tools</a> </li>
+                          
+                            <li class="middot"><a href="/tags/topic-modeling">topic modeling</a> </li>
+                          
+                            <li class="middot"><a href="/tags/word2vec">word2vec</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.</p>
+<p>En aquest post vull indagar una mica en l’ús d’eines i potencialitats recents (tals com word2vec , Mikolov) per extraure paraules d’un text i fer word embeddings (per entendre bé word embeddings recomano llegir: <a href="http://ryanheuser.org/word-vectors-2/" class="uri">http://ryanheuser.org/word-vectors-2/</a>). Aquest tipus de representacions és especialment interessant per capturar regularitats significatives tant a nivell sintàctic com a nivell semàntic entre paraules.</p>
+<p>Ho he volgut provar a partir d’una cerca de publicacions científiques sobre el liti. Potser és un conjunt de dades una mica massa petit (tinc no arriba a 3.000 registres de publicacions), però anem a veure què passa.</p>
+<div id="obtenir-i-preparar-el-text-a-analitzar" class="section level1">
+<h1>Obtenir i preparar el text a analitzar</h1>
+<pre class="r"><code>#D&#39;entrada carreguem paquets necessaris per fer minería de textos amb R
+library(tm)
+library(dplyr)
+library(tidytext)
+library(topicmodels)
+library(ggplot2)</code></pre>
+<p>Buscarem publicacions sobre “Liti” a la base de dades de publicacions Arxiv. Per cercar i obtenir registres d’aquesta base de dades utilitzarem el paquet desenvolupat per <span class="citation">@ropensci</span> anomenat “aRxiv”.</p>
+<pre class="r"><code>#install.packages(&quot;aRxiv&quot;)
+library(aRxiv)
+cerca &lt;- arxiv_search(&#39;abs:&quot;lithium&quot;&#39;, limit=3000)
+#podem fer nrow(cerca) per recomptar quants registres hem recuperat
+
+#ho guardem en un csv al nostre directori
+write.csv(cerca, file = &quot;publicacions_liti.csv&quot;)</code></pre>
+<p>Ara puc llegir des del meu directori l’arxiu csv obtingut de la cerca feta a arxiv.</p>
+<pre class="r"><code>lesmevesdades &lt;- read.csv(&quot;publicacions_liti.csv&quot;)
+ 
+#N&#39;extrec el text que és el que m&#39;interessa
+elmeutext &lt;- lesmevesdades$abstract #prenc la columna on hi ha el text del meu corpus (en aquest cas ABSTRACT)
+head(elmeutext)
+## [1]   I have carried out numerical first principles calculations of the pressure\ndependence of the elastic moduli for several ordered structures in the\nAluminum-Lithium system, specifically FCC Al, FCC and BCC Li, L1_2 Al_3Li, and\nan ordered FCC Al_7Li supercell. The calculations were performed using the full\npotential linear augmented plane wave method (LAPW) to calculate the total\nenergy as a function of strain, after which the data was fit to a polynomial\nfunction of the strain to determine the modulus. A procedure for estimating the\nerrors in this process is also given. The predicted equilibrium lattice\nparameters are slightly smaller than found experimentally, consistent with\nother LDA calculations. The computed elastic moduli are within approximately\n10% of the experimentally measured moduli, provided the calculations are\ncarried out at the experimental lattice constant. The LDA equilibrium shear\nmodulus C11-C12 increases from 59.3 GPa in Al, to 76.0 GPa in Al_7Li, to 106.2\nGPa in Al_3Li. The modulus C_44 increases from 38.4 GPa in Al to 46.1 GPa in\nAl_7Li, then falls to 40.7 GPa in Al_3Li. All of the calculated elastic moduli\nincrease with pressure with the exception of BCC Li, which becomes elastically\nunstable at about 2 GPa, where C_11-C_12 vanishes.\n
+## [2]   We derive lithium abundances in 53 T Tauri stars (TTS), concentrating on\nweak-line TTS. Our study gives the following results: 1)At luminosities $\\ge\n0.9 L\\sun$ the Li abundances are remarkably uniform, with a mean value,\nlog~N(Li)=3.1, equal to the &quot;cosmic&quot; lithium abundance. 2)Significant Li\ndepletion appears below 0.5~L$\\sun$ in the mass range 0.9-0.2 M$\\sun$ and\nincreases towards lower luminosities. At the lower mass end (0.4-0.2 M$\\sun$),\nthe observed luminosity of the Li burning turning point is about a factor 4\nhigher than predicted by the models. At masses 1.2-1.0 M$\\sun$ the observations\nimply less PMS Li burning than theoretically expected. Moreover we show that:\n1)Low Li abundances appear only among stars with low $v\\sin{i}$. Fast rotators\nwith masses around 0.8~M$\\sun$ do not show evidence for strong Li depletion\ntowards lower luminosities as slow rotators do. 2)In a sample restricted to\nonly K5-K7 stars we find that the angular momentum spread before Li burning\nbegins is larger than a factor 10. Lithium depletion associated to angular\nmomentum loss during PMS evolution is not required to explain the observed\nabundances. The efficiency of PMS Li burning in the mass range 0.9-0.7~M$\\sun$\nis reduced in the presence of rapid rotation.\n  
+## [3]   Recently conformal Weyl gravity has been considered as a candidate\nalternative gravity theory. This fourth-order theory is attractive because it\nis the only metric theory of gravity which is invariant under local conformal\ntransformations of the metric. We calculate the primordial light element\nabundances in this theory. The major difference {}from the standard cosmology\nis that the universe expands far more slowly throughout the nucleosynthesis\nepoch. The production of $^4\\rm{He}$ depends strongly on $\\eta$, the ratio of\nbaryons to photons. For $\\eta = 10^{-8}$ the mass fraction of $^4{\\rm He}$ is\n$X_4 \\simeq 0.25$ and the number densities relative to hydrogen for $^2{\\rm\nH}$, $^3{\\rm He}$ and $^7{\\rm Li}$ are $n(^2{\\rm H})/n({\\rm H}) \\simeq 9\\times\n10^{-20}$, $n(^3{\\rm He})/n({\\rm H})\\simeq 4 \\times 10^{-18}$ and $n(^7{\\rm\nLi})/n({\\rm H}) \\simeq 10^{-13}$. This value of $\\eta$ corresponds to a baryon\nmass density close to the standard model critical density. However, adjusting\n$\\eta$ to give a reasonable helium yield forces the deuterium and lithium\nyields to be small enough that the theory cannot be reconciled with\nobservations.\n                                                                                                         
+## [4]   We show that primordial nucleosynthesis in baryon inhomogeneous big-bang\nmodels can lead to significant heavy-element production while still satisfying\nall the light-element abundance constraints including the low lithium abundance\nobserved in population II stars. The parameters which admit this solution arise\nnaturally from the process of neutrino induced inflation of baryon\ninhomogeneities prior to the epoch of nucleosynthesis. These solutions entail a\nsmall fraction of baryons (\\le 2\\%) in very high density regions with local\nbaryon-to-photon ratio $\\eta^h\\approx 10^{-4}$, while most baryons are at a\nbaryon-to-photon ratio which optimizes the agreement with light-element\nabundances. The model would imply a unique signature of baryon inhomogeneities\nin the early universe, evidenced by the existence of primordial material\ncontaining heavy-element products of proton and alpha- burning reactions with\nan abundance of $[Z]\\sim -6 to -4$.\n                                                                                                                                                                                                                                                                                                                                     
+## [5]   We derive the equation of state of a dilute atomic Bose gas with an\ninteratomic interaction that has a negative scattering length and argue that\ntwo continuous phase transitions, occuring in the gas due to quantum degeneracy\neffects, are preempted by a first-order gas-liquid or gas-solid transition\ndepending on the details of the interaction potential. We also discuss the\nconsequences of this result for future experiments with magnetically trapped\nspin-polarized atomic gasses such as lithium and cesium.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+## [6]   Motivated by the recent report of a $^6$Li detection in the atmosphere of\nHD~84937, we couple stellar evolution calculations with light isotope\nproduction via stellar flares. We find that as a consequence of their small\nconvective envelope mass near the turn-off point, low-metallicity dwarfs and\nsubgiants may possess observable amounts of $^6$Li arising from such flare\nactivity. We point out an observational test which could discriminate between\nflare produced $^6$Li and protostellar $^6$Li. In the $T_{\\rm eff}$ range\n$6000-6600$~K, the $^7$Li/$^6$Li ratio on the subgiant branch should increase\nas a function of $T_{\\rm eff}$ if flare production is important, whereas the\nsame ratio should be constant if a protostellar origin is the source of the\nobserved lithium. The absence of a flare produced variation in the\n$^7$Li/$^6$Li ratio would allow for a more reliable inference of the --\ncosmologically important -- atmospheric depletion mechanisms in stars.\n                                                                                                                                                                                                                                                                                                                        
+## 2316 Levels:   $R$-matrix calculations of the electron collisions with lithium atom at\nenergies below the $3s$ excitation threshold are presented. The $^1S^e$,\n$^3S^e$ and $^1P^o$ phase shifts calculated in the near-threshold energy range\nare in excellent agreement with previous theoretical studies. The threshold\nbehavior of the $^3P^o$ phase shift is accurately analyzed along with the\nresonance located at the scattering energy $\\sim60$ meV. The phase shifts and\ncross sections calculated here show two resonances below the $3s$ threshold\nthat have not been previously reported.\n ...
+ 
+#puc guardar el corpus de text en un txt per usar després:
+write.table(elmeutext,&quot;elmeutext.txt&quot;,sep=&quot;\t&quot;,row.names=FALSE)</code></pre>
+<p>Anem a veure si podem analitzar-ne el contingut. Em baso en l’enfocament tidy textmining segons proposat per l’admirada <span class="citation">@JuliaSilge</span>, una metodologia d’anàlisi de dades textuals sumament interessant i que recomano conèixer.</p>
+<pre class="r"><code>#Primer obtinc un corpus de text que pugui tractar
+corpustext &lt;- Corpus(VectorSource(elmeutext)) 
+ 
+#transformo el corpus de text a matriu document-terme (dtm)
+dtm &lt;- DocumentTermMatrix(corpustext)
+ 
+#N&#39;extrec els termes
+terms &lt;- Terms(dtm)
+head(terms)
+## [1] &quot;(lapw)&quot; &quot;10%&quot;    &quot;106.2&quot;  &quot;38.4&quot;   &quot;40.7&quot;   &quot;46.1&quot;</code></pre>
+<p>Els termes que s’extreuen són del tipus:</p>
+<p>Ara posem la matriu en format net -és a dir, una taula amb columnes: document, terme i frequència d’aparició- mitjançant la funció tidy.</p>
+<pre class="r"><code>net &lt;- tidy(dtm)
+View(net) #veig la taula resultant
+#ordeno els termes més frequents de net
+net %&gt;%
+  count(term, sort = TRUE)
+## # A tibble: 33,440 x 2
+##    term        n
+##    &lt;chr&gt;   &lt;int&gt;
+##  1 the      2303
+##  2 and      2242
+##  3 lithium  2001
+##  4 for      1838
+##  5 with     1801
+##  6 that     1547
+##  7 are      1462
+##  8 this     1300
+##  9 from     1101
+## 10 which     947
+## # ... with 33,430 more rows
+ 
+#Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
+elsmeusstopwords &lt;- tibble(term = c(as.character(1:10),
+                                    &quot;the&quot;, &quot;and&quot;, &quot;for&quot;, &quot;this&quot;, &quot;between&quot;, &quot;than&quot;, &quot;through&quot;, &quot;but&quot;, &quot;have&quot;, &quot;been&quot;, &quot;these&quot;, &quot;that&quot;, &quot;are&quot;, &quot;from&quot;, &quot;with&quot;, &quot;their&quot;, &quot;such&quot;, &quot;also&quot;, &quot;then&quot;, &quot;was&quot;, &quot;were&quot;, &quot;which&quot;, &quot;has&quot;, &quot;its&quot;, &quot;this&quot;, &quot;can&quot;, &quot;paper&quot;, &quot;study&quot;, &quot;presents&quot;, &quot;while&quot;))
+netissim &lt;- net %&gt;%
+  anti_join(elsmeusstopwords)
+View(netissim)
+ 
+#ara podem ordenar termes per freqüència
+netissim %&gt;%
+  count(term, sort = TRUE)
+## # A tibble: 33,411 x 2
+##    term        n
+##    &lt;chr&gt;   &lt;int&gt;
+##  1 lithium  2001
+##  2 using     770
+##  3 our       692
+##  4 high      577
+##  5 results   561
+##  6 stars     530
+##  7 show      519
+##  8 present   516
+##  9 two       489
+## 10 not       476
+## # ... with 33,401 more rows</code></pre>
+</div>
+<div id="visualitzacions-del-contingut" class="section level1">
+<h1>Visualitzacions del contingut</h1>
+<p>Arribats a aquest punt podem fer un núvol d’etiquetes dels termes amb el paquet wordcloud per tenir una primera visualització general dels continguts.</p>
+<pre class="r"><code>library(wordcloud)
+netissim %&gt;%
+  anti_join(elsmeusstopwords) %&gt;%
+  count(term) %&gt;%
+  with(wordcloud(term, n, max.words = 100))</code></pre>
+<p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code> 
+#si volguéssim posar tots els termes en majúscules:
+#netissim &lt;-netissim %&gt;% mutate(term = toupper(term))</code></pre>
+<p>Per percebre els continguts a un nivell més estructural analitzem coocurrències o parells de termes; ho podem fer amb el paquet widyr i la funció pairwise.</p>
+<pre class="r"><code>library(devtools)
+#install_github(&quot;dgrtwo/widyr&quot;)
+library(widyr)
+ 
+parells &lt;- netissim %&gt;%
+  pairwise_count(term, document, sort = TRUE, upper = FALSE)
+View(parells) #per veure la taula que se&#39;m crea (que conté la columna item1, la columna item2 i la columna n (frequència d&#39;aparició conjunta de les dues paraules en una publicació)
+#(amb la funció pairwise_count simplement es recompten coocurrències, amb pairwise_cor es computa correlació)</code></pre>
+<p>Visualitzem el grafo de coocurrències (usant igraph, graph i ggplot2).</p>
+<pre class="r"><code>library(igraph)
+library(ggplot2)
+library(ggraph)
+ 
+set.seed(1234)
+parells %&gt;%
+  filter(n &gt;= 200) %&gt;%
+  graph_from_data_frame() %&gt;%
+  ggraph(layout = &quot;fr&quot;) +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = &quot;Steelblue&quot;) +
+  geom_node_point(size = 1) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, &quot;lines&quot;)) +
+  labs(title = &quot; Xarxa de Coocurrència de Paraules&quot;) +
+  theme_void()</code></pre>
+<p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. niobate)</p>
+<pre class="r"><code>parells %&gt;%
+  filter(item1 == &quot;quantum&quot;)
+## # A tibble: 6,279 x 3
+##    item1   item2           n
+##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;
+##  1 quantum niobate       114
+##  2 quantum optical        73
+##  3 quantum demonstrate    67
+##  4 quantum photon         64
+##  5 quantum based          61
+##  6 quantum two            57
+##  7 quantum results        55
+##  8 quantum single         54
+##  9 quantum frequency      53
+## 10 quantum integrated     51
+## # ... with 6,269 more rows</code></pre>
+<p>Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un post anterior.</p>
+<pre class="r"><code>
+    
+#primer hem de transformar el nostre dataset netissim en una matriu dtm (inversament a com havíem fet abans). això ho podem fer amb cast_dtm
+netissim_dtm &lt;- netissim %&gt;%
+  cast_dtm(document, term, count)
+ 
+#si volgués guardar-ho en un csv
+#write.csv(netissim_dtm,file=”netissim_dtm.csv”
+ 
+#ara apliquem LDA
+lda_netissim &lt;- LDA(netissim_dtm, k = 9, control = list(alpha = 0.1)) #decidim fer 9 topics o clusters (k=6)
+ 
+#per extraure les probabilitats que una paraula pertanyi a un topic (això s&#39;anomena beta)
+topics_netissim &lt;- tidy(lda_netissim, matrix = &quot;beta&quot;)
+topics_netissim
+## # A tibble: 300,699 x 3
+##    topic term       beta
+##    &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+##  1     1 (lapw) 3.94e- 5
+##  2     2 (lapw) 8.83e-89
+##  3     3 (lapw) 1.56e-89
+##  4     4 (lapw) 2.45e-89
+##  5     5 (lapw) 2.19e-89
+##  6     6 (lapw) 3.69e-25
+##  7     7 (lapw) 8.12e-89
+##  8     8 (lapw) 2.14e-89
+##  9     9 (lapw) 4.92e-42
+## 10     1 10%    8.20e- 5
+## # ... with 300,689 more rows</code></pre>
+<p>Podem visualitzar els top termes de cada cluster amb barres de freqüència:</p>
+<pre class="r"><code>top_terms_per_clusters &lt;- topics_netissim  %&gt;%
+  group_by(topic) %&gt;%
+  top_n(10, beta) %&gt;%
+  ungroup() %&gt;%
+  arrange(topic, -beta)
+top_terms_per_clusters
+## # A tibble: 90 x 3
+##    topic term         beta
+##    &lt;int&gt; &lt;chr&gt;       &lt;dbl&gt;
+##  1     1 lithium   0.0152 
+##  2     1 stars     0.0131 
+##  3     1 stellar   0.0112 
+##  4     1 solar     0.00873
+##  5     1 rotation  0.00852
+##  6     1 models    0.00780
+##  7     1 mass      0.00682
+##  8     1 depletion 0.00646
+##  9     1 age       0.00542
+## 10     1 surface   0.00540
+## # ... with 80 more rows
+ 
+top_terms_per_clusters %&gt;%
+  mutate(term = reorder(term, beta)) %&gt;%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = &quot;free&quot;) +
+  coord_flip()</code></pre>
+<p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Un següent pas podria ser intentar representar les paraules del meu corpus com a vectors i així les podria visualitzar i veure’n associacions, etc. Això és el que es coneix com a word embeddings. Amb el paquet <em>wordVectors</em> podem implementar a R word2vec, el model de word embeddings basat amb xarxes neuronals desenvolupat per un equip de Google liderat per Tomas Mikolov.</p>
+<pre class="r"><code>
+#devtools::install_github(&quot;bmschmidt/wordVectors&quot;)
+library (wordVectors)
+# usem train_word2vec per generar els vectors a partir del meu corpus de text en txt
+# output és l&#39;arxiu binari que se&#39;m crea
+# vectors son el nombre de dimensions (entre 100-500 és ok)
+# window és l&#39;amplitut en termes de nombre de paraules a l&#39;entorn d&#39;una paraula.
+ 
+wembe &lt;- train_word2vec(&quot;elmeutext.txt&quot;,
+                       output = &quot;wembe.bin&quot;, threads = 3,#ho guardo al meu directori
+                       vectors = 200, window = 15, force=TRUE)
+
+#pot ser que trigui una mica...
+ 
+wembe &lt;- read.vectors(&quot;wembe.bin&quot;)</code></pre>
+<p>Ara ja tinc vectors per cada terme.</p>
+<p>Amb la funció nearest_to() podem buscar paraules properes (per cosine similarity) a una paraula determinada.</p>
+<pre class="r"><code>#p.ex. paraules properes a biomechanics
+nearest_to(wembe, wembe[[&quot;quantum&quot;]], 20)
+##              quantum           processing              optics, 
+##         8.881784e-16         2.421989e-01         2.736075e-01 
+##        communication             memories       communication. 
+##         2.859486e-01         2.900698e-01         2.961607e-01 
+##             networks        long-distance                nodes 
+##         3.084105e-01         3.118518e-01         3.186850e-01 
+##       communications            computers            metrology 
+##         3.198176e-01         3.210166e-01         3.217000e-01 
+##               memory          processing.           chemistry. 
+##         3.334353e-01         3.363304e-01         3.366201e-01 
+##             resource          information            networks. 
+##         3.416567e-01         3.443532e-01         3.476697e-01 
+##              optics. microwave-to-optical 
+##         3.509136e-01         3.520805e-01
+#o bé paraules properes a Marca
+nearest_to(wembe, wembe[[&quot;energy&quot;]], 20)
+##           energy         energies          energy,        renewable 
+##     6.661338e-16     3.451870e-01     3.534705e-01     3.886273e-01 
+##     intermittent             cost         storage,        landscape 
+##     3.952199e-01     4.185801e-01     4.414054e-01     4.455407e-01 
+##          nucleus    technologies,          storage      electricity 
+##     4.456123e-01     4.456192e-01     4.465015e-01     4.465295e-01 
+##         cohesive               H2       volumetric           column 
+##     4.552721e-01     4.556170e-01     4.706390e-01     4.709380e-01 
+##     photovoltaic Born-Oppenheimer            cost,             FWHM 
+##     4.710927e-01     4.742849e-01     4.759846e-01     4.800932e-01</code></pre>
+</div>
+<div id="reducció-de-la-dimensionalitat-amb-t-sne" class="section level1">
+<h1>Reducció de la dimensionalitat amb T-SNE</h1>
+<p>Seria convenient reduir la dimensionalitat amb la tècnica coneguda com t-distributed stochastic neighbor embedding (t-sne) que ens permet obtenir vectors simples amb paraules amb 2 dimensions (x i y) que podrem situar al pla vectorial i visualitzar-les. Per saber-ne més sobre t-sne recomano llegir <a href="https://lvdmaaten.github.io/tsne" class="uri">https://lvdmaaten.github.io/tsne</a></p>
+<p>De fet, si intentem fer una representació dels meus word embeddings en base a unes paraules d’interès, R implícitament força una reducció de dimensionalitat amb tsne.</p>
+<pre class="r"><code>library(tsne)
+plot(
+  x = wembe,
+  y = wembe[[c(&quot;solar&quot;, &quot;energy&quot;)]]
+)</code></pre>
+<p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Però millor usar el paquet rtsne per generar la visualització amb tsne.</p>
+<pre class="r"><code>library(Rtsne)
+# set.seed(42) si vull definir una seed per reproduir-ho sempre igual
+tsne_out &lt;- Rtsne(as.matrix(wembe[,1:100]), perplexity=30, theta=0.5, dims=2) # executar TSNE (i passar el vector a 2 dimensions)</code></pre>
+<p>Finalment fem generar els resultats en un arxiu jpeg gran que me’l pugui descarregar i fer-hi zooms per observar aquestes relacions interessants entre paraules.</p>
+<pre class="r"><code>jpeg(&quot;tsne_out.jpg&quot;, width=2400, height=1800) #indico l&#39;adreça del meu directori on guardar l&#39;arxiu d&#39;imatge tsne_out.jpg
+plot(tsne_out$Y, t=&#39;n&#39;)
+text(tsne_out$Y, labels=rownames(wembe))
+dev.off()
+## png 
+##   2</code></pre>
+<p>Fins aquí aquest petit experiment de minería de textos i representació de paraules en un pla vectorial fent ús del model word2vec i de tècniques de reducció de la dimensionalitat (en concret t-sne).</p>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/example-article/">Example article</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del cov-19</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        
+
+        <div class="copyright">
+
+        
+            
+                <a href="/license">Copyright ©2020</a>
+            
+        
+
+        </div>
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+            <a href="https://www.instagram.com/enricesc" rel=me target="_blank">
+                <img class="icon" src="/img/instagram.svg" alt="instagram" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/enricescorsa" rel=me target="_blank">
+                <img class="icon" src="/img/github.svg" alt="github" />
+            </a>
+        
+
+        
+            <a href="https://twitter.com/EnricEscorsa" rel=me target="_blank">
+                <img class="icon" src="/img/twitter.svg" alt="twitter" />
+            </a>
+        
+
+        
+            <a href="https://www.linkedin.com/in/enric-escorsa-o-callaghan-24b0966" rel=me target="_blank">
+                <img class="icon" src="/img/linkedin.svg" alt="linkedin" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="mailto:enricescorsa@gmail.com">
+                <img class="icon" src="/img/email.svg" alt="email" />
+            </a>
+        
+
+        
+            <a href="/index.xml">
+                <img class="icon" src="/img/rss.svg" alt="rss" />
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Raleway:400,600,700', 'Merriweather:300,300i,700,700i', 'Ubuntu+Mono:400,700']
+    }
+  });
+</script>
+
+
+
+  <script src="/js/highlight.min.js" defer></script>
+  
+
+
+
+  <script src="/js/progressively.min.js" defer></script>
+
+
+
+  <script src="/js/social-share-kit.min.js" defer></script>
+
+
+
+
+
+
+<script>
+  window.onload = function() {
+    
+      hljs.initHighlighting();
+    
+    
+      progressively.init({delay: 30, throttle: 50});
+    
+    
+      SocialShareKit.init({
+        twitter: {
+            text: '',
+            via: 'EnricEscorsa'
+        }
+      });
+    
+  };
+</script>
+
+
+
+
+</body>
+</html>
+

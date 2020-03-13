@@ -1,0 +1,18 @@
+---
+title: Mapes de paraules com a vectors
+author: Enric Escorsa
+date: '2017-05-19'
+slug: mapes-de-paraules-com-a-vectors
+categories: [Experiments]
+tags: ["deeplearning", "dl", "lda", "neural networks", "nlp", "r", "t-sne", "text mining", "tools", "topic modeling", "word2vec"]
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# R Markdown
