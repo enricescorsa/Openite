@@ -1,0 +1,291 @@
+---
+title: Mapes de paraules com a vectors
+author: Enric Escorsa
+date: '2017-05-19'
+slug: mapes-de-paraules-com-a-vectors
+categories: [Experiments]
+
+tags: ["deeplearning", "dl", "lda", "neural networks", "nlp", "r", "t-sne", "text mining", "tools", "topic modeling", "word2vec"]
+
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+draft: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+
+Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.
+
+En aquest post vull indagar una mica en l’ús d’eines i potencialitats recents (tals com word2vec , Mikolov) per extraure paraules d’un text i fer word embeddings (per entendre bé word embeddings recomano llegir: http://ryanheuser.org/word-vectors-2/). Aquest tipus de representacions és especialment interessant per capturar regularitats significatives tant a nivell sintàctic com a nivell semàntic entre paraules.
+
+Ho he volgut provar a partir d’una cerca de publicacions científiques sobre el liti. Potser és un conjunt de dades una mica massa petit (tinc no arriba a 3.000 registres de publicacions), però anem a veure què passa.
+
+
+# Obtenir i preparar el text a analitzar
+
+```{r message = FALSE, warning = FALSE}
+#D'entrada carreguem paquets necessaris per fer minería de textos amb R
+library(tm)
+library(dplyr)
+library(tidytext)
+library(topicmodels)
+library(ggplot2)
+
+```
+
+
+Buscarem publicacions sobre "Liti" a la base de dades de publicacions Arxiv. Per cercar i obtenir registres d'aquesta base de dades utilitzarem el paquet desenvolupat per @ropensci anomenat "aRxiv".
+
+```{r message = FALSE, warning = FALSE}
+#install.packages("aRxiv")
+library(aRxiv)
+cerca <- arxiv_search('abs:"lithium"', limit=3000)
+#podem fer nrow(cerca) per recomptar quants registres hem recuperat
+
+#ho guardem en un csv al nostre directori
+write.csv(cerca, file = "publicacions_liti.csv")
+```
+
+Ara puc llegir des del meu directori l'arxiu csv obtingut de la cerca feta a arxiv.
+
+```{r message = FALSE, warning = FALSE}
+lesmevesdades <- read.csv("publicacions_liti.csv")
+ 
+#N'extrec el text que és el que m'interessa
+elmeutext <- lesmevesdades$abstract #prenc la columna on hi ha el text del meu corpus (en aquest cas ABSTRACT)
+head(elmeutext)
+ 
+#puc guardar el corpus de text en un txt per usar després:
+write.table(elmeutext,"elmeutext.txt",sep="\t",row.names=FALSE)
+```
+
+
+Anem a veure si podem analitzar-ne el contingut. Em baso en l’enfocament tidy textmining segons proposat per l'admirada @JuliaSilge, una metodologia d’anàlisi de dades textuals sumament interessant i que recomano conèixer.
+
+
+```{r message = FALSE, warning = FALSE}
+#Primer obtinc un corpus de text que pugui tractar
+corpustext <- Corpus(VectorSource(elmeutext)) 
+ 
+#transformo el corpus de text a matriu document-terme (dtm)
+dtm <- DocumentTermMatrix(corpustext)
+ 
+#N'extrec els termes
+terms <- Terms(dtm)
+head(terms)
+```
+
+
+
+Els termes que s’extreuen són del tipus:
+
+
+
+Ara posem la matriu en format net -és a dir, una taula amb  columnes: document, terme i frequència d’aparició- mitjançant la funció tidy.
+
+```{r message = FALSE, warning = FALSE}
+net <- tidy(dtm)
+View(net) #veig la taula resultant
+#ordeno els termes més frequents de net
+net %>%
+  count(term, sort = TRUE)
+ 
+#Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
+elsmeusstopwords <- tibble(term = c(as.character(1:10),
+                                    "the", "and", "for", "this", "between", "than", "through", "but", "have", "been", "these", "that", "are", "from", "with", "their", "such", "also", "then", "was", "were", "which", "has", "its", "this", "can", "paper", "study", "presents", "while"))
+netissim <- net %>%
+  anti_join(elsmeusstopwords)
+View(netissim)
+ 
+#ara podem ordenar termes per freqüència
+netissim %>%
+  count(term, sort = TRUE)
+```
+
+
+# Visualitzacions del contingut
+
+Arribats a aquest punt podem fer un núvol d’etiquetes dels termes amb el paquet wordcloud per tenir una primera visualització general dels continguts.
+
+```{r message = FALSE, warning = FALSE}
+library(wordcloud)
+netissim %>%
+  anti_join(elsmeusstopwords) %>%
+  count(term) %>%
+  with(wordcloud(term, n, max.words = 100))
+ 
+#si volguéssim posar tots els termes en majúscules:
+#netissim <-netissim %>% mutate(term = toupper(term))
+```
+
+
+Per percebre els continguts a un nivell més estructural analitzem coocurrències o parells de termes; ho podem fer amb el paquet widyr i la funció pairwise.
+
+
+```{r message = FALSE, warning = FALSE}
+library(devtools)
+#install_github("dgrtwo/widyr")
+library(widyr)
+ 
+parells <- netissim %>%
+  pairwise_count(term, document, sort = TRUE, upper = FALSE)
+View(parells) #per veure la taula que se'm crea (que conté la columna item1, la columna item2 i la columna n (frequència d'aparició conjunta de les dues paraules en una publicació)
+#(amb la funció pairwise_count simplement es recompten coocurrències, amb pairwise_cor es computa correlació)
+
+```
+
+
+
+Visualitzem el grafo de coocurrències (usant igraph, graph i ggplot2).
+
+```{r message = FALSE, warning = FALSE}
+library(igraph)
+library(ggplot2)
+library(ggraph)
+ 
+set.seed(1234)
+parells %>%
+  filter(n >= 200) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "Steelblue") +
+  geom_node_point(size = 1) +
+  geom_node_text(aes(label = name), repel = TRUE,
+                 point.padding = unit(0.2, "lines")) +
+  labs(title = " Xarxa de Coocurrència de Paraules") +
+  theme_void()
+
+```
+
+
+
+
+Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. niobate)
+
+```{r message = FALSE, warning = FALSE}
+parells %>%
+  filter(item1 == "quantum")
+```
+
+
+Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un post anterior.
+
+```{r message = FALSE, warning = FALSE}
+
+	
+#primer hem de transformar el nostre dataset netissim en una matriu dtm (inversament a com havíem fet abans). això ho podem fer amb cast_dtm
+netissim_dtm <- netissim %>%
+  cast_dtm(document, term, count)
+ 
+#si volgués guardar-ho en un csv
+#write.csv(netissim_dtm,file=”netissim_dtm.csv”
+ 
+#ara apliquem LDA
+lda_netissim <- LDA(netissim_dtm, k = 9, control = list(alpha = 0.1)) #decidim fer 9 topics o clusters (k=6)
+ 
+#per extraure les probabilitats que una paraula pertanyi a un topic (això s'anomena beta)
+topics_netissim <- tidy(lda_netissim, matrix = "beta")
+topics_netissim
+```
+
+
+Podem visualitzar els top termes de cada cluster amb barres de freqüència:
+
+
+```{r message = FALSE, warning = FALSE}
+top_terms_per_clusters <- topics_netissim  %>%
+  group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+top_terms_per_clusters
+ 
+top_terms_per_clusters %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip()
+```
+
+
+Un següent pas podria ser intentar representar les paraules del meu corpus com a vectors i així les podria visualitzar i veure’n associacions, etc. Això és el que es coneix com a word embeddings. Amb el paquet *wordVectors* podem implementar a R word2vec, el model de word embeddings basat amb xarxes neuronals desenvolupat per un equip de Google liderat per Tomas Mikolov.
+
+
+```{r message = FALSE, warning = FALSE, results = FALSE}
+
+#devtools::install_github("bmschmidt/wordVectors")
+library (wordVectors)
+# usem train_word2vec per generar els vectors a partir del meu corpus de text en txt
+# output és l'arxiu binari que se'm crea
+# vectors son el nombre de dimensions (entre 100-500 és ok)
+# window és l'amplitut en termes de nombre de paraules a l'entorn d'una paraula.
+ 
+wembe <- train_word2vec("elmeutext.txt",
+                       output = "wembe.bin", threads = 3,#ho guardo al meu directori
+                       vectors = 200, window = 15, force=TRUE)
+
+#pot ser que trigui una mica...
+ 
+wembe <- read.vectors("wembe.bin")
+```
+
+	
+Ara ja tinc vectors per cada terme.
+
+Amb la funció nearest_to() podem buscar paraules properes (per cosine similarity) a una paraula determinada.
+
+```{r message = FALSE, warning = FALSE}
+#p.ex. paraules properes a biomechanics
+nearest_to(wembe, wembe[["quantum"]], 20)
+#o bé paraules properes a Marca
+nearest_to(wembe, wembe[["energy"]], 20)
+```
+
+	
+
+# Reducció de la dimensionalitat amb T-SNE
+
+Seria convenient reduir la dimensionalitat amb la tècnica coneguda com t-distributed stochastic neighbor embedding (t-sne) que ens permet obtenir vectors simples amb paraules amb 2 dimensions (x i y) que podrem situar al pla vectorial i visualitzar-les. Per saber-ne més sobre t-sne recomano llegir https://lvdmaaten.github.io/tsne
+
+De fet, si intentem fer una representació dels meus word embeddings en base a unes paraules d’interès, R implícitament força una reducció de dimensionalitat amb tsne.
+
+```{r message = FALSE, warning = FALSE}
+library(tsne)
+plot(
+  x = wembe,
+  y = wembe[[c("solar", "energy")]]
+)
+
+```
+
+	
+
+Però millor usar el paquet rtsne per generar la visualització amb tsne.
+
+```{r message = FALSE, warning = FALSE}
+library(Rtsne)
+# set.seed(42) si vull definir una seed per reproduir-ho sempre igual
+tsne_out <- Rtsne(as.matrix(wembe[,1:100]), perplexity=30, theta=0.5, dims=2) # executar TSNE (i passar el vector a 2 dimensions)
+```
+
+
+
+Finalment fem generar els resultats en un arxiu jpeg gran que me’l pugui descarregar i fer-hi zooms per observar aquestes relacions interessants entre paraules.
+
+```{r message = FALSE, warning = FALSE}
+jpeg("tsne_out.jpg", width=2400, height=1800) #indico l'adreça del meu directori on guardar l'arxiu d'imatge tsne_out.jpg
+plot(tsne_out$Y, t='n')
+text(tsne_out$Y, labels=rownames(wembe))
+dev.off()
+```
+
+
+
+Fins aquí aquest petit experiment de minería de textos i representació de paraules en un pla vectorial fent ús del model word2vec i de tècniques de reducció de la dimensionalitat (en concret t-sne).
+
