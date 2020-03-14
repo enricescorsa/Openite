@@ -5,7 +5,8 @@ date: '2017-03-30'
 slug: captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments
 categories:
   - Experiments
-tags: []
+tags: 
+  - UBI
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
@@ -16,7 +17,7 @@ meta_img: /images/image.jpg
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-En el [post anterior](/blog/2017-03-18-captant-l-interès-en-universal-basic-income/)  vaig recuperar 1000 tuits de twitter relacionats amb Universal Basic Income  i en vaig analitzar els usuaris i el principals temes tractats. Volia anar ara una mica més enllà i tractar de veure’n el sentiment implícit en el que s’hi diu.
+En el [post anterior](https://enricescorsa.netlify.com/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/)  vaig recuperar 1000 tuits de twitter relacionats amb Universal Basic Income  i en vaig analitzar els usuaris i el principals temes tractats. Volia anar ara una mica més enllà i tractar de veure’n el sentiment implícit en el que s’hi diu.
 
 ```{r eval = FALSE}
 #obro el csv que he recuperat de tuits

@@ -1,0 +1,175 @@
+---
+title: Analitzant les lletres de Franco Battiato amb Topic Modeling
+author: Enric Escorsa
+date: '2017-04-03'
+slug: topic-modeling-a-les-lletres-de-franco-battiato
+categories:
+  - Experiments
+tags:
+  - battiato
+  - lda
+  - nlp
+  - text mining
+  - topic modeling
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Tractant de seguir [aquest exemple](https://eight2late.wordpress.com/2015/09/29/a-gentle-introduction-to-topic-modeling-using-r/), m’agradaria agrupar automàticament (clusteritzar) una sèrie de documents en base a la seva temàtica, amb la tècnica de [LDA (Latent Dirichlet Allocation)](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation), una tècnica força usada per aquests tipus de problema (topic modeling).
+
+Franco Battiato és un dels músics més inclassificables que conec. Les seves lletres són com collages d’idees, imatges suggerents, records i estats anímics, construits de forma intuitiva, desestructurada i sobretot molt lliure i creativa.
+
+Al meu directori hi tinc una sèrie d’arxius en text simple (.txt); en cadascún d’ells hi ha la lletra d’una cançó de Battiato. Com a fan que sóc, les he extretes de la seva discografia, disponible a la seva web oficial (www.battiato.it); van des de l’any 1971 (àlbum Fetus) al 2012 (àlbum Apriti Sesamo); és a dir, abarquen més de quatre dècades de música.
+
+```{r eval = FALSE}
+#per treballar amb els textos, el primer que cal fer és carregar el paquet de textmining
+library(tm)
+ 
+#tot seguit, definir el directori on tinc les meves dades.
+setwd("C:/El teu directori")
+```
+ 
+
+Anem a carregar les lletres al corpus per a poder-les analitzar.
+
+```{r eval = FALSE}
+#llistem els arxius .txt del directori
+filenames <- list.files(getwd(),pattern="*.txt")
+ 
+#llegim els arxius com a vectors de caracters
+arxius <- lapply(filenames,readLines)
+ 
+#creem un corpus a partir del vector
+docs <- Corpus(VectorSource(arxius))
+```
+
+Netegem el text.
+
+```{r eval = FALSE}	
+#passem tot a minuscules
+docs <-tm_map(docs,content_transformer(tolower))
+#eliminem simbols estranys (potser no cal)
+toSpace <- content_transformer(function(docs, pattern) { return (gsub(pattern, " ", docs))})
+docs <- tm_map(docs, toSpace, """)
+docs <- tm_map(docs, toSpace, """)
+docs <- tm_map(docs, toSpace, "'")
+docs <- tm_map(docs, toSpace, "-")
+#eliminem puntuació
+docs <- tm_map(docs, removePunctuation)
+#eliminar digits numèrics
+docs <- tm_map(docs, removeNumbers)
+#eliminem stopwords
+docs <- tm_map(docs, removeWords, stopwords("english"))
+#eliminem espais en blanc
+docs <- tm_map(docs, stripWhitespace)
+#comprovem les paraules que tenim
+writeLines(as.character(docs[[30]]))
+#fem l'steming de les paraules del document
+docs <- tm_map(docs,stemDocument)
+#definim i eliminem altres stopwords que no volem
+myStopwords <- c("can", "say", "see", "lot", "will", "one", "two", "like", "get", "even ")
+docs <- tm_map(docs, removeWords, myStopwords)
+ 
+#comprobem com queda la cosa
+writeLines(as.character(docs[[10]]))
+```
+
+A continuació  crearem la matriu document-termes (dtm); és a dir, una matriu on cada fila és la lletra d’una cançó de Battiato i a les columnes hi ha els termes que hi apareixen  i la seva freqüència.
+
+```{r eval = FALSE}
+dtm <- DocumentTermMatrix(docs)
+#convertim noms de files a noms d'arxiu
+rownames(dtm) <- filenames
+#collapsem la matriu sumant les columnes
+freq <- colSums(as.matrix(dtm))
+ 
+#comprobem que la llargada sigui el nombre total de termes
+length(freq)
+ 
+#ordenem per ordre descendent
+ord <- order(freq,decreasing=TRUE)
+ 
+#Llistem tots els termes en ordre decreixent de frequencia i ho guardem en un csv
+freq[ord]
+write.csv(freq[ord],"word_freq.csv")
+```
+
+Estem llestos amb el pre-processament. En aquest punt, podríem fer, per exemple, una visualització de les paraules més correlacionades, mitjançant el paquet _corrplot_.
+
+![](/blog/2017-04-03-topic-modeling-a-les-lletres-de-franco-battiato_files/battiato_corr.png)
+
+Ara anem a fer el topic modeling usant LDA.
+
+```{r eval = FALSE}
+#carreguem el paquet per fer topic models
+library(topicmodels)
+ 
+#definim parametres per defecte pel mostreig Gibbs (volem que sigui el màxim aleatori).
+burnin <- 4000 #parametre per descartar primes passos (burnin) del recorregut de presa de mostra
+iter <- 2000 #nombre d'iteracions
+thin <- 500 #per les iteraciones es van prenenent de 500 en 500
+seed <-list(2003,5,63,100001,765) #posem 5 numeros aleatoris en la llista seed
+nstart <- 5 #usem 5 diferents punts d'inici
+best <- TRUE #per defecte que retorni els resutats amb major probabilitat
+ 
+#Hem de definir el nombre de topics (clusters) que volem
+k <- 5
+ 
+#Executem LDA usant el mètode de mostreig de Gibbs
+ldaOut <-LDA(dtm,k, method="Gibbs", control=list(nstart=nstart, seed = seed, best=best, burnin = burnin, iter = iter, thin=thin))
+ 
+#generem un csv amb els resultats (docs classificats en topics)
+ldaOut.topics <- as.matrix(topics(ldaOut))
+write.csv(ldaOut.topics,file=paste("Docs_classificats_en_Topics.csv"))
+ 
+#mostrar els top 6 termes en cada topic
+ldaOut.terms <- as.matrix(terms(ldaOut,6))
+dct <- write.csv(ldaOut.terms,file=paste("Top_Terms_en_cada_Topic.csv"))
+ 
+#probabilitats associades amb cada assignació de topic
+topicProbabilities <- as.data.frame(ldaOut@gamma)
+write.csv(topicProbabilities,file=paste("Probabilitats_Topic.csv"))
+ 
+#Trobar la importancia relativa dels 2 primers topics
+topic1ToTopic2 <- lapply(1:nrow(dtm),function(x)
+sort(topicProbabilities[x,])[k]/sort(topicProbabilities[x,])[k-1])
+ 
+#Trobal la importancia relativa del segon i el tercer topics més importants
+topic2ToTopic3 <- lapply(1:nrow(dtm),function(x)
+sort(topicProbabilities[x,])[k-1]/sort(topicProbabilities[x,])[k-2])
+ 
+#escriure-ho en un arxiu csv
+write.csv(topic1ToTopic2,file=paste("Topic1ToTopic2.csv"))
+write.csv(topic2ToTopic3,file=paste("Topic2ToTopic3.csv"))
+```
+
+Finalment, utilitzem el fantàstic paquet LDAvis, desenvolupat per Carson Sievert de l’Iowa State University, que ens permet generar una visualització interactiva dels 5 tòpics i explorar els termes continguts, situant el cursor a sobre de cadascún d’ells.
+
+```{r eval = FALSE}
+#install.packages("LDAvis")
+library(LDAvis)
+ 
+#defineixo parametres per visualitzacio
+phi <- as.matrix(posterior(ldaOut)$terms)
+theta <- as.matrix(posterior(ldaOut)$topics)
+vocab <- colnames(phi)
+doc_length <- as.vector(rowSums(as.matrix(dtm)))
+term_frequency <- as.vector(colSums(as.matrix(dtm)))
+ 
+#creo arxiu json i se'm guardaran al directori els arxius html/css/js per poder-ho veure com una pagina web
+ldavis_json <- createJSON(phi = phi, theta = theta, vocab = vocab, doc.length = doc_length, term.frequency = term_frequency)
+serVis(ldavis_json, out.dir = "C:/el meu directori de sortida", open.browser = FALSE)
+```
+
+El resultat té l’aspecte següent:
+
+![](/blog/2017-04-03-topic-modeling-a-les-lletres-de-franco-battiato_files/gif4.gif)
+
+La clusterització temàtica m’ha permès navegar pels temes de les cançons del cantautor sicilià i apreciar els aspectes recorrents tals com la solitut, el silenci, la llum, els ulls, el cor, el temps, etc. Tanmateix, aquests resultats reafirmen la meva preassumpció que el mestre Battiato és un autor inclassificable, literalment.

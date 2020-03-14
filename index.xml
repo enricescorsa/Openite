@@ -43,6 +43,27 @@ En aquest post vull indagar una mica en l’ús d’eines i potencialitats recen
     </item>
     
     <item>
+      <title>Analitzant les lletres de Franco Battiato amb Topic Modeling</title>
+      <link>/blog/topic-modeling-a-les-lletres-de-franco-battiato/</link>
+      <pubDate>Mon, 03 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/topic-modeling-a-les-lletres-de-franco-battiato/</guid>
+      <description>Tractant de seguir aquest exemple, m’agradaria agrupar automàticament (clusteritzar) una sèrie de documents en base a la seva temàtica, amb la tècnica de LDA (Latent Dirichlet Allocation), una tècnica força usada per aquests tipus de problema (topic modeling).
+Franco Battiato és un dels músics més inclassificables que conec. Les seves lletres són com collages d’idees, imatges suggerents, records i estats anímics, construits de forma intuitiva, desestructurada i sobretot molt lliure i creativa.</description>
+    </item>
+    
+    <item>
+      <title>Waterpolo heatmap</title>
+      <link>/blog/waterpolo-heatmap/</link>
+      <pubDate>Sun, 02 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/waterpolo-heatmap/</guid>
+      <description>Vull mirar de representar els resultats dels partits de waterpolo dels Masters que apareixen publicats a la web de la federació catalana de natació en una visualització tipus heatmap o mapa de calor interactiu.
+Per a fer-ho utilitzaré R i els paquets associats a la llibreria de JavaScript D3.js que permet visualitzacions de dades interactives.
+#per començar instal·lo els paquets necessarisinstall.packages(&amp;quot;d3heatmap&amp;quot;)install.packages(&amp;quot;rvest&amp;quot;)install.packages(&amp;quot;XML&amp;quot;)#carrego el paquet rvest per fer webscraping a la web www.</description>
+    </item>
+    
+    <item>
       <title>Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments</title>
       <link>/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/</link>
       <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>

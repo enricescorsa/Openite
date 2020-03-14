@@ -1,0 +1,61 @@
+---
+title: Waterpolo heatmap
+author: Enric Escorsa
+date: '2017-04-02'
+slug: waterpolo-heatmap
+categories:
+  - Experiments
+tags:
+  - d3.js
+  - d3heatmap
+  - heatmap
+  - r
+  - waterpolo
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+Vull mirar de representar els resultats dels partits de waterpolo dels Masters que apareixen publicats a la web de la [federació catalana de natació](https://www.aquatics.cat/) en una visualització tipus heatmap o mapa de calor interactiu.
+
+Per a fer-ho utilitzaré R i els paquets associats a la llibreria de JavaScript D3.js que permet visualitzacions de dades interactives.
+
+```{r, eval=FALSE}
+#per començar instal·lo els paquets necessaris
+install.packages("d3heatmap")
+install.packages("rvest")
+install.packages("XML")
+ 
+#carrego el paquet rvest per fer webscraping a la web www.aquatics.cat, a la pàgina on surten els resultats de la categoria Masters.
+library(rvest)
+ 
+#capturo les dades de la taula 2 d'aquesta pàgina
+classificacio_waterpolo <- html("http://aquatics.cat/competicio/informacioCompeticio/2016/58/60/0") #recupero la segona taula que apareix en aquesta pagina amb .[[2]] classificacio_waterpolo %>%
+  html_nodes("table") %>%
+  .[[2]] %>%
+  html_table()
+ 
+#també ho puc fer amb el paquet XML (especificant "which =2" selecciono la segona taula) i transformarla en un df amb readHTMLTable
+library(XML)
+url <- "http://aquatics.cat/competicio/informacioCompeticio/2016/58/60/0"
+classificacio_waterpolodf <- readHTMLTable (url, which = 2)
+classificacio_waterpolodf
+ 
+#he creat un data frame que em puc descarregar com un arxiu csv i després llegir-la
+write.csv(classificacio_waterpolodf, file = "classificacio_waterpolo.csv")
+ 
+#llegeixo el csv de classificació i resultats dels partits jugats de waterpolo des del directori on m'he l'he descarregat
+waterpolo_heatmap_brut <- read.csv("classificacio_waterpolo.csv", row.names = 3)
+ 
+#elimino les columnes 1 i 2 que no aporten dades de valor
+waterpolo_heatmap <- waterpolo_heatmap_brut[,3:9]
+ 
+#i finalment utilitzo el paquet d3heatmap per generar amb aquestes dades un mapa de calor interactiu
+library(d3heatmap)
+d3heatmap(waterpolo_heatmap, scale = "column")
+```
+
+El resultat té l'aspecte següent:
+
+![](/blog/2017-04-02-waterpolo-heatmap_files/gif3.gif)
