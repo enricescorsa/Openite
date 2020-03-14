@@ -6,18 +6,20 @@
     <description>Recent content in Post on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 19 May 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Mar 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Mapes de paraules com a vectors</title>
-      <link>/post/mapes-de-paraules-com-a-vectors/</link>
-      <pubDate>Fri, 19 May 2017 00:00:00 +0000</pubDate>
+      <title>Captant l’interès en Universal Basic Income (part 1)</title>
+      <link>/post/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/</link>
+      <pubDate>Sat, 18 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/post/mapes-de-paraules-com-a-vectors/</guid>
-      <description>R Markdown</description>
+      <guid>/post/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/</guid>
+      <description>Aconseguir que cada persona del món pugui tenir dret a una renda bàsica -el que es coneix com a Universal Basic Income (UBI)– sembla ser un tema d’interès creixent.
+Un indicador d’aquest interès es podria derivar d’observar les vegades que la gent visita la pàgina de wikipedia per saber de què va aquest tema.
+Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.</description>
     </item>
     
   </channel>

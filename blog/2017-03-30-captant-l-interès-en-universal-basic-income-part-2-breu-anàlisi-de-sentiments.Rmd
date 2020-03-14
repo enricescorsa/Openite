@@ -1,0 +1,156 @@
+---
+title: 'Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments'
+author: Enric Escorsa
+date: '2017-03-30'
+slug: captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments
+categories:
+  - Experiments
+tags: []
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+En el [post anterior](/blog/2017-03-18-captant-l-interès-en-universal-basic-income/)  vaig recuperar 1000 tuits de twitter relacionats amb Universal Basic Income  i en vaig analitzar els usuaris i el principals temes tractats. Volia anar ara una mica més enllà i tractar de veure’n el sentiment implícit en el que s’hi diu.
+
+```{r eval = FALSE}
+#obro el csv que he recuperat de tuits
+library (readr)
+read_csv ("UBI.csv") #directori on el tinc
+#vull extraure el text dels tuits
+texttuits <- as.character(tweets$text)
+ 
+#carrego paquets
+library('stringr')
+library('readr')
+library('wordcloud')
+library('tm')
+library('SnowballC')
+library('RWeka')
+library('RSentiment')
+library(DT)
+ 
+#neteja del text
+sample <- sample(textwits, (length(textuits)))
+corpus <- Corpus(VectorSource(list(sample)))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removeNumbers)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords('english'))
+corpus <- tm_map(corpus, stemDocument)
+dtm <- DocumentTermMatrix(VCorpus(VectorSource(corpus[[1]]$content)))
+freq <- colSums(as.matrix(dtm))
+ 
+#Calculem Sentiments
+sentiments <- calculate_sentiment(names(freq))
+sentiments <- cbind(sentiments, as.data.frame(freq))
+sent_pos <- sentiments[sentiments$sentiment == 'Positive',]
+sent_neg <- sentiments[sentiments$sentiment == 'Negative']
+#total de sentiments positius
+sum(sent_pos$freq)
+#total de sentiments negatius
+sum(sent_neg$freq)
+```
+
+Anem a representar els sentiments positius
+
+```{r eval = FALSE}
+#sentiments positius
+layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+par(mar=rep(0, 4))
+plot.new()
+set.seed(100)
+pal <- brewer.pal(10,"Greens")
+pal <- pal[-(1:4)]
+wordcloud(sent_pos$text,sent_pos$freq,min.freq=2,colors=pal)
+```
+![](/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentpositiveubi_verd.png)
+
+Ara els sentiments negatius
+
+```{r, eval=FALSE}
+#sentiments negatius
+layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+par(mar=rep(0, 4))
+plot.new()
+set.seed(100)
+pal <- brewer.pal(10,"Reds")
+pal <- pal[-(1:4)]
+wordcloud(sent_neg$text,sent_neg$freq,min.freq=2,colors=pal)
+
+SentimentNegativeUBI_vermell
+```
+
+![](/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentnegativeubi_vermell.png)
+
+L’aport d’aquest anàlisi és, si més no, limitat i esbiaixat ja que no resol el tema de les desambigüacions.
+
+Un altre enfocament, tal vegada més interessant és el que aporta el paquet syushet que usa quatre diccionaris i els desenvolupaments del grup de Processament del Llenguatge Natural de Stanford i en particular el [lèxic d’emocions NRC](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm) elaborat per Saif Mohammad. 
+
+```{r eval = FALSE}
+#Analitzarem el sentiment usant el paquet 'syuzhet'
+#primer netejem el text dels twits
+text = as.character(tweets$text)
+#eliminem Retweets
+some_txt<-gsub("(RT|via)((?:\\b\\w*@\\w+)+)","",text)
+#eliminem URLs
+some_txt<-gsub("http[^[:blank:]]+","",some_txt)
+#eliminem noms d'usuaris
+some_txt<-gsub("@\\w+","",some_txt)
+#eliminem signes de puntuació
+some_txt<-gsub("[[:punct:]]"," ",some_txt)
+#eliminem números (alphanumeric)
+some_txt<-gsub("[^[:alnum:]]"," ",some_txt)
+ 
+#carreguem els paquets d'anàlisi de sentiment i visualització
+library(ggplot2)
+library(syuzhet)
+mysentiment<-get_nrc_sentiment((some_txt))#aquesta funció extrau els sentiments dels twits
+ 
+# obtenir un score de sentiment per cada emoció
+mysentiment.positive =sum(mysentiment$positive)
+mysentiment.anger =sum(mysentiment$anger)
+mysentiment.anticipation =sum(mysentiment$anticipation)
+mysentiment.disgust =sum(mysentiment$disgust)
+mysentiment.fear =sum(mysentiment$fear)
+mysentiment.joy =sum(mysentiment$joy)
+mysentiment.sadness =sum(mysentiment$sadness)
+mysentiment.surprise =sum(mysentiment$surprise)
+mysentiment.trust =sum(mysentiment$trust)
+mysentiment.negative =sum(mysentiment$negative)
+```
+
+
+Un cop obtinguts uns scores per cada emoció anem a representar-los en un diagrama de barres
+
+```{r eval = FALSE}
+# Crear diagrama de barres
+yAxis <- c(mysentiment.positive,
++ mysentiment.anger,
++ mysentiment.anticipation,
++ mysentiment.disgust,
++ mysentiment.fear,
++ mysentiment.joy,
++ mysentiment.sadness,
++ mysentiment.surprise,
++ mysentiment.trust,
++ mysentiment.negative)
+ 
+xAxis <- c("Positiu","Enuig","Expectativa","fàstic","Por","Joia","Tristor","Sorpresa","Confiança","Negatiu")
+library(RColorbrewer)
+pal <- brewer.pal(10,"Spectral")#defineixo una paleta de colors
+pal <- pal[-(1:2)]
+barplot(yAxis, names.arg = xAxis, xlab = "València emocional", ylab = "Score", main = "Anàlisi del sentiment dels twits", col = pal, border = "black", xpd = F, axisnames = T, cex.axis = 0.8, cex.sub = 0.8)
+colSums(mysentiment)
+```
+
+
+Els scores dels sentiments associats a la Renda Bàsica Universal dels tuits recuperats es poden veure a la figura següent:
+
+![](/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentsubi.png)

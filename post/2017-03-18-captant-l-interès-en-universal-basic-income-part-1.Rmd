@@ -1,0 +1,221 @@
+---
+title: Captant l’interès en Universal Basic Income (part 1)
+author: Enric Escorsa
+date: '2017-03-18'
+slug: captant-l-interès-en-universal-basic-income-part-1
+categories:
+  - Experiments
+tags:
+  - UBI
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Aconseguir que cada persona del món pugui tenir dret a una renda bàsica -el que es coneix com a Universal Basic Income (UBI)– sembla ser un tema d’interès creixent.
+
+Un indicador d’aquest interès es podria derivar d’observar les vegades que la gent visita la pàgina de wikipedia per saber de què va aquest tema.
+
+Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.
+
+```{r}
+library(wikipediatrend)
+library(ggplot2)
+#recupero el número visites a la pagina de wikipedia (https://en.wikipedia.org/wiki/Basic_income) els darrers 5 anys
+page_views <-
+wp_trend(
+page = "Basic_income" ,
+from = "2012-01-01",
+to   = "2017-03-30"
+)
+ 
+ggplot(page_views, aes(x=date, y=views, color=wp_year(date))) +
+geom_line() +
+stat_smooth(method = "lm", formula = y ~ poly(x, 22), color="#CD0000a0", size=1.2) +
+theme_bw()
+```
+
+
+Efectivament, si observem els darrers 5 anys, el tema sembla que desperta recentment un considerable interès.
+
+
+També és palès l’interès general, expressat en nombre de cerques dels usuaris de Google, segons es pot constatar a Google Trends (www.google.com/trends).
+
+![](/post/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi_googletrends.png)
+Font:GoogleTrends
+
+Anem a veure ara què diu la gent a Twitter sobre Universal Basic Income (UBI).
+
+Usarem el paquet  TwitteR, que ofereix una utilitat convenient per minar tuits a partir de l’API de Twitter.
+
+```{r eval = FALSE}
+#Abans que res carreguem tots els paquets que necessitarem
+library(ggplot2)
+library(twitteR)
+library(igraph)
+library(stringr)
+library(wordcloud)
+library (tm)
+library(graph)
+library(Rgraphviz)
+library(twitteR)
+library(ROAuth)
+library(httr)
+ 
+# Després hem de crear una API a Twitter i posar les claus que ens donen aquí
+api_key <- "XXX"
+api_secret <- "XXX"
+access_token <- "XXX"
+access_token_secret <- "XXX"
+setup_twitter_oauth(api_key, api_secret, access_token, access_token_secret)
+ 
+ 
+#Anem a recol·lectar els ultims tweets fent una cerca a twitter
+#(intentem recuperar 1000 twits, però twitter posa certes restriccions i només ens deixarà recuperar-ne  alguns i només de la darrera setmana)
+tweets <- SearchTwitter("Universal Basic Income", n=1000)
+```
+
+
+Anem a veure quins són els tuitaires més actius
+
+```{r, eval = FALSE}
+#TWITAIRES MÉS ACTIUS
+twitaires<- tweets$screenName
+twitairesCorpus <- Corpus(VectorSource(twitaires))
+#WORDCLOUD dels twitaires que més tuitejen
+pal <- brewer.pal(9,"RdBu")#defineixo una paleta de colors
+pal <- pal[-(1:5)]
+wordcloud(words = twitairesCorpus, scale=c(3,0.5), max.words=100, random.order=FALSE,
+rot.per=0.10, use.r.layout=FALSE, , colors=pal)
+```
+
+![](/post/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi3_twiterosmesactius.png)
+
+Aquests són doncs els comptes d’usuaris de twitter més actius actualment en relació al tema del Universal Basic Income. Ara anem a construir un corpus net de text per tal d’extraure temes implícits en tots els twits.
+
+```{r, eval = FALSE}
+#primer converteixo la llista de twits en un dataframe
+tweets <- twListToDF(tweets)
+ 
+# construim el corpus i convertim el vector source en un vector de caracters
+myCorpus <- Corpus(VectorSource(tweets$text))
+#treiem els caracters estranys d'altres codificacions, a codi ASCII
+myCorpus <- iconv(myCorpus, "ASCII", sub="")
+ 
+# convertir tot a minúscules
+myCorpus <- tm_map(myCorpus, content_transformer(tolower))
+ 
+# treure les URLs de myCorpus
+removeURL <- function(x) gsub("http[^[:space:]]*", "", x)
+myCorpus <- tm_map(myCorpus, content_transformer(removeURL))
+ 
+#treure rt dels retweets
+removert <- function(x) gsub("(RT|via)((?:\\b\\W*@\\w+)+)", "", x)
+myCorpus <- tm_map(myCorpus, content_transformer(removert))
+ 
+# treure tot el que no siguin lletres (en anglès) o espais
+removeNumPunct <- function(x) gsub("[^[:alpha:][:space:]]*", "", x)
+myCorpus <- tm_map(myCorpus, content_transformer(removeNumPunct))
+ 
+# eliminar stopwords
+# si cal podem afegir stopwords addicionals com pex: 'will' o 'via'
+myStopwords <- c(stopwords("english"), "will", "via")
+# i especificar paraules que no volem que consideri stopwords. pex'big' o 'basic'
+myStopwords <- setdiff(myStopwords, c("big", "basic"))
+# eliminar stopwords de myCorpus
+myCorpus <- tm_map(myCorpus,removeWords, stopwords("english"))
+ 
+# treure espais en blanc extres
+myCorpus <- tm_map(myCorpus, stripWhitespace)
+ 
+#construir la matriu terme document
+tdm <- TermDocumentMatrix(myCorpus,
+control = list(wordLengths = c(1, Inf)))
+tdm #per inspeccionar la matriu
+```
+
+Vegem quines són les paraules més freqüents
+
+```{r, eval = FALSE}
+#PARAULES FREQUENTS
+#faig un df amb els termes més freqüents
+term.freq <- rowSums(as.matrix(tdm))
+term.freq <- subset(term.freq, term.freq <= 100)#trec els més frquents (UBI)
+term.freq <- subset(term.freq, term.freq >= 20)
+df <- data.frame(term = names(term.freq), freq = term.freq)
+#trec algunes paraules que no aporten del diagrama de barres
+df<- df[- grep("will|the|it|is|i|htt|amp|a|we|heres|s", df$term),]
+#visualitzar termes frequents amb diagrama de barres
+ggplot(df, aes(x=term, y=freq)) + geom_bar(stat="identity", fill="steelblue") +
+  xlab("Termes") + ylab("Freqüencia") + coord_flip() + theme_minimal() + 
+  theme(axis.text=element_text(size=8))
+```
+
+![](/post/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi_freqterms.png)
+
+Ens fem una idea de temes que preocupen: persones, diners, menjar, pobresa, etc.
+
+Quins són els tuits més retuitejats?
+
+```{r, eval = FALSE}
+#TWITS MÉS RETUITEJATS(mes de 90 vegades)
+freqtweets <- subset(tweets, retweetCount> 90)
+#miro quins son
+head(freqtweets$text)
+```
+
+[1] “RT @Harvard_Press: Finland and Utrecht are experimenting with universal basic income. Learn more about this radical proposal: https://t.co/…&#8221;
+[2] “RT @openculture: Hear Alan Watts’s 1960s Prediction That Automation (aka Robots) Will Necessitate a Universal Basic Income https://t.co/hVZ…&#8221;
+[3] “RT @wef: Finland is experimenting with basic income. Read more: https://t.co/TTiNEuuBIL https://t.co/IeOuSjQyGV&#8221;
+[4] “RT @waitbutwhy: New Dinner Table: Is universal basic income a good idea? How about in the future, when we may have no choice? https://t.co/…&#8221;
+[5] “RT @BrianLehrer: Building a utopia starts by eradicating poverty. @rcbregman makes a realistic case for basic universal income. https://t.c…&#8221;
+
+Entre els tuits que han despertat major interès hi trobem els que es fan ressò dels experiments de Finlàndia amb la Renda Bàsica Universal i els que mencionen la seva necessitat front al desplegament dels robots i l’intel·ligència artificial, entre d’altres.
+
+De fet, pot ser interessant observar correlació entre termes -usant findAssocs de tm– i veure, per exemple, amb quins altres termes el terme “Robot” apareix més correlacionat en el corpus estudiat.
+
+```{r, eval = FALSE}
+findAssocs(tdm, "robot", 0.5)
+```
+
+bill gates taxing
+0.60 0.60 0.52
+
+S’ha tuitejat força sobre les declaracions de Bill Gates en què deia que els robots haurien de pagar impostos.
+
+```{r, eval = FALSE}
+findAssocs(tdm, "robots", 0.5)
+```
+
+additional american each finds nberpubs reduces employment economy workers
+0.84 0.84 0.84 0.84 0.84 0.77 0.63 0.59 0.57
+
+S’observa la preocupació associada a l’efecte dels robots en l’economia i la reducció dels llocs de treball.
+
+Finalment anem a fer un grafo de la xarxa de tuitaires
+
+```{r, eval = FALSE}
+#parteixo dels tweets convertit a df al principi
+library(graphTweets)
+library(igraph)
+edges <- getEdges(data = tweets, tweets = "text", source = "screenName")
+nodes <- getNodes(edges, source = "source", target = "target")
+ 
+# plotejo
+g <- igraph::graph.data.frame(edges, directed=TRUE, vertices = nodes)
+plot(g, layout=layout.fruchterman.reingold, vertex.size=7, vertex.label.color="grey20", vertex.label.dist=0.8, vertex.color="orange", vertex.frame.color ="white", edge.arrow.size=0.3, edge.curved=0, vertex.label.font=14, vertex.label.cex=.5)
+ 
+#com que no estic content amb l'edició del grafo creat amb igraph, creo un grapho dinamic que es pot obrir a Gephi des d'on podré manupular millor l'apariència
+dyn <- dynamise(tweets, tweets = "text", source = "screenName",
+start.stamp = "created", write = TRUE, open = TRUE)
+```
+
+Al grafo de Gephi veiem els tuitaires més influents.
+
+![](/post/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi2.png)

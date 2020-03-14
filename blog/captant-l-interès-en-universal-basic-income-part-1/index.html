@@ -15,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/" />
-<meta property="og:title" content="Post" />
-<meta property="twitter:title" content="Post">
+<meta property="og:url" content="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/" />
+<meta property="og:title" content="Captant l’interès en Universal Basic Income (part 1)" />
+<meta property="twitter:title" content="Captant l’interès en Universal Basic Income (part 1)">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="">
-<meta property="twitter:description" content="">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - Post 
+     Enric Escorsa O&#39;Callaghan - Captant l’interès en Universal Basic Income (part 1) 
 
 </title>
-<link rel="canonical" href="/post/">
+<link rel="canonical" href="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/">
 
 
 <style media="screen">
@@ -1066,8 +1066,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/post/index.xml" rel="alternate" type="application/rss+xml" title="Enric Escorsa O&#39;Callaghan" />
-
 
 </head>
 
@@ -1075,7 +1073,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1090,12 +1088,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                     
                         
-                            
-                        
-                    
-                        
-                            
-                            <li><a href="/post">post</a></li>
                             
                         
                     
@@ -1120,37 +1112,280 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Post</div>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-                
-
-                
-                <ul>
-                    
-                      
-                        <li class="groupby">Mar, 2017</li>
-                        
-                          
-                            <li class="post-item">
-    <span class="meta">Mar 18, 2017</span>
     
-    <a href="/post/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/"><span>Captant l’interès en Universal Basic Income (part 1)</span></a>
+    Captant l’interès en Universal Basic Income (part 1)
     
-</li>
 
-                          
-                        
-                      
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Sat Mar 18 2017 00:00:00 UTC">Mar 18, 2017</div>
                     
-                </ul>
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">6 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/ubi">UBI</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>Aconseguir que cada persona del món pugui tenir dret a una renda bàsica -el que es coneix com a Universal Basic Income (UBI)– sembla ser un tema d’interès creixent.</p>
+<p>Un indicador d’aquest interès es podria derivar d’observar les vegades que la gent visita la pàgina de wikipedia per saber de què va aquest tema.</p>
+<p>Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.</p>
+<pre class="r"><code>library(wikipediatrend)</code></pre>
+<pre><code>## 
+##   [wikipediatrend]
+##     
+##   Note:
+##     
+##     - Data before 2016-01-01 
+##       * is provided by petermeissner.de and
+##       * was prepared in a project commissioned by the Hertie School of Governance (Prof. Dr. Simon Munzert)
+##       * and supported by the Daimler and Benz Foundation.
+##     
+##     - Data from 2016-01-01 onwards 
+##       * is provided by the Wikipedia Foundation
+##       * via its pageviews package and API.
+## </code></pre>
+<pre class="r"><code>library(ggplot2)
+#recupero el número visites a la pagina de wikipedia (https://en.wikipedia.org/wiki/Basic_income) els darrers 5 anys
+page_views &lt;-
+wp_trend(
+page = &quot;Basic_income&quot; ,
+from = &quot;2012-01-01&quot;,
+to   = &quot;2017-03-30&quot;
+)
+ 
+ggplot(page_views, aes(x=date, y=views, color=wp_year(date))) +
+geom_line() +
+stat_smooth(method = &quot;lm&quot;, formula = y ~ poly(x, 22), color=&quot;#CD0000a0&quot;, size=1.2) +
+theme_bw()</code></pre>
+<p><img src="/blog/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Efectivament, si observem els darrers 5 anys, el tema sembla que desperta recentment un considerable interès.</p>
+<p>També és palès l’interès general, expressat en nombre de cerques dels usuaris de Google, segons es pot constatar a Google Trends (www.google.com/trends).</p>
+<p><img src="/blog/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi_googletrends.png" />
+Font:GoogleTrends</p>
+<p>Anem a veure ara què diu la gent a Twitter sobre Universal Basic Income (UBI).</p>
+<p>Usarem el paquet TwitteR, que ofereix una utilitat convenient per minar tuits a partir de l’API de Twitter.</p>
+<pre class="r"><code>#Abans que res carreguem tots els paquets que necessitarem
+library(ggplot2)
+library(twitteR)
+library(igraph)
+library(stringr)
+library(wordcloud)
+library (tm)
+library(graph)
+library(Rgraphviz)
+library(twitteR)
+library(ROAuth)
+library(httr)
+ 
+# Després hem de crear una API a Twitter i posar les claus que ens donen aquí
+api_key &lt;- &quot;XXX&quot;
+api_secret &lt;- &quot;XXX&quot;
+access_token &lt;- &quot;XXX&quot;
+access_token_secret &lt;- &quot;XXX&quot;
+setup_twitter_oauth(api_key, api_secret, access_token, access_token_secret)
+ 
+ 
+#Anem a recol·lectar els ultims tweets fent una cerca a twitter
+#(intentem recuperar 1000 twits, però twitter posa certes restriccions i només ens deixarà recuperar-ne  alguns i només de la darrera setmana)
+tweets &lt;- SearchTwitter(&quot;Universal Basic Income&quot;, n=1000)</code></pre>
+<p>Anem a veure quins són els tuitaires més actius</p>
+<pre class="r"><code>#TWITAIRES MÉS ACTIUS
+twitaires&lt;- tweets$screenName
+twitairesCorpus &lt;- Corpus(VectorSource(twitaires))
+#WORDCLOUD dels twitaires que més tuitejen
+pal &lt;- brewer.pal(9,&quot;RdBu&quot;)#defineixo una paleta de colors
+pal &lt;- pal[-(1:5)]
+wordcloud(words = twitairesCorpus, scale=c(3,0.5), max.words=100, random.order=FALSE,
+rot.per=0.10, use.r.layout=FALSE, , colors=pal)</code></pre>
+<p><img src="/blog/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi3_twiterosmesactius.png" /></p>
+<p>Aquests són doncs els comptes d’usuaris de twitter més actius actualment en relació al tema del Universal Basic Income. Ara anem a construir un corpus net de text per tal d’extraure temes implícits en tots els twits.</p>
+<pre class="r"><code>#primer converteixo la llista de twits en un dataframe
+tweets &lt;- twListToDF(tweets)
+ 
+# construim el corpus i convertim el vector source en un vector de caracters
+myCorpus &lt;- Corpus(VectorSource(tweets$text))
+#treiem els caracters estranys d&#39;altres codificacions, a codi ASCII
+myCorpus &lt;- iconv(myCorpus, &quot;ASCII&quot;, sub=&quot;&quot;)
+ 
+# convertir tot a minúscules
+myCorpus &lt;- tm_map(myCorpus, content_transformer(tolower))
+ 
+# treure les URLs de myCorpus
+removeURL &lt;- function(x) gsub(&quot;http[^[:space:]]*&quot;, &quot;&quot;, x)
+myCorpus &lt;- tm_map(myCorpus, content_transformer(removeURL))
+ 
+#treure rt dels retweets
+removert &lt;- function(x) gsub(&quot;(RT|via)((?:\\b\\W*@\\w+)+)&quot;, &quot;&quot;, x)
+myCorpus &lt;- tm_map(myCorpus, content_transformer(removert))
+ 
+# treure tot el que no siguin lletres (en anglès) o espais
+removeNumPunct &lt;- function(x) gsub(&quot;[^[:alpha:][:space:]]*&quot;, &quot;&quot;, x)
+myCorpus &lt;- tm_map(myCorpus, content_transformer(removeNumPunct))
+ 
+# eliminar stopwords
+# si cal podem afegir stopwords addicionals com pex: &#39;will&#39; o &#39;via&#39;
+myStopwords &lt;- c(stopwords(&quot;english&quot;), &quot;will&quot;, &quot;via&quot;)
+# i especificar paraules que no volem que consideri stopwords. pex&#39;big&#39; o &#39;basic&#39;
+myStopwords &lt;- setdiff(myStopwords, c(&quot;big&quot;, &quot;basic&quot;))
+# eliminar stopwords de myCorpus
+myCorpus &lt;- tm_map(myCorpus,removeWords, stopwords(&quot;english&quot;))
+ 
+# treure espais en blanc extres
+myCorpus &lt;- tm_map(myCorpus, stripWhitespace)
+ 
+#construir la matriu terme document
+tdm &lt;- TermDocumentMatrix(myCorpus,
+control = list(wordLengths = c(1, Inf)))
+tdm #per inspeccionar la matriu</code></pre>
+<p>Vegem quines són les paraules més freqüents</p>
+<pre class="r"><code>#PARAULES FREQUENTS
+#faig un df amb els termes més freqüents
+term.freq &lt;- rowSums(as.matrix(tdm))
+term.freq &lt;- subset(term.freq, term.freq &lt;= 100)#trec els més frquents (UBI)
+term.freq &lt;- subset(term.freq, term.freq &gt;= 20)
+df &lt;- data.frame(term = names(term.freq), freq = term.freq)
+#trec algunes paraules que no aporten del diagrama de barres
+df&lt;- df[- grep(&quot;will|the|it|is|i|htt|amp|a|we|heres|s&quot;, df$term),]
+#visualitzar termes frequents amb diagrama de barres
+ggplot(df, aes(x=term, y=freq)) + geom_bar(stat=&quot;identity&quot;, fill=&quot;steelblue&quot;) +
+  xlab(&quot;Termes&quot;) + ylab(&quot;Freqüencia&quot;) + coord_flip() + theme_minimal() + 
+  theme(axis.text=element_text(size=8))</code></pre>
+<p><img src="/blog/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi_freqterms.png" /></p>
+<p>Ens fem una idea de temes que preocupen: persones, diners, menjar, pobresa, etc.</p>
+<p>Quins són els tuits més retuitejats?</p>
+<pre class="r"><code>#TWITS MÉS RETUITEJATS(mes de 90 vegades)
+freqtweets &lt;- subset(tweets, retweetCount&gt; 90)
+#miro quins son
+head(freqtweets$text)</code></pre>
+<p>[1] “RT <span class="citation">@Harvard_Press</span>: Finland and Utrecht are experimenting with universal basic income. Learn more about this radical proposal: <a href="https://t.co/…”" class="uri">https://t.co/…”</a>;
+[2] “RT <span class="citation">@openculture</span>: Hear Alan Watts’s 1960s Prediction That Automation (aka Robots) Will Necessitate a Universal Basic Income <a href="https://t.co/hVZ…”" class="uri">https://t.co/hVZ…”</a>;
+[3] “RT <span class="citation">@wef</span>: Finland is experimenting with basic income. Read more: <a href="https://t.co/TTiNEuuBIL" class="uri">https://t.co/TTiNEuuBIL</a> <a href="https://t.co/IeOuSjQyGV”" class="uri">https://t.co/IeOuSjQyGV”</a>;
+[4] “RT <span class="citation">@waitbutwhy</span>: New Dinner Table: Is universal basic income a good idea? How about in the future, when we may have no choice? <a href="https://t.co/…”" class="uri">https://t.co/…”</a>;
+[5] “RT <span class="citation">@BrianLehrer</span>: Building a utopia starts by eradicating poverty. <span class="citation">@rcbregman</span> makes a realistic case for basic universal income. <a href="https://t.c…”" class="uri">https://t.c…”</a>;</p>
+<p>Entre els tuits que han despertat major interès hi trobem els que es fan ressò dels experiments de Finlàndia amb la Renda Bàsica Universal i els que mencionen la seva necessitat front al desplegament dels robots i l’intel·ligència artificial, entre d’altres.</p>
+<p>De fet, pot ser interessant observar correlació entre termes -usant findAssocs de tm– i veure, per exemple, amb quins altres termes el terme “Robot” apareix més correlacionat en el corpus estudiat.</p>
+<pre class="r"><code>findAssocs(tdm, &quot;robot&quot;, 0.5)</code></pre>
+<p>bill gates taxing
+0.60 0.60 0.52</p>
+<p>S’ha tuitejat força sobre les declaracions de Bill Gates en què deia que els robots haurien de pagar impostos.</p>
+<pre class="r"><code>findAssocs(tdm, &quot;robots&quot;, 0.5)</code></pre>
+<p>additional american each finds nberpubs reduces employment economy workers
+0.84 0.84 0.84 0.84 0.84 0.77 0.63 0.59 0.57</p>
+<p>S’observa la preocupació associada a l’efecte dels robots en l’economia i la reducció dels llocs de treball.</p>
+<p>Finalment anem a fer un grafo de la xarxa de tuitaires</p>
+<pre class="r"><code>#parteixo dels tweets convertit a df al principi
+library(graphTweets)
+library(igraph)
+edges &lt;- getEdges(data = tweets, tweets = &quot;text&quot;, source = &quot;screenName&quot;)
+nodes &lt;- getNodes(edges, source = &quot;source&quot;, target = &quot;target&quot;)
+ 
+# plotejo
+g &lt;- igraph::graph.data.frame(edges, directed=TRUE, vertices = nodes)
+plot(g, layout=layout.fruchterman.reingold, vertex.size=7, vertex.label.color=&quot;grey20&quot;, vertex.label.dist=0.8, vertex.color=&quot;orange&quot;, vertex.frame.color =&quot;white&quot;, edge.arrow.size=0.3, edge.curved=0, vertex.label.font=14, vertex.label.cex=.5)
+ 
+#com que no estic content amb l&#39;edició del grafo creat amb igraph, creo un grapho dinamic que es pot obrir a Gephi des d&#39;on podré manupular millor l&#39;apariència
+dyn &lt;- dynamise(tweets, tweets = &quot;text&quot;, source = &quot;screenName&quot;,
+start.stamp = &quot;created&quot;, write = TRUE, open = TRUE)</code></pre>
+<p>Al grafo de Gephi veiem els tuitaires més influents.</p>
+<p><img src="/blog/2017-03-18-captant-l-interès-en-universal-basic-income-part-1_files/ubi2.png" /></p>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/">Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

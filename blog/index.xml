@@ -32,13 +32,24 @@ En aquest post vull indagar una mica en l’ús d’eines i potencialitats recen
     </item>
     
     <item>
-      <title>Hello R Markdown</title>
-      <link>/blog/hello-r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <title>Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments</title>
+      <link>/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/</link>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
       
-      <guid>/blog/hello-r-markdown/</guid>
-      <description>Including PlotsYou can also embed plots. See Figure 1 for example:
-par(mar = c(0, 1, 0, 1))pie(c(280, 60, 20),c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),init.angle = -50, border = NA)Figure 1: A fancy pie chart.</description>
+      <guid>/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/</guid>
+      <description>En el post anterior vaig recuperar 1000 tuits de twitter relacionats amb Universal Basic Income i en vaig analitzar els usuaris i el principals temes tractats. Volia anar ara una mica més enllà i tractar de veure’n el sentiment implícit en el que s’hi diu.
+#obro el csv que he recuperat de tuitslibrary (readr)read_csv (&amp;quot;UBI.csv&amp;quot;) #directori on el tinc#vull extraure el text dels tuitstexttuits &amp;lt;- as.</description>
+    </item>
+    
+    <item>
+      <title>Captant l’interès en Universal Basic Income (part 1)</title>
+      <link>/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/</link>
+      <pubDate>Sat, 18 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/</guid>
+      <description>Aconseguir que cada persona del món pugui tenir dret a una renda bàsica -el que es coneix com a Universal Basic Income (UBI)– sembla ser un tema d’interès creixent.
+Un indicador d’aquest interès es podria derivar d’observar les vegades que la gent visita la pàgina de wikipedia per saber de què va aquest tema.
+Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.</description>
     </item>
     
   </channel>

@@ -15,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/" />
-<meta property="og:title" content="Post" />
-<meta property="twitter:title" content="Post">
+<meta property="og:url" content="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/" />
+<meta property="og:title" content="Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments" />
+<meta property="twitter:title" content="Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="">
-<meta property="twitter:description" content="">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - Post 
+     Enric Escorsa O&#39;Callaghan - Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments 
 
 </title>
-<link rel="canonical" href="/post/">
+<link rel="canonical" href="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-2-breu-an%C3%A0lisi-de-sentiments/">
 
 
 <style media="screen">
@@ -1066,8 +1066,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/post/index.xml" rel="alternate" type="application/rss+xml" title="Enric Escorsa O&#39;Callaghan" />
-
 
 </head>
 
@@ -1075,7 +1073,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1090,12 +1088,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                     
                         
-                            
-                        
-                    
-                        
-                            
-                            <li><a href="/post">post</a></li>
                             
                         
                     
@@ -1120,37 +1112,234 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            <div class="posts">
-                <div class="page-heading">Post</div>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
-                
-
-                
-                <ul>
-                    
-                      
-                        <li class="groupby">Mar, 2017</li>
-                        
-                          
-                            <li class="post-item">
-    <span class="meta">Mar 18, 2017</span>
     
-    <a href="/post/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/"><span>Captant l’interès en Universal Basic Income (part 1)</span></a>
+    Captant l’interès en Universal Basic Income (part 2): breu anàlisi de sentiments
     
-</li>
 
-                          
-                        
-                      
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Thu Mar 30 2017 00:00:00 UTC">Mar 30, 2017</div>
                     
-                </ul>
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">3 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>En el <a href="/blog/2017-03-18-captant-l-interès-en-universal-basic-income/">post anterior</a> vaig recuperar 1000 tuits de twitter relacionats amb Universal Basic Income i en vaig analitzar els usuaris i el principals temes tractats. Volia anar ara una mica més enllà i tractar de veure’n el sentiment implícit en el que s’hi diu.</p>
+<pre class="r"><code>#obro el csv que he recuperat de tuits
+library (readr)
+read_csv (&quot;UBI.csv&quot;) #directori on el tinc
+#vull extraure el text dels tuits
+texttuits &lt;- as.character(tweets$text)
+ 
+#carrego paquets
+library(&#39;stringr&#39;)
+library(&#39;readr&#39;)
+library(&#39;wordcloud&#39;)
+library(&#39;tm&#39;)
+library(&#39;SnowballC&#39;)
+library(&#39;RWeka&#39;)
+library(&#39;RSentiment&#39;)
+library(DT)
+ 
+#neteja del text
+sample &lt;- sample(textwits, (length(textuits)))
+corpus &lt;- Corpus(VectorSource(list(sample)))
+corpus &lt;- tm_map(corpus, removePunctuation)
+corpus &lt;- tm_map(corpus, content_transformer(tolower))
+corpus &lt;- tm_map(corpus, removeNumbers)
+corpus &lt;- tm_map(corpus, stripWhitespace)
+corpus &lt;- tm_map(corpus, removeWords, stopwords(&#39;english&#39;))
+corpus &lt;- tm_map(corpus, stemDocument)
+dtm &lt;- DocumentTermMatrix(VCorpus(VectorSource(corpus[[1]]$content)))
+freq &lt;- colSums(as.matrix(dtm))
+ 
+#Calculem Sentiments
+sentiments &lt;- calculate_sentiment(names(freq))
+sentiments &lt;- cbind(sentiments, as.data.frame(freq))
+sent_pos &lt;- sentiments[sentiments$sentiment == &#39;Positive&#39;,]
+sent_neg &lt;- sentiments[sentiments$sentiment == &#39;Negative&#39;]
+#total de sentiments positius
+sum(sent_pos$freq)
+#total de sentiments negatius
+sum(sent_neg$freq)</code></pre>
+<p>Anem a representar els sentiments positius</p>
+<pre class="r"><code>#sentiments positius
+layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+par(mar=rep(0, 4))
+plot.new()
+set.seed(100)
+pal &lt;- brewer.pal(10,&quot;Greens&quot;)
+pal &lt;- pal[-(1:4)]
+wordcloud(sent_pos$text,sent_pos$freq,min.freq=2,colors=pal)</code></pre>
+<p><img src="/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentpositiveubi_verd.png" /></p>
+<p>Ara els sentiments negatius</p>
+<pre class="r"><code>#sentiments negatius
+layout(matrix(c(1, 2), nrow=2), heights=c(1, 4))
+par(mar=rep(0, 4))
+plot.new()
+set.seed(100)
+pal &lt;- brewer.pal(10,&quot;Reds&quot;)
+pal &lt;- pal[-(1:4)]
+wordcloud(sent_neg$text,sent_neg$freq,min.freq=2,colors=pal)
+
+SentimentNegativeUBI_vermell</code></pre>
+<p><img src="/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentnegativeubi_vermell.png" /></p>
+<p>L’aport d’aquest anàlisi és, si més no, limitat i esbiaixat ja que no resol el tema de les desambigüacions.</p>
+<p>Un altre enfocament, tal vegada més interessant és el que aporta el paquet syushet que usa quatre diccionaris i els desenvolupaments del grup de Processament del Llenguatge Natural de Stanford i en particular el <a href="http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm">lèxic d’emocions NRC</a> elaborat per Saif Mohammad.</p>
+<pre class="r"><code>#Analitzarem el sentiment usant el paquet &#39;syuzhet&#39;
+#primer netejem el text dels twits
+text = as.character(tweets$text)
+#eliminem Retweets
+some_txt&lt;-gsub(&quot;(RT|via)((?:\\b\\w*@\\w+)+)&quot;,&quot;&quot;,text)
+#eliminem URLs
+some_txt&lt;-gsub(&quot;http[^[:blank:]]+&quot;,&quot;&quot;,some_txt)
+#eliminem noms d&#39;usuaris
+some_txt&lt;-gsub(&quot;@\\w+&quot;,&quot;&quot;,some_txt)
+#eliminem signes de puntuació
+some_txt&lt;-gsub(&quot;[[:punct:]]&quot;,&quot; &quot;,some_txt)
+#eliminem números (alphanumeric)
+some_txt&lt;-gsub(&quot;[^[:alnum:]]&quot;,&quot; &quot;,some_txt)
+ 
+#carreguem els paquets d&#39;anàlisi de sentiment i visualització
+library(ggplot2)
+library(syuzhet)
+mysentiment&lt;-get_nrc_sentiment((some_txt))#aquesta funció extrau els sentiments dels twits
+ 
+# obtenir un score de sentiment per cada emoció
+mysentiment.positive =sum(mysentiment$positive)
+mysentiment.anger =sum(mysentiment$anger)
+mysentiment.anticipation =sum(mysentiment$anticipation)
+mysentiment.disgust =sum(mysentiment$disgust)
+mysentiment.fear =sum(mysentiment$fear)
+mysentiment.joy =sum(mysentiment$joy)
+mysentiment.sadness =sum(mysentiment$sadness)
+mysentiment.surprise =sum(mysentiment$surprise)
+mysentiment.trust =sum(mysentiment$trust)
+mysentiment.negative =sum(mysentiment$negative)</code></pre>
+<p>Un cop obtinguts uns scores per cada emoció anem a representar-los en un diagrama de barres</p>
+<pre class="r"><code># Crear diagrama de barres
+yAxis &lt;- c(mysentiment.positive,
++ mysentiment.anger,
++ mysentiment.anticipation,
++ mysentiment.disgust,
++ mysentiment.fear,
++ mysentiment.joy,
++ mysentiment.sadness,
++ mysentiment.surprise,
++ mysentiment.trust,
++ mysentiment.negative)
+ 
+xAxis &lt;- c(&quot;Positiu&quot;,&quot;Enuig&quot;,&quot;Expectativa&quot;,&quot;fàstic&quot;,&quot;Por&quot;,&quot;Joia&quot;,&quot;Tristor&quot;,&quot;Sorpresa&quot;,&quot;Confiança&quot;,&quot;Negatiu&quot;)
+library(RColorbrewer)
+pal &lt;- brewer.pal(10,&quot;Spectral&quot;)#defineixo una paleta de colors
+pal &lt;- pal[-(1:2)]
+barplot(yAxis, names.arg = xAxis, xlab = &quot;València emocional&quot;, ylab = &quot;Score&quot;, main = &quot;Anàlisi del sentiment dels twits&quot;, col = pal, border = &quot;black&quot;, xpd = F, axisnames = T, cex.axis = 0.8, cex.sub = 0.8)
+colSums(mysentiment)</code></pre>
+<p>Els scores dels sentiments associats a la Renda Bàsica Universal dels tuits recuperats es poden veure a la figura següent:</p>
+<p><img src="/blog/2017-03-30-captant-l-interès-en-universal-basic-income-part-2-breu-anàlisi-de-sentiments_files/sentimentsubi.png" /></p>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/captant-l-inter%C3%A8s-en-universal-basic-income-part-1/">Captant l’interès en Universal Basic Income (part 1)</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/mapes-de-paraules-com-a-vectors/">Mapes de paraules com a vectors</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 
