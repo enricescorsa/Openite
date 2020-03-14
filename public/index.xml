@@ -1,139 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Enric Escorsa O&#39;Callaghan</title>
-    <link>/</link>
-    <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <lastBuildDate>Sun, 02 Feb 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Mapa interactiu de l&#39;expansió del cov-19</title>
-      <link>/blog/coronavirus/</link>
-      <pubDate>Sun, 02 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/coronavirus/</guid>
-      <description>Evolució dels casos de coronavirus a temps realAnem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases) (usant el paquet per fer webscrapping de r, rvest)
-library(rvest)#llegeixo lA PÀGINApaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)head(taules)## {xml_nodeset (1)}## [1] &amp;lt;table class=&amp;quot;table table-bordered table-condensed table-striped&amp;quot;&amp;gt;\n&amp;lt;thea .</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Tue, 22 Aug 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>I am a Human Learner (beginner). Consulting on Technology Scouting at @ialeT from Barcelona. Tinkering with statistical programming languages. Music &amp;amp; landscape.
- Enric Escorsa
- </description>
-    </item>
-    
-    <item>
-      <title>Mapes de paraules com a vectors</title>
-      <link>/blog/mapes-de-paraules-com-a-vectors/</link>
-      <pubDate>Fri, 19 May 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/mapes-de-paraules-com-a-vectors/</guid>
-      <description>Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.
-En aquest post vull indagar una mica en l’ús d’eines i potencialitats recents (tals com word2vec , Mikolov) per extraure paraules d’un text i fer word embeddings (per entendre bé word embeddings recomano llegir: http://ryanheuser.</description>
-    </item>
-    
-    <item>
-      <title>R que R</title>
-      <link>/projects/rquer/</link>
-      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/projects/rquer/</guid>
-      <description>Escribí un librito, muy elemental, como una introducción a R para no programadores. Se llama &amp;ldquo;R que R&amp;rdquo; (nombre poco original, ya sé). El libro mismo está escrito desde R con el paquete Bookdown, creado por el gran @YihuiXie. Si quieres, puedes escribir libros así, usando el paquete bookdown y colgarlos en la red. Aquí lo podéis ver:
- Libro &amp;ldquo;R que R&amp;rdquo;  </description>
-    </item>
-    
-    <item>
-      <title>Example article</title>
-      <link>/blog/example-article/</link>
-      <pubDate>Mon, 28 Sep 2015 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/example-article/</guid>
-      <description>Text This is some text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium at ipsum eu pharetra. Proin ac ante et leo ultrices bibendum. Vivamus id ipsum fermentum, aliquam nunc mollis, tempus sapien. Praesent scelerisque cursus eros vitae pretium. Etiam sit amet ligula in leo euismod malesuada. Proin eleifend pulvinar ipsum, eu lobortis ante pharetra eu. Vivamus sem elit, venenatis eget ornare nec, ullamcorper non tellus. Duis quis massa finibus, euismod erat quis, fermentum nunc.</description>
-    </item>
-    
-    <item>
-      <title>Projects</title>
-      <link>/projects/projects/</link>
-      <pubDate>Wed, 19 Aug 2015 20:29:37 -0700</pubDate>
-      
-      <guid>/projects/projects/</guid>
-      <description>Here are some open projects or experiments that I am happy to share with you.</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/blog/hello-r-markdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/blog/hello-r-markdown/</guid>
-      <description>Including PlotsYou can also embed plots. See Figure 1 for example:
-par(mar = c(0, 1, 0, 1))pie(c(280, 60, 20),c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),init.angle = -50, border = NA)Figure 1: A fancy pie chart.</description>
-    </item>
-    
-    <item>
-      <title>Creating a New Theme</title>
-      <link>/blog/creating-a-new-theme/</link>
-      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/creating-a-new-theme/</guid>
-      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
-We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
-    </item>
-    
-    <item>
-      <title>(Hu)go Template Primer</title>
-      <link>/blog/hugo-template-primer/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/hugo-template-primer/</guid>
-      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
-This document is a brief primer on using go templates.</description>
-    </item>
-    
-    <item>
-      <title>Getting Started with Hugo</title>
-      <link>/blog/getting-started-with-hugo/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/getting-started-with-hugo/</guid>
-      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
-Save it somewhere specific as we will be using it in the next step.
-More complete instructions are available at installing hugo
-Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
-Follow the following steps:
- Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
-    </item>
-    
-    <item>
-      <title>Home</title>
-      <link>/home/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/home/</guid>
-      <description>This is a blog about data &amp;amp; landscapes, an experiment and above all, an excuse to learn #Rstats</description>
-    </item>
-    
-    <item>
-      <title>License</title>
-      <link>/license/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/license/</guid>
-      <description>You can use this page to put a license on the contents of your blog, like so:
- The MIT License (MIT)
-Copyright (c) 2015 Nishanth Shanmughamnishanth.gerrard@gmail.com
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</description>
-    </item>
-    
-  </channel>
-</rss>

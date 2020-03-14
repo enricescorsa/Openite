@@ -69,6 +69,7 @@ taula_coronaviruslocalitzat <- dplyr::left_join(taula_coronavirus, adcoordsnet, 
 
 Finalment mapejo en un mapa interactiu (amb _leaflet_), en el que pots navegar i fer zoom i clicar a cada país per veure dades que apareixen en popup.
 
+El tamany del cercle és en funció del nombre de casos confirmats totals.
 
 ```{r, echo=TRUE, warning=F, message=F}
 library(tidyverse)
@@ -90,3 +91,17 @@ mapa
 ``` 
 
 (mapa generat el primer cop a dia 12/03/2020)
+
+
+Faig un altre mapa on el tamany del cercle, en aquest cas, és en funció del nombre de casos en els darrers 15 dies.
+
+```{r, echo=TRUE, warning=F, message=F}
+
+mapa <- leaflet(taula_coronaviruslocalitzat) %>% addTiles() %>%
+  addCircleMarkers(
+    radius = ~taula_coronaviruslocalitzat$`Casos confirmats els darrers 15 dies`*0.003,
+    color = ~pal(taula_coronaviruslocalitzat$`Morts`),
+    stroke = FALSE, fillOpacity = 0.35,
+    popup=paste("País:", taula_coronaviruslocalitzat$`Pais`, "<br>", "Casos:", taula_coronaviruslocalitzat$`Casos confirmats`, "<br>", "Casos confirmats els darrers 15 dies:", taula_coronaviruslocalitzat$`Casos confirmats els darrers 15 dies`, "<br>",  "Morts", taula_coronaviruslocalitzat$`Morts`, "<br>"))
+mapa
+``` 
