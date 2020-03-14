@@ -1,0 +1,68 @@
+---
+title:  Llegint l'obra de Thoreau des del projecte Gutemberg amb R
+author: Enric Escorsa
+date: '2020-03-14'
+slug: thoreau-henry-david
+categories:
+  - Experiments
+tags:
+  - Thoreau
+  - nlp
+  - gutenberg
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+El [projecte Gutemberg](http://www.gutenberg.org/) permet accedir a més de 60.000 llibres de domini public. Gràcies a David Robinson (@drob), que ha creat el paquet [gutembergr](https://cran.r-project.org/web/packages/gutenbergr/vignettes/intro.html) tenim accés als llibres del repositori Gutemberg desde R.
+
+Podem buscar, per exemple per autor:
+
+```{r, warning=FALSE, message=FALSE}
+library(gutenbergr)
+gutenberg_works(author == "Thoreau, Henry David")
+```
+
+Aleshores podem descarregar-nos el llibre que ens interessa per l'identificador. En aquests cas, el llibre "Walden" té l'identificador 205.
+
+```{r, warning=FALSE, comment=FALSE, error=FALSE, message=FALSE}
+walden <- gutenberg_download(205)
+
+walden
+```
+
+# Analitzar
+
+Extraiem les paraules del text del llibre
+
+```{r, warning=FALSE, comment=FALSE, error=FALSE, message=FALSE}
+library(tidyverse)
+library(tidytext)
+
+words <- walden %>%
+  unnest_tokens(word, text)
+
+words
+```
+
+i en fem un recompte
+
+```{r, warning=FALSE, message=FALSE}
+recompte_paraules <- words %>%
+  anti_join(stop_words, by = "word") %>%
+  count(gutenberg_id, word, sort = TRUE)
+
+recompte_paraules
+```
+
+
+Va, fem un núvol de paraules amb _wordcloud_
+
+```{r, warning=FALSE, message=FALSE}
+library(wordcloud)
+wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```
+

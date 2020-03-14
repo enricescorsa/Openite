@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/prova/" />
-<meta property="og:title" content="prova" />
-<meta property="twitter:title" content="prova">
+<meta property="og:url" content="/blog/thoreau-henry-david/" />
+<meta property="og:title" content="Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R" />
+<meta property="twitter:title" content="Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R">
 
     <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - prova 
+     Enric Escorsa O&#39;Callaghan - Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R 
 
 </title>
-<link rel="canonical" href="/post/prova/">
+<link rel="canonical" href="/blog/thoreau-henry-david/">
 
 
 <style media="screen">
@@ -1060,7 +1060,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 <link rel="shortcut icon"
 
-    href="/img/logo.png"
+    href="/img/Enric_Escorsa.png"
 
 >
 
@@ -1077,7 +1077,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
     <div class="container">
         
-        <a href="/"><img class="logo" src="/img/Enric_Escorsa.png" alt="logo"></a>
+        <a href="/"><img class="logo" src="/img/logo.png" alt="logo"></a>
         
         <div class="content">
             <a href="/"><div class="name"><h1>Enric Escorsa O&#39;Callaghan</h1></div></a>
@@ -1088,12 +1088,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                     
                         
-                            
-                        
-                    
-                        
-                            
-                            <li><a href="/post">post</a></li>
                             
                         
                     
@@ -1120,27 +1114,203 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-<div class="main column">
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            <div class="page-heading">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
 
     
-    prova
+    Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R
     
 
 </div>
 
+                </div>
+                <div class="meta">
+                    <div class="date" title="Sat Mar 14 2020 00:00:00 UTC">Mar 14, 2020</div>
+                    
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">3 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/thoreau">Thoreau</a> </li>
+                          
+                            <li class="middot"><a href="/tags/nlp">nlp</a> </li>
+                          
+                            <li class="middot"><a href="/tags/gutenberg">gutenberg</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
             <div class="markdown">
                 
     
     
 
 
+<p>El <a href="http://www.gutenberg.org/">projecte Gutemberg</a> permet accedir a més de 60.000 llibres de domini public. Gràcies a David Robinson (<span class="citation">@drob</span>), que ha creat el paquet <a href="https://cran.r-project.org/web/packages/gutenbergr/vignettes/intro.html">gutembergr</a> tenim accés als llibres del repositori Gutemberg desde R.</p>
+<p>Podem buscar, per exemple per autor:</p>
+<pre class="r"><code>library(gutenbergr)
+gutenberg_works(author == &quot;Thoreau, Henry David&quot;)</code></pre>
+<pre><code>## # A tibble: 12 x 8
+##    gutenberg_id title author gutenberg_autho~ language gutenberg_books~ rights
+##           &lt;int&gt; &lt;chr&gt; &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt; 
+##  1           71 &quot;On ~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  2          205 &quot;Wal~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  3         1022 &quot;Wal~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  4         2567 &quot;A P~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  5         4066 &quot;Wil~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  6         4232 &quot;A W~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  7         9846 &quot;Exc~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  8        34392 &quot;Cap~ Thore~               54 en       &lt;NA&gt;             Publi~
+##  9        34990 &quot;Can~ Thore~               54 en       &lt;NA&gt;             Publi~
+## 10        42500 &quot;The~ Thore~               54 en       &lt;NA&gt;             Publi~
+## 11        42553 &quot;Exc~ Thore~               54 en       &lt;NA&gt;             Publi~
+## 12        43523 &quot;The~ Thore~               54 en       &lt;NA&gt;             Publi~
+## # ... with 1 more variable: has_text &lt;lgl&gt;</code></pre>
+<p>Aleshores podem descarregar-nos el llibre que ens interessa per l’identificador. En aquests cas, el llibre “Walden” té l’identificador 205.</p>
+<pre class="r"><code>walden &lt;- gutenberg_download(205)
 
+walden</code></pre>
+<pre><code>FALSE # A tibble: 10,099 x 2
+FALSE    gutenberg_id text                               
+FALSE           &lt;int&gt; &lt;chr&gt;                              
+FALSE  1          205 &quot;WALDEN,&quot;                          
+FALSE  2          205 &quot;&quot;                                 
+FALSE  3          205 &quot;and&quot;                              
+FALSE  4          205 &quot;&quot;                                 
+FALSE  5          205 &quot;ON THE DUTY OF CIVIL DISOBEDIENCE&quot;
+FALSE  6          205 &quot;&quot;                                 
+FALSE  7          205 &quot;By Henry David Thoreau&quot;           
+FALSE  8          205 &quot;&quot;                                 
+FALSE  9          205 &quot;&quot;                                 
+FALSE 10          205 &quot;&quot;                                 
+FALSE # ... with 10,089 more rows</code></pre>
+<div id="analitzar" class="section level1">
+<h1>Analitzar</h1>
+<p>Extraiem les paraules del text del llibre</p>
+<pre class="r"><code>library(tidyverse)
+library(tidytext)
+
+words &lt;- walden %&gt;%
+  unnest_tokens(word, text)
+
+words</code></pre>
+<pre><code>FALSE # A tibble: 116,879 x 2
+FALSE    gutenberg_id word        
+FALSE           &lt;int&gt; &lt;chr&gt;       
+FALSE  1          205 walden      
+FALSE  2          205 and         
+FALSE  3          205 on          
+FALSE  4          205 the         
+FALSE  5          205 duty        
+FALSE  6          205 of          
+FALSE  7          205 civil       
+FALSE  8          205 disobedience
+FALSE  9          205 by          
+FALSE 10          205 henry       
+FALSE # ... with 116,869 more rows</code></pre>
+<p>i en fem un recompte</p>
+<pre class="r"><code>recompte_paraules &lt;- words %&gt;%
+  anti_join(stop_words, by = &quot;word&quot;) %&gt;%
+  count(gutenberg_id, word, sort = TRUE)
+
+recompte_paraules</code></pre>
+<pre><code>## # A tibble: 10,812 x 3
+##    gutenberg_id word       n
+##           &lt;int&gt; &lt;chr&gt;  &lt;int&gt;
+##  1          205 life     203
+##  2          205 pond     202
+##  3          205 house    200
+##  4          205 day      194
+##  5          205 time     176
+##  6          205 water    175
+##  7          205 woods    151
+##  8          205 ice      123
+##  9          205 winter   106
+## 10          205 heard    103
+## # ... with 10,802 more rows</code></pre>
+<p>Va, fem un núvol de paraules amb <em>wordcloud</em></p>
+<pre class="r"><code>library(wordcloud)
+wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
+          max.words=200, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, &quot;Dark2&quot;))</code></pre>
+<p><img src="/blog/2020-03-14-thoreau-henry-david_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
 
 
             </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del cov-19</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>

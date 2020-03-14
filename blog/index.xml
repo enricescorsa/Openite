@@ -6,10 +6,21 @@
     <description>Recent content in Blog on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R</title>
+      <link>/blog/thoreau-henry-david/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/thoreau-henry-david/</guid>
+      <description>El projecte Gutemberg permet accedir a més de 60.000 llibres de domini public. Gràcies a David Robinson (@drob), que ha creat el paquet gutembergr tenim accés als llibres del repositori Gutemberg desde R.
+Podem buscar, per exemple per autor:
+library(gutenbergr)gutenberg_works(author == &amp;quot;Thoreau, Henry David&amp;quot;)## # A tibble: 12 x 8## gutenberg_id title author gutenberg_autho~ language gutenberg_books~ rights## &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; ## 1 71 &amp;quot;On ~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 2 205 &amp;quot;Wal~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 3 1022 &amp;quot;Wal~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 4 2567 &amp;quot;A P~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 5 4066 &amp;quot;Wil~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 6 4232 &amp;quot;A W~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 7 9846 &amp;quot;Exc~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 8 34392 &amp;quot;Cap~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 9 34990 &amp;quot;Can~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 10 42500 &amp;quot;The~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 11 42553 &amp;quot;Exc~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## 12 43523 &amp;quot;The~ Thore~ 54 en &amp;lt;NA&amp;gt; Publi~## # .</description>
+    </item>
     
     <item>
       <title>Mapa interactiu de l&#39;expansió del cov-19</title>
