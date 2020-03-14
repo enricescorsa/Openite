@@ -1176,9 +1176,10 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 <div id="evolució-dels-casos-de-coronavirus-a-temps-real" class="section level2">
 <h2>Evolució dels casos de coronavirus a temps real</h2>
+<p><em>(darrera actualització 14/03/2020)</em></p>
 <p>Anem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (<a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases" class="uri">https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases</a>) (usant el paquet per fer webscrapping de r, <em>rvest</em>)</p>
 <pre class="r"><code>library(rvest)
-#llegeixo lA PÀGINA
+#llegeixo la pàgina
 paginaecdc &lt;- read_html(&quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&quot;)
 
 #extrec taules
@@ -1200,7 +1201,7 @@ colnames(taula_coronavirus) &lt;- c(&quot;Regio&quot;, &quot;Pais&quot;, &quot;C
                             &quot;Morts&quot;, &quot;Casos confirmats els darrers 15 dies&quot;)</code></pre>
 <div id="geolocalitzo" class="section level3">
 <h3>Geolocalitzo</h3>
-<p>Ara geolocalitzo, generant la Longitud i latitud de cada país a la taula (desde <em>OpenStreetMaps</em> amb el paquet <em>tmaptools</em>)</p>
+<p>Ara geolocalitzo, generant la Longitud i Latitud de cada país a la taula (desde <em>OpenStreetMaps</em> amb el paquet <em>tmaptools</em>)</p>
 <pre class="r"><code>library(tmaptools)
 #amb la funcio geocode_OSM obtenim de open street maps les coordenades de la columna &quot;Pais&quot;
 adcoords &lt;- tmaptools::geocode_OSM(taula_coronavirus$&quot;Pais&quot;)

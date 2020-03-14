@@ -17,8 +17,9 @@
       <pubDate>Sun, 02 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/coronavirus/</guid>
-      <description>Evolució dels casos de coronavirus a temps realAnem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases) (usant el paquet per fer webscrapping de r, rvest)
-library(rvest)#llegeixo lA PÀGINApaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)head(taules)## {xml_nodeset (1)}## [1] &amp;lt;table class=&amp;quot;table table-bordered table-condensed table-striped&amp;quot;&amp;gt;\n&amp;lt;thea .</description>
+      <description>Evolució dels casos de coronavirus a temps real(darrera actualització 14/03/2020)
+Anem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases) (usant el paquet per fer webscrapping de r, rvest)
+library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)head(taules)## {xml_nodeset (1)}## [1] &amp;lt;table class=&amp;quot;table table-bordered table-condensed table-striped&amp;quot;&amp;gt;\n&amp;lt;thea .</description>
     </item>
     
     <item>

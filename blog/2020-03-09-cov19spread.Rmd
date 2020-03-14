@@ -17,11 +17,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Evolució dels casos de coronavirus a temps real
 
+_(darrera actualització 14/03/2020)_
+
 Anem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (<https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases>) (usant el paquet per fer webscrapping de r, _rvest_)
 
 ```{r, echo=TRUE, warning=F, message=F}
 library(rvest)
-#llegeixo lA PÀGINA
+#llegeixo la pàgina
 paginaecdc <- read_html("https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases")
 
 #extrec taules
@@ -44,7 +46,7 @@ colnames(taula_coronavirus) <- c("Regio", "Pais", "Casos confirmats",
 
 ### Geolocalitzo
 
-Ara geolocalitzo, generant la Longitud i latitud de cada país a la taula (desde _OpenStreetMaps_ amb el paquet _tmaptools_)
+Ara geolocalitzo, generant la Longitud i Latitud de cada país a la taula (desde _OpenStreetMaps_ amb el paquet _tmaptools_)
 
 ```{r, echo=TRUE, warning=F, message=F}
 
