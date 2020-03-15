@@ -1131,7 +1131,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
                 </div>
                 <div class="meta">
-                    <div class="date" title="Sat Mar 14 2020 00:00:00 UTC">Mar 14, 2020</div>
+                    <div class="date" title="Wed Mar 14 2018 00:00:00 UTC">Mar 14, 2018</div>
                     
                         
                         <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
@@ -1233,7 +1233,7 @@ FALSE  8          205 disobedience
 FALSE  9          205 by          
 FALSE 10          205 henry       
 FALSE # ... with 116,869 more rows</code></pre>
-<p>i en fem un recompte</p>
+<p>i en fem un recompte (abans n’eliminem els <em>stopwords</em>, paraules tals com preposicions i altres que no aporten, filtrant-les mitjançant la funció “anti_join” a les paraules que tenim)</p>
 <pre class="r"><code>recompte_paraules &lt;- words %&gt;%
   anti_join(stop_words, by = &quot;word&quot;) %&gt;%
   count(gutenberg_id, word, sort = TRUE)
@@ -1286,10 +1286,15 @@ wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq =
                 
                 <div>
                     <img class="icon" src="/img/back.svg" alt="back" />
-                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del cov-19</a>
+                    <a href="/blog/mapes-de-paraules-com-a-vectors/">Mapes de paraules com a vectors</a>
                 </div>
                 
                 <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del cov-19</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
                 
             </div>
             

@@ -1,7 +1,7 @@
 ---
 title:  Llegint l'obra de Thoreau des del projecte Gutemberg amb R
 author: Enric Escorsa
-date: '2020-03-14'
+date: '2018-03-14'
 slug: thoreau-henry-david
 categories:
   - Experiments
@@ -46,7 +46,7 @@ words <- walden %>%
 words
 ```
 
-i en fem un recompte
+i en fem un recompte (abans n'eliminem els _stopwords_, paraules tals com preposicions i altres que no aporten, filtrant-les mitjançant la funció "anti_join" a les paraules que tenim)
 
 ```{r, warning=FALSE, message=FALSE}
 recompte_paraules <- words %>%

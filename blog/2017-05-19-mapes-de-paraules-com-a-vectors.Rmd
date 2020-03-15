@@ -5,13 +5,23 @@ date: '2017-05-19'
 slug: mapes-de-paraules-com-a-vectors
 categories: [Experiments]
 
-tags: ["deeplearning", "dl", "lda", "neural networks", "nlp", "r", "t-sne", "text mining", "tools", "topic modeling", "word2vec"]
+tags:
+  - deeplearning
+  - dl
+  - lda, 
+  - neural networks
+  - nlp
+  - r
+  - t-sne
+  - text mining
+  - tools
+  - topic modeling
+  - word2vec
 
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
 meta_img: /images/image.jpg
-draft: TRUE
 ---
 
 ```{r setup, include=FALSE}
@@ -81,11 +91,6 @@ head(terms)
 ```
 
 
-
-Els termes que s’extreuen són del tipus:
-
-
-
 Ara posem la matriu en format net -és a dir, una taula amb  columnes: document, terme i frequència d’aparició- mitjançant la funció tidy.
 
 ```{r message = FALSE, warning = FALSE}
@@ -118,9 +123,7 @@ netissim %>%
   anti_join(elsmeusstopwords) %>%
   count(term) %>%
   with(wordcloud(term, n, max.words = 100))
- 
-#si volguéssim posar tots els termes en majúscules:
-#netissim <-netissim %>% mutate(term = toupper(term))
+
 ```
 
 
@@ -153,7 +156,7 @@ parells %>%
   filter(n >= 200) %>%
   graph_from_data_frame() %>%
   ggraph(layout = "fr") +
-  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "Steelblue") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "#F132B2") +
   geom_node_point(size = 1) +
   geom_node_text(aes(label = name), repel = TRUE,
                  point.padding = unit(0.2, "lines")) +
