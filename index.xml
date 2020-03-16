@@ -6,10 +6,22 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Evolució del coronavirus a Europa</title>
+      <link>/blog/coronavirus2/</link>
+      <pubDate>Mon, 16 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/coronavirus2/</guid>
+      <description>Evolució dels casos de coronavirus a Europa(darrera actualització 16/03/2020)
+Continuant amb l’anàlisi de la propagacio del coronavirus del post anterior també puc mirar l’evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar aquí.
+Ho faig i la llegeixo amb readxl
+library(tidyverse)library(rvest)#després de descarregar-la, llegeixo la taula.library(readxl)COVID_19_distribucio_mundial &amp;lt;- read_excel(&amp;quot;Copia de COVID-19-geographic-disbtribution-worldwide-2020-03-15.</description>
+    </item>
     
     <item>
       <title>Mapa interactiu de l&#39;expansió del cov-19</title>
@@ -50,7 +62,8 @@ library(gutenbergr)gutenberg_works(author == &amp;quot;Thoreau, Henry David&amp
       <pubDate>Fri, 19 May 2017 00:00:00 +0000</pubDate>
       
       <guid>/blog/mapes-de-paraules-com-a-vectors/</guid>
-      <description>---title: Mapes de paraules com a vectorsauthor: Enric Escorsadate: &#39;2017-05-19&#39;slug: mapes-de-paraules-com-a-vectorscategories: [Experiments]tags:- deeplearning- dl- lda, - neural networks- nlp- r- t-sne- text mining- tools- topic modeling- word2vecdescription: Deschacker_news_id: &#39;&#39;lobsters_id: &#39;&#39;meta_img: /images/image.jpg---Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.</description>
+      <description>Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.
+En aquest post vull indagar una mica en l’ús d’eines i potencialitats recents (tals com word2vec , Mikolov) per extraure paraules d’un text i fer word embeddings (per entendre bé word embeddings recomano llegir: http://ryanheuser.</description>
     </item>
     
     <item>

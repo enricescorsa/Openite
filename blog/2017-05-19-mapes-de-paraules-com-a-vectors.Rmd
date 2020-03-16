@@ -3,8 +3,6 @@ title: Mapes de paraules com a vectors
 author: Enric Escorsa
 date: '2017-05-19'
 slug: mapes-de-paraules-com-a-vectors
-categories: [Experiments]
-
 tags:
   - deeplearning
   - dl
@@ -17,17 +15,13 @@ tags:
   - tools
   - topic modeling
   - word2vec
-
+categories:
+  - Experiments
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
 meta_img: /images/image.jpg
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE)
-```
-
 
 Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.
 

@@ -171,4 +171,4 @@ El resultat té l’aspecte següent:
 
 ![](/blog/2017-04-03-topic-modeling-a-les-lletres-de-franco-battiato_files/gif4.gif)
 
-La clusterització temàtica m’ha permès navegar pels temes de les cançons del cantautor sicilià i apreciar els aspectes recurrents tals com la solitut, el silenci, la llum, els ulls, el cor, el temps, etc. Tanmateix, aquests resultats reafirmen la meva preassumpció que el mestre Battiato és un autor inclassificable, literalment.
+La clusterització temàtica m’ha permès navegar pels temes de les cançons del cantautor sicilià i apreciar els aspectes recurrents tals com la solitud, el silenci, la llum, els ulls, el cor, el temps, etc. Tanmateix, aquests resultats reafirmen la meva preassumpció que el mestre Battiato és un autor inclassificable, literalment.

@@ -1185,32 +1185,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                 
     
     
----
-title: Mapes de paraules com a vectors
-author: Enric Escorsa
-date: '2017-05-19'
-slug: mapes-de-paraules-com-a-vectors
-categories: [Experiments]
-
-tags:
-  - deeplearning
-  - dl
-  - lda, 
-  - neural networks
-  - nlp
-  - r
-  - t-sne
-  - text mining
-  - tools
-  - topic modeling
-  - word2vec
-
-description: Desc
-hacker_news_id: ''
-lobsters_id: ''
-meta_img: /images/image.jpg
----
-
 
 
 <p>Transformar les paraules d’un text a vectors és una pràctica que dóna molt de joc perquè ens permet representar-les i observar-les des de varis punts de vista i d’aquesta forma veure-hi aspectes interessants que ens ajuden a comprendre el text.</p>
@@ -1237,16 +1211,15 @@ write.csv(cerca, file = &quot;publicacions_liti.csv&quot;)</code></pre>
  
 #N&#39;extrec el text que és el que m&#39;interessa
 elmeutext &lt;- lesmevesdades$abstract #prenc la columna on hi ha el text del meu corpus (en aquest cas ABSTRACT)
-head(elmeutext)
-## [1]   I have carried out numerical first principles calculations of the pressure\ndependence of the elastic moduli for several ordered structures in the\nAluminum-Lithium system, specifically FCC Al, FCC and BCC Li, L1_2 Al_3Li, and\nan ordered FCC Al_7Li supercell. The calculations were performed using the full\npotential linear augmented plane wave method (LAPW) to calculate the total\nenergy as a function of strain, after which the data was fit to a polynomial\nfunction of the strain to determine the modulus. A procedure for estimating the\nerrors in this process is also given. The predicted equilibrium lattice\nparameters are slightly smaller than found experimentally, consistent with\nother LDA calculations. The computed elastic moduli are within approximately\n10% of the experimentally measured moduli, provided the calculations are\ncarried out at the experimental lattice constant. The LDA equilibrium shear\nmodulus C11-C12 increases from 59.3 GPa in Al, to 76.0 GPa in Al_7Li, to 106.2\nGPa in Al_3Li. The modulus C_44 increases from 38.4 GPa in Al to 46.1 GPa in\nAl_7Li, then falls to 40.7 GPa in Al_3Li. All of the calculated elastic moduli\nincrease with pressure with the exception of BCC Li, which becomes elastically\nunstable at about 2 GPa, where C_11-C_12 vanishes.\n
+head(elmeutext)</code></pre>
+<pre><code>## [1]   I have carried out numerical first principles calculations of the pressure\ndependence of the elastic moduli for several ordered structures in the\nAluminum-Lithium system, specifically FCC Al, FCC and BCC Li, L1_2 Al_3Li, and\nan ordered FCC Al_7Li supercell. The calculations were performed using the full\npotential linear augmented plane wave method (LAPW) to calculate the total\nenergy as a function of strain, after which the data was fit to a polynomial\nfunction of the strain to determine the modulus. A procedure for estimating the\nerrors in this process is also given. The predicted equilibrium lattice\nparameters are slightly smaller than found experimentally, consistent with\nother LDA calculations. The computed elastic moduli are within approximately\n10% of the experimentally measured moduli, provided the calculations are\ncarried out at the experimental lattice constant. The LDA equilibrium shear\nmodulus C11-C12 increases from 59.3 GPa in Al, to 76.0 GPa in Al_7Li, to 106.2\nGPa in Al_3Li. The modulus C_44 increases from 38.4 GPa in Al to 46.1 GPa in\nAl_7Li, then falls to 40.7 GPa in Al_3Li. All of the calculated elastic moduli\nincrease with pressure with the exception of BCC Li, which becomes elastically\nunstable at about 2 GPa, where C_11-C_12 vanishes.\n
 ## [2]   We derive lithium abundances in 53 T Tauri stars (TTS), concentrating on\nweak-line TTS. Our study gives the following results: 1)At luminosities $\\ge\n0.9 L\\sun$ the Li abundances are remarkably uniform, with a mean value,\nlog~N(Li)=3.1, equal to the &quot;cosmic&quot; lithium abundance. 2)Significant Li\ndepletion appears below 0.5~L$\\sun$ in the mass range 0.9-0.2 M$\\sun$ and\nincreases towards lower luminosities. At the lower mass end (0.4-0.2 M$\\sun$),\nthe observed luminosity of the Li burning turning point is about a factor 4\nhigher than predicted by the models. At masses 1.2-1.0 M$\\sun$ the observations\nimply less PMS Li burning than theoretically expected. Moreover we show that:\n1)Low Li abundances appear only among stars with low $v\\sin{i}$. Fast rotators\nwith masses around 0.8~M$\\sun$ do not show evidence for strong Li depletion\ntowards lower luminosities as slow rotators do. 2)In a sample restricted to\nonly K5-K7 stars we find that the angular momentum spread before Li burning\nbegins is larger than a factor 10. Lithium depletion associated to angular\nmomentum loss during PMS evolution is not required to explain the observed\nabundances. The efficiency of PMS Li burning in the mass range 0.9-0.7~M$\\sun$\nis reduced in the presence of rapid rotation.\n  
 ## [3]   Recently conformal Weyl gravity has been considered as a candidate\nalternative gravity theory. This fourth-order theory is attractive because it\nis the only metric theory of gravity which is invariant under local conformal\ntransformations of the metric. We calculate the primordial light element\nabundances in this theory. The major difference {}from the standard cosmology\nis that the universe expands far more slowly throughout the nucleosynthesis\nepoch. The production of $^4\\rm{He}$ depends strongly on $\\eta$, the ratio of\nbaryons to photons. For $\\eta = 10^{-8}$ the mass fraction of $^4{\\rm He}$ is\n$X_4 \\simeq 0.25$ and the number densities relative to hydrogen for $^2{\\rm\nH}$, $^3{\\rm He}$ and $^7{\\rm Li}$ are $n(^2{\\rm H})/n({\\rm H}) \\simeq 9\\times\n10^{-20}$, $n(^3{\\rm He})/n({\\rm H})\\simeq 4 \\times 10^{-18}$ and $n(^7{\\rm\nLi})/n({\\rm H}) \\simeq 10^{-13}$. This value of $\\eta$ corresponds to a baryon\nmass density close to the standard model critical density. However, adjusting\n$\\eta$ to give a reasonable helium yield forces the deuterium and lithium\nyields to be small enough that the theory cannot be reconciled with\nobservations.\n                                                                                                         
 ## [4]   We show that primordial nucleosynthesis in baryon inhomogeneous big-bang\nmodels can lead to significant heavy-element production while still satisfying\nall the light-element abundance constraints including the low lithium abundance\nobserved in population II stars. The parameters which admit this solution arise\nnaturally from the process of neutrino induced inflation of baryon\ninhomogeneities prior to the epoch of nucleosynthesis. These solutions entail a\nsmall fraction of baryons (\\le 2\\%) in very high density regions with local\nbaryon-to-photon ratio $\\eta^h\\approx 10^{-4}$, while most baryons are at a\nbaryon-to-photon ratio which optimizes the agreement with light-element\nabundances. The model would imply a unique signature of baryon inhomogeneities\nin the early universe, evidenced by the existence of primordial material\ncontaining heavy-element products of proton and alpha- burning reactions with\nan abundance of $[Z]\\sim -6 to -4$.\n                                                                                                                                                                                                                                                                                                                                     
 ## [5]   We derive the equation of state of a dilute atomic Bose gas with an\ninteratomic interaction that has a negative scattering length and argue that\ntwo continuous phase transitions, occuring in the gas due to quantum degeneracy\neffects, are preempted by a first-order gas-liquid or gas-solid transition\ndepending on the details of the interaction potential. We also discuss the\nconsequences of this result for future experiments with magnetically trapped\nspin-polarized atomic gasses such as lithium and cesium.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 ## [6]   Motivated by the recent report of a $^6$Li detection in the atmosphere of\nHD~84937, we couple stellar evolution calculations with light isotope\nproduction via stellar flares. We find that as a consequence of their small\nconvective envelope mass near the turn-off point, low-metallicity dwarfs and\nsubgiants may possess observable amounts of $^6$Li arising from such flare\nactivity. We point out an observational test which could discriminate between\nflare produced $^6$Li and protostellar $^6$Li. In the $T_{\\rm eff}$ range\n$6000-6600$~K, the $^7$Li/$^6$Li ratio on the subgiant branch should increase\nas a function of $T_{\\rm eff}$ if flare production is important, whereas the\nsame ratio should be constant if a protostellar origin is the source of the\nobserved lithium. The absence of a flare produced variation in the\n$^7$Li/$^6$Li ratio would allow for a more reliable inference of the --\ncosmologically important -- atmospheric depletion mechanisms in stars.\n                                                                                                                                                                                                                                                                                                                        
-## 2343 Levels:   $R$-matrix calculations of the electron collisions with lithium atom at\nenergies below the $3s$ excitation threshold are presented. The $^1S^e$,\n$^3S^e$ and $^1P^o$ phase shifts calculated in the near-threshold energy range\nare in excellent agreement with previous theoretical studies. The threshold\nbehavior of the $^3P^o$ phase shift is accurately analyzed along with the\nresonance located at the scattering energy $\\sim60$ meV. The phase shifts and\ncross sections calculated here show two resonances below the $3s$ threshold\nthat have not been previously reported.\n ...
- 
-#puc guardar el corpus de text en un txt per usar després:
+## 2343 Levels:   $R$-matrix calculations of the electron collisions with lithium atom at\nenergies below the $3s$ excitation threshold are presented. The $^1S^e$,\n$^3S^e$ and $^1P^o$ phase shifts calculated in the near-threshold energy range\nare in excellent agreement with previous theoretical studies. The threshold\nbehavior of the $^3P^o$ phase shift is accurately analyzed along with the\nresonance located at the scattering energy $\\sim60$ meV. The phase shifts and\ncross sections calculated here show two resonances below the $3s$ threshold\nthat have not been previously reported.\n ...</code></pre>
+<pre class="r"><code>#puc guardar el corpus de text en un txt per usar després:
 write.table(elmeutext,&quot;elmeutext.txt&quot;,sep=&quot;\t&quot;,row.names=FALSE)</code></pre>
 <p>Anem a veure si podem analitzar-ne el contingut. Em baso en l’enfocament tidy textmining segons proposat per l’admirada <span class="citation">@JuliaSilge</span>, una metodologia d’anàlisi de dades textuals sumament interessant i que recomano conèixer.</p>
 <pre class="r"><code>#Primer obtinc un corpus de text que pugui tractar
@@ -1257,15 +1230,15 @@ dtm &lt;- DocumentTermMatrix(corpustext)
  
 #N&#39;extrec els termes
 terms &lt;- Terms(dtm)
-head(terms)
-## [1] &quot;(lapw)&quot; &quot;10%&quot;    &quot;106.2&quot;  &quot;38.4&quot;   &quot;40.7&quot;   &quot;46.1&quot;</code></pre>
+head(terms)</code></pre>
+<pre><code>## [1] &quot;(lapw)&quot; &quot;10%&quot;    &quot;106.2&quot;  &quot;38.4&quot;   &quot;40.7&quot;   &quot;46.1&quot;</code></pre>
 <p>Ara posem la matriu en format net -és a dir, una taula amb columnes: document, terme i frequència d’aparició- mitjançant la funció tidy.</p>
 <pre class="r"><code>net &lt;- tidy(dtm)
 View(net) #veig la taula resultant
 #ordeno els termes més frequents de net
 net %&gt;%
-  count(term, sort = TRUE)
-## # A tibble: 33,733 x 2
+  count(term, sort = TRUE)</code></pre>
+<pre><code>## # A tibble: 33,733 x 2
 ##    term        n
 ##    &lt;chr&gt;   &lt;int&gt;
 ##  1 the      2330
@@ -1278,9 +1251,8 @@ net %&gt;%
 ##  8 this     1316
 ##  9 from     1111
 ## 10 which     965
-## # ... with 33,723 more rows
- 
-#Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
+## # ... with 33,723 more rows</code></pre>
+<pre class="r"><code>#Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
 elsmeusstopwords &lt;- tibble(term = c(as.character(1:10),
                                     &quot;the&quot;, &quot;and&quot;, &quot;for&quot;, &quot;this&quot;, &quot;between&quot;, &quot;than&quot;, &quot;through&quot;, &quot;but&quot;, &quot;have&quot;, &quot;been&quot;, &quot;these&quot;, &quot;that&quot;, &quot;are&quot;, &quot;from&quot;, &quot;with&quot;, &quot;their&quot;, &quot;such&quot;, &quot;also&quot;, &quot;then&quot;, &quot;was&quot;, &quot;were&quot;, &quot;which&quot;, &quot;has&quot;, &quot;its&quot;, &quot;this&quot;, &quot;can&quot;, &quot;paper&quot;, &quot;study&quot;, &quot;presents&quot;, &quot;while&quot;))
 netissim &lt;- net %&gt;%
@@ -1289,8 +1261,8 @@ View(netissim)
  
 #ara podem ordenar termes per freqüència
 netissim %&gt;%
-  count(term, sort = TRUE)
-## # A tibble: 33,704 x 2
+  count(term, sort = TRUE)</code></pre>
+<pre><code>## # A tibble: 33,704 x 2
 ##    term        n
 ##    &lt;chr&gt;   &lt;int&gt;
 ##  1 lithium  2023
@@ -1314,9 +1286,6 @@ netissim %&gt;%
   count(term) %&gt;%
   with(wordcloud(term, n, max.words = 100))</code></pre>
 <p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<pre class="r"><code> 
-#si volguéssim posar tots els termes en majúscules:
-#netissim &lt;-netissim %&gt;% mutate(term = toupper(term))</code></pre>
 <p>Per percebre els continguts a un nivell més estructural analitzem coocurrències o parells de termes; ho podem fer amb el paquet widyr i la funció pairwise.</p>
 <pre class="r"><code>library(devtools)
 #install_github(&quot;dgrtwo/widyr&quot;)
@@ -1345,8 +1314,8 @@ parells %&gt;%
 <p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. niobate)</p>
 <pre class="r"><code>parells %&gt;%
-  filter(item1 == &quot;quantum&quot;)
-## # A tibble: 6,351 x 3
+  filter(item1 == &quot;quantum&quot;)</code></pre>
+<pre><code>## # A tibble: 6,351 x 3
 ##    item1   item2           n
 ##    &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;
 ##  1 quantum niobate       116
@@ -1361,9 +1330,7 @@ parells %&gt;%
 ## 10 quantum integrated     52
 ## # ... with 6,341 more rows</code></pre>
 <p>Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un post anterior.</p>
-<pre class="r"><code>
-    
-#primer hem de transformar el nostre dataset netissim en una matriu dtm (inversament a com havíem fet abans). això ho podem fer amb cast_dtm
+<pre class="r"><code>#primer hem de transformar el nostre dataset netissim en una matriu dtm (inversament a com havíem fet abans). això ho podem fer amb cast_dtm
 netissim_dtm &lt;- netissim %&gt;%
   cast_dtm(document, term, count)
  
@@ -1375,20 +1342,20 @@ lda_netissim &lt;- LDA(netissim_dtm, k = 9, control = list(alpha = 0.1)) #decidi
  
 #per extraure les probabilitats que una paraula pertanyi a un topic (això s&#39;anomena beta)
 topics_netissim &lt;- tidy(lda_netissim, matrix = &quot;beta&quot;)
-topics_netissim
-## # A tibble: 303,336 x 3
+topics_netissim</code></pre>
+<pre><code>## # A tibble: 303,336 x 3
 ##    topic term        beta
 ##    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-##  1     1 (lapw) 3.28e-267
-##  2     2 (lapw) 1.05e-266
-##  3     3 (lapw) 8.40e-269
-##  4     4 (lapw) 4.90e-268
-##  5     5 (lapw) 2.97e-270
-##  6     6 (lapw) 2.60e-159
-##  7     7 (lapw) 6.70e-265
-##  8     8 (lapw) 1.70e-269
-##  9     9 (lapw) 4.29e-  5
-## 10     1 10%    1.04e- 58
+##  1     1 (lapw) 1.38e-212
+##  2     2 (lapw) 1.82e-194
+##  3     3 (lapw) 4.04e-  5
+##  4     4 (lapw) 4.95e-234
+##  5     5 (lapw) 8.27e-235
+##  6     6 (lapw) 8.99e-238
+##  7     7 (lapw) 2.51e-212
+##  8     8 (lapw) 5.27e-215
+##  9     9 (lapw) 2.24e-212
+## 10     1 10%    9.97e-186
 ## # ... with 303,326 more rows</code></pre>
 <p>Podem visualitzar els top termes de cada cluster amb barres de freqüència:</p>
 <pre class="r"><code>top_terms_per_clusters &lt;- topics_netissim  %&gt;%
@@ -1396,23 +1363,22 @@ topics_netissim
   top_n(10, beta) %&gt;%
   ungroup() %&gt;%
   arrange(topic, -beta)
-top_terms_per_clusters
-## # A tibble: 90 x 3
-##    topic term               beta
-##    &lt;int&gt; &lt;chr&gt;             &lt;dbl&gt;
-##  1     1 lithium         0.0107 
-##  2     1 primordial      0.00659
-##  3     1 cosmic          0.00559
-##  4     1 standard        0.00510
-##  5     1 big             0.00507
-##  6     1 nuclear         0.00505
-##  7     1 abundance       0.00502
-##  8     1 nucleosynthesis 0.00501
-##  9     1 bang            0.00491
-## 10     1 model           0.00408
-## # ... with 80 more rows
- 
-top_terms_per_clusters %&gt;%
+top_terms_per_clusters</code></pre>
+<pre><code>## # A tibble: 90 x 3
+##    topic term           beta
+##    &lt;int&gt; &lt;chr&gt;         &lt;dbl&gt;
+##  1     1 lithium     0.0114 
+##  2     1 line        0.00680
+##  3     1 using       0.00646
+##  4     1 model       0.00640
+##  5     1 phase       0.00430
+##  6     1 results     0.00402
+##  7     1 our         0.00339
+##  8     1 magnetic    0.00322
+##  9     1 lines       0.00312
+## 10     1 temperature 0.00306
+## # ... with 80 more rows</code></pre>
+<pre class="r"><code>top_terms_per_clusters %&gt;%
   mutate(term = reorder(term, beta)) %&gt;%
   ggplot(aes(term, beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
@@ -1420,8 +1386,7 @@ top_terms_per_clusters %&gt;%
   coord_flip()</code></pre>
 <p><img src="/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Un següent pas podria ser intentar representar les paraules del meu corpus com a vectors i així les podria visualitzar i veure’n associacions, etc. Això és el que es coneix com a word embeddings. Amb el paquet <em>wordVectors</em> podem implementar a R word2vec, el model de word embeddings basat amb xarxes neuronals desenvolupat per un equip de Google liderat per Tomas Mikolov.</p>
-<pre class="r"><code>
-#devtools::install_github(&quot;bmschmidt/wordVectors&quot;)
+<pre class="r"><code>#devtools::install_github(&quot;bmschmidt/wordVectors&quot;)
 library (wordVectors)
 # usem train_word2vec per generar els vectors a partir del meu corpus de text en txt
 # output és l&#39;arxiu binari que se&#39;m crea
@@ -1438,25 +1403,31 @@ wembe &lt;- read.vectors(&quot;wembe.bin&quot;)</code></pre>
 <p>Ara ja tinc vectors per cada terme.</p>
 <p>Amb la funció nearest_to() podem buscar paraules properes (per cosine similarity) a una paraula determinada.</p>
 <pre class="r"><code>#p.ex. paraules properes a biomechanics
-nearest_to(wembe, wembe[[&quot;quantum&quot;]], 20)
-##         quantum      processing        memories   long-distance           nodes 
-##    2.220446e-16    2.731515e-01    2.864091e-01    2.942382e-01    2.999700e-01 
-##   communication     processing.  communication.        networks       computers 
-##    3.048568e-01    3.061448e-01    3.184879e-01    3.292409e-01    3.431277e-01 
-##  communications         Quantum         optics,             OAM         optics. 
-##    3.441948e-01    3.473676e-01    3.521733e-01    3.529408e-01    3.549177e-01 
-##  communication,       metrology      photonics.       networks. implementations 
-##    3.556448e-01    3.608360e-01    3.611673e-01    3.617904e-01    3.619845e-01
-#o bé paraules properes a Marca
-nearest_to(wembe, wembe[[&quot;energy&quot;]], 20)
-##        energy      energies     renewable       storage          cost 
-##  5.551115e-16  3.657225e-01  3.673494e-01  3.790944e-01  4.028327e-01 
-##  intermittent       nucleus      cohesive     landscape      storage, 
-##  4.072102e-01  4.180601e-01  4.213371e-01  4.214097e-01  4.285336e-01 
-##   electricity       nucleon  reflectivity    volumetric       energy, 
-##  4.306393e-01  4.316119e-01  4.374523e-01  4.380036e-01  4.395769e-01 
-##    deployment technologies,       kinetic    adsorption  photovoltaic 
-##  4.449066e-01  4.463105e-01  4.477647e-01  4.506878e-01  4.559452e-01</code></pre>
+nearest_to(wembe, wembe[[&quot;quantum&quot;]], 20)</code></pre>
+<pre><code>##              quantum           processing                nodes 
+##         7.771561e-16         2.691523e-01         2.931102e-01 
+##        long-distance       communication.             memories 
+##         2.949265e-01         2.976279e-01         2.982884e-01 
+##          processing.        communication       communication, 
+##         3.045993e-01         3.158130e-01         3.367809e-01 
+##           photonics.            computers             networks 
+##         3.421153e-01         3.423821e-01         3.428619e-01 
+##              optics,       communications          information 
+##         3.461594e-01         3.484726e-01         3.517992e-01 
+## microwave-to-optical              optics.               memory 
+##         3.568599e-01         3.596302e-01         3.598758e-01 
+##          processing,                  OAM 
+##         3.604084e-01         3.604230e-01</code></pre>
+<pre class="r"><code>#o bé paraules properes a Marca
+nearest_to(wembe, wembe[[&quot;energy&quot;]], 20)</code></pre>
+<pre><code>##        energy      energies       storage     renewable       energy, 
+##  6.661338e-16  3.729517e-01  3.832055e-01  3.844993e-01  4.147995e-01 
+##          cost   electricity  intermittent      storage,       nucleus 
+##  4.194276e-01  4.310651e-01  4.342713e-01  4.467039e-01  4.470080e-01 
+##    adsorption    volumetric technologies,      cohesive    deployment 
+##  4.492977e-01  4.494481e-01  4.510785e-01  4.525472e-01  4.570511e-01 
+##     landscape  photovoltaic       nucleon    potential,        minima 
+##  4.592631e-01  4.630969e-01  4.661662e-01  4.677171e-01  4.682151e-01</code></pre>
 </div>
 <div id="reducció-de-la-dimensionalitat-amb-t-sne" class="section level1">
 <h1>Reducció de la dimensionalitat amb T-SNE</h1>
@@ -1476,8 +1447,8 @@ tsne_out &lt;- Rtsne(as.matrix(wembe[,1:100]), perplexity=30, theta=0.5, dims=2)
 <pre class="r"><code>jpeg(&quot;tsne_out.jpg&quot;, width=2400, height=1800) #indico l&#39;adreça del meu directori on guardar l&#39;arxiu d&#39;imatge tsne_out.jpg
 plot(tsne_out$Y, t=&#39;n&#39;)
 text(tsne_out$Y, labels=rownames(wembe))
-dev.off()
-## png 
+dev.off()</code></pre>
+<pre><code>## png 
 ##   2</code></pre>
 <p>Fins aquí aquest petit experiment de minería de textos i representació de paraules en un pla vectorial fent ús del model word2vec i de tècniques de reducció de la dimensionalitat (en concret t-sne).</p>
 </div>
