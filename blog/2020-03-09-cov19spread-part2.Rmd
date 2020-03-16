@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 _(darrera actualització 16/03/2020)_
 
-Continuant amb l'anàlisi de la propagacio del coronavirus del [post anterior](https://enricescorsa.netlify.com/blog/coronavirus/) també puc mirar l'evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar [aquí](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide).
+Continuant amb l'anàlisi de la propagació del coronavirus del [post anterior](https://enricescorsa.netlify.com/blog/coronavirus/) també puc mirar l'evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar [aquí](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide).
 
 Ho faig i la llegeixo amb _readxl_
 

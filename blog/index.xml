@@ -18,7 +18,7 @@
       
       <guid>/blog/coronavirus2/</guid>
       <description>Evolució dels casos de coronavirus a Europa(darrera actualització 16/03/2020)
-Continuant amb l’anàlisi de la propagacio del coronavirus del post anterior també puc mirar l’evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar aquí.
+Continuant amb l’anàlisi de la propagació del coronavirus del post anterior també puc mirar l’evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar aquí.
 Ho faig i la llegeixo amb readxl
 library(tidyverse)library(rvest)#després de descarregar-la, llegeixo la taula.library(readxl)COVID_19_distribucio_mundial &amp;lt;- read_excel(&amp;quot;Copia de COVID-19-geographic-disbtribution-worldwide-2020-03-15.</description>
     </item>
