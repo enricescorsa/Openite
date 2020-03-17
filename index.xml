@@ -12,26 +12,26 @@
     
     
     <item>
-      <title>Evolució del coronavirus a Europa</title>
+      <title>Evolució dels casos de COVID-19 a Europa</title>
       <link>/blog/coronavirus2/</link>
       <pubDate>Mon, 16 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/coronavirus2/</guid>
-      <description>Evolució dels casos de coronavirus a Europa(darrera actualització 16/03/2020)
+      <description>(darrera actualització 17/03/2020)
 Continuant amb l’anàlisi de la propagació del coronavirus del post anterior també puc mirar l’evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar aquí.
 Ho faig i la llegeixo amb readxl
-library(tidyverse)library(rvest)#després de descarregar-la, llegeixo la taula.library(readxl)COVID_19_distribucio_mundial &amp;lt;- read_excel(&amp;quot;Copia de COVID-19-geographic-disbtribution-worldwide-2020-03-15.</description>
+library(tidyverse)library(rvest)#després de descarregar-la, llegeixo la taula.library(readxl)COVID_19_distribucio_mundial &amp;lt;- read_excel(&amp;quot;COVID-19-geographic-disbtribution-worldwide-2020-03-16.xls&amp;quot;)View(COVID_19_distribucio_mundial)EvolucióRepresentem gràfics per país de l’evolució dels casos a Europa</description>
     </item>
     
     <item>
-      <title>Mapa interactiu de l&#39;expansió del cov-19</title>
+      <title>Mapa interactiu de l&#39;expansió del COVID-19</title>
       <link>/blog/coronavirus/</link>
       <pubDate>Sun, 02 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/coronavirus/</guid>
-      <description>Evolució dels casos de coronavirus a temps real(darrera actualització 14/03/2020)
+      <description>(darrera actualització 17/03/2020)
 Anem a estudiar l’evolució dels casos de coronavirus a temps real. Prenc les dades del European Centre for Disease Prevention and Control (https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases) (usant el paquet per fer webscrapping de r, rvest)
-library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)head(taules)## {xml_nodeset (1)}## [1] &amp;lt;table class=&amp;quot;table table-bordered table-condensed table-striped&amp;quot;&amp;gt;\n&amp;lt;thea .</description>
+library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)head(taules)## {xml_nodeset (1)}## [1] &amp;lt;table class=&amp;quot;table table-bordered table-condensed table-striped&amp;quot;&amp;gt;\n&amp;lt;thea ...llista_de_taules &amp;lt;- paginaecdc %&amp;gt;%html_nodes(&amp;quot;table&amp;quot;) %&amp;gt;%.</description>
     </item>
     
     <item>

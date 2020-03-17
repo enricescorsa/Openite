@@ -16,8 +16,8 @@
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/coronavirus2/" />
-<meta property="og:title" content="Evolució del coronavirus a Europa" />
-<meta property="twitter:title" content="Evolució del coronavirus a Europa">
+<meta property="og:title" content="Evolució dels casos de COVID-19 a Europa" />
+<meta property="twitter:title" content="Evolució dels casos de COVID-19 a Europa">
 
     <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
@@ -29,7 +29,7 @@
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - Evolució del coronavirus a Europa 
+     Enric Escorsa O&#39;Callaghan - Evolució dels casos de COVID-19 a Europa 
 
 </title>
 <link rel="canonical" href="/blog/coronavirus2/">
@@ -1124,7 +1124,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     <div class="page-heading">
 
     
-    Evolució del coronavirus a Europa
+    Evolució dels casos de COVID-19 a Europa
     
 
 </div>
@@ -1138,7 +1138,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                         
                     
                     
-                    <div class="reading-time middot">1 minute read</div>
+                    <div class="reading-time middot">2 minute read</div>
                     
                     
                       <div class="tags">
@@ -1165,9 +1165,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     
 
 
-<div id="evolució-dels-casos-de-coronavirus-a-europa" class="section level2">
-<h2>Evolució dels casos de coronavirus a Europa</h2>
-<p><em>(darrera actualització 16/03/2020)</em></p>
+<p><em>(darrera actualització 17/03/2020)</em></p>
 <p>Continuant amb l’anàlisi de la propagació del coronavirus del <a href="https://enricescorsa.netlify.com/blog/coronavirus/">post anterior</a> també puc mirar l’evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar <a href="https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide">aquí</a>.</p>
 <p>Ho faig i la llegeixo amb <em>readxl</em></p>
 <pre class="r"><code>library(tidyverse)
@@ -1175,35 +1173,53 @@ library(rvest)
 #després de descarregar-la, llegeixo la taula.
 
 library(readxl)
-COVID_19_distribucio_mundial &lt;- read_excel(&quot;Copia de COVID-19-geographic-disbtribution-worldwide-2020-03-15.xls&quot;)
+COVID_19_distribucio_mundial &lt;- read_excel(&quot;COVID-19-geographic-disbtribution-worldwide-2020-03-16.xls&quot;)
 View(COVID_19_distribucio_mundial)</code></pre>
 <div id="evolució" class="section level3">
 <h3>Evolució</h3>
 <p>Representem gràfics per país de l’evolució dels casos a Europa</p>
 <pre class="r"><code>COVID_19_eu &lt;- COVID_19_distribucio_mundial %&gt;% filter(EU == &quot;EU&quot;)
 
-ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
+ggplot(COVID_19_eu, aes(x = DateRep, y = log10(NewConfCases))) + geom_line() +
     facet_wrap(~CountryExp, scales = &quot;free_y&quot;) +
-    ggtitle(&quot;Evolució de nous casos de Coronavirus a Europa&quot;) +
-    theme_minimal()</code></pre>
+    ggtitle(&quot;Evolució de nous casos de COVID-19&quot;) +
+    labs(subtitle = &quot;Europa&quot;) + theme_minimal()</code></pre>
 <p><img src="/blog/2020-03-09-cov19spread-part2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Evolució de nous casos a països propers</p>
 <pre class="r"><code>COVID_19_paisos &lt;- COVID_19_distribucio_mundial %&gt;% filter(CountryExp == c(&quot;Spain&quot;,&quot;Germany&quot;,&quot;France&quot;,&quot;Portugal&quot;))
 
 COVID_19_evolucio &lt;-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle(&quot;Evolució de nous casos de Coronavirus a Espanya, França, Alemanya i Portugal&quot;)
-COVID_19_evolucio</code></pre>
+    ggtitle(&quot;Evolució de Nous Casos de COVID-19&quot;) +
+  labs(subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;)
+
+COVID_19_evolucio_log &lt;-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line() + theme_minimal() +
+    ggtitle(&quot;Evolució de Nous Casos de COVID-19 (escala logarítmica)&quot;) +
+  labs(subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;)
+
+       
+#usem el paquet patchwork per posar els dos plots junts
+library(patchwork)
+
+COVID_19_evolucio / COVID_19_evolucio_log</code></pre>
 <p><img src="/blog/2020-03-09-cov19spread-part2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Evolució de noves morts a països propers</p>
-<pre class="r"><code>COVID_19_spain &lt;- COVID_19_distribucio_mundial %&gt;% filter(CountryExp == c(&quot;Spain&quot;,&quot;Germany&quot;,&quot;France&quot;))
+<pre class="r"><code>COVID_19_spain &lt;- COVID_19_distribucio_mundial %&gt;% filter(CountryExp == c(&quot;Spain&quot;,&quot;Germany&quot;,&quot;France&quot;,&quot;Portugal&quot;))
 
 COVID_19_evolucio &lt;-ggplot(COVID_19_spain, aes(x = DateRep, y = NewDeaths, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle(&quot;Evolució de les morts per Coronavirus a Espanya, França, Alemanya i Portugal&quot;)
-COVID_19_evolucio</code></pre>
+    ggtitle(&quot;Evolució de les Morts per COVID-19&quot;) +
+  labs(subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;)
+
+COVID_19_evolucio_log &lt;-ggplot(COVID_19_spain, aes(x = DateRep, y = log10(NewDeaths), col = CountryExp)) + geom_line() + theme_minimal() +
+    ggtitle(&quot;Evolució de les Morts per COVID-19 (escala logarítmica)&quot;) +
+  labs(subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;)
+
+#usem el paquet patchwork per posar els dos plots junts
+library(patchwork)
+
+COVID_19_evolucio / COVID_19_evolucio_log</code></pre>
 <p><img src="/blog/2020-03-09-cov19spread-part2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p><em>(gràfics generats el primer cop a dia 16/03/2020)</em></p>
+<p><em>(gràfics generats el primer cop a dia 17/03/2020)</em></p>
 <p>`</p>
-</div>
 </div>
 
 
@@ -1231,7 +1247,7 @@ COVID_19_evolucio</code></pre>
                 
                 <div>
                     <img class="icon" src="/img/back.svg" alt="back" />
-                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del cov-19</a>
+                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del COVID-19</a>
                 </div>
                 
                 <div style="width: 100%;"></div>

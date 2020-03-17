@@ -1,5 +1,5 @@
 ---
-title: "Evolució del coronavirus a Europa"
+title: "Evolució dels casos de COVID-19 a Europa"
 author: Enric Escorsa
 date: '2020-03-16'
 slug: coronavirus2
@@ -15,9 +15,8 @@ meta_img: /images/image.jpg
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Evolució dels casos de coronavirus a Europa
 
-_(darrera actualització 16/03/2020)_
+_(darrera actualització 17/03/2020)_
 
 Continuant amb l'anàlisi de la propagació del coronavirus del [post anterior](https://enricescorsa.netlify.com/blog/coronavirus/) també puc mirar l'evolució dels casos al món descarregant-me la taula que la European Centre for Disease Prevention and Control posa a disposició en excel i que us podeu descarregar [aquí](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide).
 
@@ -29,7 +28,7 @@ library(rvest)
 #després de descarregar-la, llegeixo la taula.
 
 library(readxl)
-COVID_19_distribucio_mundial <- read_excel("Copia de COVID-19-geographic-disbtribution-worldwide-2020-03-15.xls")
+COVID_19_distribucio_mundial <- read_excel("COVID-19-geographic-disbtribution-worldwide-2020-03-16.xls")
 View(COVID_19_distribucio_mundial)
 
 ```
@@ -42,10 +41,10 @@ Representem gràfics per país de l'evolució dels casos a Europa
 
 COVID_19_eu <- COVID_19_distribucio_mundial %>% filter(EU == "EU")
 
-ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
+ggplot(COVID_19_eu, aes(x = DateRep, y = log10(NewConfCases))) + geom_line() +
     facet_wrap(~CountryExp, scales = "free_y") +
-    ggtitle("Evolució de nous casos de Coronavirus a Europa") +
-    theme_minimal()
+    ggtitle("Evolució de nous casos de COVID-19") +
+    labs(subtitle = "Europa") + theme_minimal()
 ```
 
 Evolució de nous casos a països propers
@@ -54,23 +53,43 @@ Evolució de nous casos a països propers
 COVID_19_paisos <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France","Portugal"))
 
 COVID_19_evolucio <-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de nous casos de Coronavirus a Espanya, França, Alemanya i Portugal")
-COVID_19_evolucio
+    ggtitle("Evolució de Nous Casos de COVID-19") +
+  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+
+COVID_19_evolucio_log <-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line() + theme_minimal() +
+    ggtitle("Evolució de Nous Casos de COVID-19 (escala logarítmica)") +
+  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+
+       
+#usem el paquet patchwork per posar els dos plots junts
+library(patchwork)
+
+COVID_19_evolucio / COVID_19_evolucio_log
+
 ```
 
 
 Evolució de noves morts a països propers
 
 ```{r, warning=FALSE}
-COVID_19_spain <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France"))
+COVID_19_spain <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France","Portugal"))
 
 COVID_19_evolucio <-ggplot(COVID_19_spain, aes(x = DateRep, y = NewDeaths, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de les morts per Coronavirus a Espanya, França, Alemanya i Portugal")
-COVID_19_evolucio
+    ggtitle("Evolució de les Morts per COVID-19") +
+  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+
+COVID_19_evolucio_log <-ggplot(COVID_19_spain, aes(x = DateRep, y = log10(NewDeaths), col = CountryExp)) + geom_line() + theme_minimal() +
+    ggtitle("Evolució de les Morts per COVID-19 (escala logarítmica)") +
+  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+
+#usem el paquet patchwork per posar els dos plots junts
+library(patchwork)
+
+COVID_19_evolucio / COVID_19_evolucio_log
 ```
 
 
 
-_(gràfics generats el primer cop a dia 16/03/2020)_
+_(gràfics generats el primer cop a dia 17/03/2020)_
 
 ` 
