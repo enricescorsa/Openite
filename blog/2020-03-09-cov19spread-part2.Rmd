@@ -41,10 +41,10 @@ Representem gràfics per país de l'evolució dels casos a Europa
 
 COVID_19_eu <- COVID_19_distribucio_mundial %>% filter(EU == "EU")
 
-ggplot(COVID_19_eu, aes(x = DateRep, y = log10(NewConfCases))) + geom_line() +
+ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
     facet_wrap(~CountryExp, scales = "free_y") +
     ggtitle("Evolució de nous casos de COVID-19") +
-    labs(subtitle = "Europa") + theme_minimal()
+    labs(subtitle = "Europa", x = "Data", y = "Nous casos confirmats") + theme_minimal()
 ```
 
 Evolució de nous casos a països propers
@@ -52,19 +52,19 @@ Evolució de nous casos a països propers
 ```{r, warning=FALSE}
 COVID_19_paisos <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France","Portugal"))
 
-COVID_19_evolucio <-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de Nous Casos de COVID-19") +
-  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+COVID_19_evolucio <-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
+    labs(title = "Evolució de Nous Casos de COVID-19", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous casos confirmats")
 
-COVID_19_evolucio_log <-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de Nous Casos de COVID-19 (escala logarítmica)") +
-  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+COVID_19_evolucio_log <-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
+    labs(title = "Evolució de Nous Casos de COVID-19 (escala logarítmica)", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous casos confirmats")
 
        
 #usem el paquet patchwork per posar els dos plots junts
 library(patchwork)
 
-COVID_19_evolucio / COVID_19_evolucio_log
+
+combinat<- COVID_19_evolucio / COVID_19_evolucio_log & theme(legend.position = "right", legend.title=element_blank())
+combinat + plot_layout(guides = "collect")
 
 ```
 
@@ -74,18 +74,16 @@ Evolució de noves morts a països propers
 ```{r, warning=FALSE}
 COVID_19_spain <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France","Portugal"))
 
-COVID_19_evolucio <-ggplot(COVID_19_spain, aes(x = DateRep, y = NewDeaths, col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de les Morts per COVID-19") +
-  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+COVID_19_morts <-ggplot(COVID_19_spain, aes(x = DateRep, y = NewDeaths, col = CountryExp)) + geom_line (size = 0.8) + theme_minimal() +
+  labs(title = "Evolució de les Morts per COVID-19", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Morts confirmades")
 
-COVID_19_evolucio_log <-ggplot(COVID_19_spain, aes(x = DateRep, y = log10(NewDeaths), col = CountryExp)) + geom_line() + theme_minimal() +
-    ggtitle("Evolució de les Morts per COVID-19 (escala logarítmica)") +
-  labs(subtitle = "Espanya, França, Alemanya i Portugal")
+COVID_19_morts_log <-ggplot(COVID_19_spain, aes(x = DateRep, y = log10(NewDeaths), col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() + labs(title = "Evolució de les Morts per COVID-19 (escala logarítmica)", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Morts confirmades")
 
 #usem el paquet patchwork per posar els dos plots junts
 library(patchwork)
 
-COVID_19_evolucio / COVID_19_evolucio_log
+combinatm <- COVID_19_morts / COVID_19_morts_log & theme(legend.position = "right", , legend.title=element_blank())
+combinatm + plot_layout(guides = "collect")
 ```
 
 
