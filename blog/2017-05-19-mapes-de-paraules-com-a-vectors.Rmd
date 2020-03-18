@@ -30,7 +30,7 @@ En aquest post vull indagar una mica en l’ús d’eines i potencialitats recen
 Ho he volgut provar a partir d’una cerca de publicacions científiques sobre el liti. Potser és un conjunt de dades una mica massa petit (tinc no arriba a 3.000 registres de publicacions), però anem a veure què passa.
 
 
-# Obtenir i preparar el text a analitzar
+## Obtenir i preparar el text a analitzar
 
 ```{r message = FALSE, warning = FALSE}
 #D'entrada carreguem paquets necessaris per fer minería de textos amb R
@@ -96,7 +96,7 @@ net %>%
  
 #Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
 elsmeusstopwords <- tibble(term = c(as.character(1:10),
-                                    "the", "and", "for", "this", "between", "than", "through", "but", "have", "been", "these", "that", "are", "from", "with", "their", "such", "also", "then", "was", "were", "which", "has", "its", "this", "can", "paper", "study", "presents", "while"))
+                                    "the", "results", "our", "very", "stars.", "found", "using", "show", "based", "present", "find", "not", "observed", "both", "and", "for", "this", "between", "than", "when", "through", "but", "have", "been", "these", "that", "two","used", "are", "from", "with", "their", "such", "also", "then", "was", "were", "which", "has", "its", "this", "can", "paper", "study", "presents", "while", "abundances"))
 netissim <- net %>%
   anti_join(elsmeusstopwords)
 View(netissim)
@@ -107,17 +107,17 @@ netissim %>%
 ```
 
 
-# Visualitzacions del contingut
+## Visualitzacions del contingut
 
 Arribats a aquest punt podem fer un núvol d’etiquetes dels termes amb el paquet wordcloud per tenir una primera visualització general dels continguts.
 
 ```{r message = FALSE, warning = FALSE}
 library(wordcloud)
+paleta <- c("#E7298A", "#CE1256", "#980043")
 netissim %>%
   anti_join(elsmeusstopwords) %>%
   count(term) %>%
-  with(wordcloud(term, n, max.words = 100))
-
+  with(wordcloud(term, n, max.words = 95, colors = paleta))
 ```
 
 
@@ -162,7 +162,7 @@ parells %>%
 
 
 
-Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. niobate)
+Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. "quantum" o "niobate")
 
 ```{r message = FALSE, warning = FALSE}
 parells %>%
@@ -207,7 +207,7 @@ top_terms_per_clusters %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
   geom_col(show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free") +
-  coord_flip()
+  coord_flip() + theme_minimal()
 ```
 
 
@@ -238,51 +238,36 @@ Ara ja tinc vectors per cada terme.
 Amb la funció nearest_to() podem buscar paraules properes (per cosine similarity) a una paraula determinada.
 
 ```{r message = FALSE, warning = FALSE}
-#p.ex. paraules properes a biomechanics
+#p.ex. paraules properes a "quantum"
 nearest_to(wembe, wembe[["quantum"]], 20)
-#o bé paraules properes a Marca
+#o bé paraules properes a "energy"
 nearest_to(wembe, wembe[["energy"]], 20)
 ```
 
 	
 
-# Reducció de la dimensionalitat amb T-SNE
+## Reducció de la dimensionalitat amb T-SNE
 
 Seria convenient reduir la dimensionalitat amb la tècnica coneguda com t-distributed stochastic neighbor embedding (t-sne) que ens permet obtenir vectors simples amb paraules amb 2 dimensions (x i y) que podrem situar al pla vectorial i visualitzar-les. Per saber-ne més sobre t-sne recomano llegir https://lvdmaaten.github.io/tsne
 
-De fet, si intentem fer una representació dels meus word embeddings en base a unes paraules d’interès, R implícitament força una reducció de dimensionalitat amb tsne.
+Usem el paquet _rtsne_ per generar la visualització amb tsne.
 
-```{r message = FALSE, warning = FALSE}
-library(tsne)
-plot(
-  x = wembe,
-  y = wembe[[c("solar", "energy")]]
-)
-
-```
-
-	
-
-Però millor usar el paquet rtsne per generar la visualització amb tsne.
-
-```{r message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE, comment=FALSE}
 library(Rtsne)
 # set.seed(42) si vull definir una seed per reproduir-ho sempre igual
 tsne_out <- Rtsne(as.matrix(wembe[,1:100]), perplexity=30, theta=0.5, dims=2) # executar TSNE (i passar el vector a 2 dimensions)
 ```
 
+Finalment guardo els resultats en un arxiu  en format jpeg gran que em pugui descarregar per poder-lo obrir localment i fer-hi zooms per tal d'observar aquestes relacions interessants entre paraules.
 
-
-Finalment fem generar els resultats en un arxiu jpeg gran que me’l pugui descarregar i fer-hi zooms per observar aquestes relacions interessants entre paraules.
-
-```{r message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE, comment=FALSE}
 jpeg("tsne_out.jpg", width=2400, height=1800) #indico l'adreça del meu directori on guardar l'arxiu d'imatge tsne_out.jpg
 plot(tsne_out$Y, t='n')
 text(tsne_out$Y, labels=rownames(wembe))
 dev.off()
 ```
 
-
+![](/blog/2017-05-19-mapes-de-paraules-com-a-vectors_files/stne_out.PNG)
 
 Fins aquí aquest petit experiment de minería de textos i representació de paraules en un pla vectorial fent ús del model word2vec i de tècniques de reducció de la dimensionalitat (en concret t-sne).
 

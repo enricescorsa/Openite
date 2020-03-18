@@ -35683,7 +35683,7 @@ $\chi^{(2)}$ nonlinear optical processes.
 "
 "  Thermal electrochemical models for porous electrode batteries (such as
 lithium ion batteries) are widely used. Due to the multiple scales involved,
-solving the model accounting for the porous microstructre is computationally
+solving the model accounting for the porous microstructure is computationally
 expensive, therefore effective models at the macroscale are preferable.
 However, these effective models are usually postulated ad hoc rather than
 systematically upscaled from the microscale equations. We present an effective
@@ -35693,8 +35693,8 @@ model that can be defined either at the cell or the battery level. The main
 aspects of the model are the consideration of thermal effects, the diffusion
 effects in the electrode particles, and the anisotropy of the material based on
 the microstructure, all of them incorporated in a systematic manner. We also
-compare the homogenised model with the standard electrochemical Doyle, Fuller
-\& Newman model.
+compare the homogenised model with the standard electrochemical Doyle, Fuller &
+Newman model.
 "
 "  Electronic structure of layered LiNiO2 has been controversial despite
 numerous theoretical and experimental reports regarding its nature. We
@@ -37538,4 +37538,32 @@ among normal giants is about one percent and slightly dependent on metallicity
 ([Fe/H]). Li-enriched and normal giants are found to have similar projected
 rotational velocity which suggest that Li-enrichment in giants is not linked to
 scenarios such as mergers and tidal interaction between binary stars.
+"
+"  Lithium niobate photonic chip could realize diverse optical engineering for
+various applications benefiting from its excellent optical performances. In
+this letter, we demonstrate monolithic photonic chips for multi-channel
+sum-frequency conversion based on reverse-proton-exchange periodically poled
+lithium niobate waveguides, with the different channels showing uniform and
+excellent conversion efficiencies. To obtain a robust device and provide a
+convenient interface for applications, the integrated chip is fiber coupled
+with two fiber arrays. The packaged chip then forms the core of a multi-channel
+up conversion single photon detector. In each channel the input signal
+interacts with a 1950-nm single frequency pump laser and the sum frequency
+output is spectrally filtered and detected by a silicon avalanche photodiode.
+Average detection efficiency (DE) of 23.2 % and noise count rate (NCR) of 557
+counts per second (cps) are achieved, with a standard deviation of 2.73 % and
+48 cps over the 30 channels, as well as optical isolation (OI) between nearby
+channels of more than 71 dB, which are excellent for the extensive applications
+of monolithic photonic chips in fields including deep space laser
+communication, high-rate quantum key distribution and single-photon imaging.
+"
+"  We report the efficient generation of high-gain parametric down-conversion,
+including pump depletion, with pump powers as low as 100 $\mu$W (energies
+$0.1$~$\mu$J/pulse) and conversion efficiencies up to 33%. In our simple
+configuration, the pump beam is tightly focused into a periodically poled
+lithium niobate crystal placed in free space. We also observe a recasting of
+the photon number statistics for both the pump and the down-converted beams as
+the pump power increases to reach the depleted pump regime. We interpret our
+experimental results as a clear signature of the interplay between the pump and
+the PDC beams in highly efficient parametric down-conversion sources.
 "
