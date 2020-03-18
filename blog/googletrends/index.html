@@ -1170,24 +1170,34 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 <p>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb <em>Google Trends</em>. Hi ha un paquet convenient per fer-ho amb r: el paquet <em>gtrendsR</em>. Provem-lo:</p>
+<pre class="r"><code>#primer carreguem el paqeut gtrendsR
+library(gtrendsR)</code></pre>
 <div id="tendència-els-darrers-anys" class="section level3">
 <h3>Tendència els darrers anys</h3>
-<p>Mirem la tendència en les cerques sobre “Coronavirus” arreu del món</p>
+<p>Mirem la tendència en les cerques sobre “Coronavirus” arreu del món.</p>
+<pre class="r"><code>library(gtrendsR)
+trend &lt;- gtrends(&quot;coronavirus&quot;)
+plot(trend)</code></pre>
 <p><img src="/blog/2020-03-18-google-trends_files/figure-html/trends-1.png" width="672" /></p>
 </div>
 <div id="tendència-en-els-darrers-mesos" class="section level3">
 <h3>Tendència en els darrers mesos:</h3>
-<p>Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya i EE.UU.</p>
+<p>Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya, Portugal i EE.UU.</p>
+<pre class="r"><code>library(gtrendsR)
+
+trend &lt;- gtrends(c(&quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;), time = &quot;today 1-m&quot;, geo = c(&quot;FR&quot;, &quot;IT&quot;, &quot;ES&quot;, &quot;US&quot;, &quot;PT&quot;))
+plot(trend)</code></pre>
 <p><img src="/blog/2020-03-18-google-trends_files/figure-html/trendsmes-1.png" width="672" /></p>
 </div>
 <div id="en-les-darreres-4-hores" class="section level3">
 <h3>En les darreres 4 hores:</h3>
-<p>Interès en “coronavirus” (nombre de hits en el temps) en les darreres 4 hores
-<img src="/blog/2020-03-18-google-trends_files/figure-html/resultrends-1.png" width="672" /></p>
+<p>Interès en “coronavirus” (nombre de hits en el temps) en les darreres 4 hores.</p>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/resultrends-1.png" width="672" /></p>
 </div>
 <div id="top-temes-relacionats" class="section level3">
 <h3>Top temes relacionats:</h3>
 <p>Resultats de temes relacionats amb “coronavirus”:</p>
+<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_topics, 15)</code></pre>
 <pre><code>##    subject related_topics                    value     keyword category
 ## 1      100            top              Coronavirus coronavirus        0
 ## 2        8            top                  Symptom coronavirus        0
@@ -1207,7 +1217,8 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 </div>
 <div id="top-cerques-relacionades" class="section level3">
 <h3>Top cerques relacionades:</h3>
-<p>cerques relacionades amb “coronavirus”:</p>
+<p>Cerques relacionades amb “coronavirus”:</p>
+<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_queries, 15)</code></pre>
 <pre><code>##    subject related_queries                value     keyword category
 ## 1      100             top               corona coronavirus        0
 ## 2       93             top coronavirus symptoms coronavirus        0
@@ -1215,7 +1226,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 ## 4       82             top                virus coronavirus        0
 ## 5       76             top     coronavirus news coronavirus        0
 ## 6       57             top         corona virus coronavirus        0
-## 7       53             top    coronavirus cases coronavirus        0
+## 7       54             top    coronavirus cases coronavirus        0
 ## 8       51             top    china coronavirus coronavirus        0
 ## 9       47             top   coronavirus italia coronavirus        0
 ## 10      46             top       coronavirus uk coronavirus        0
@@ -1228,6 +1239,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <div id="interès-per-ciutat" class="section level3">
 <h3>Interès per Ciutat:</h3>
 <p>Interès en “coronavirus” per Ciutat</p>
+<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$interest_by_city, 15)</code></pre>
 <pre><code>##     location hits     keyword   geo gprop
 ## 1    Bologna   NA coronavirus world   web
 ## 2      Turin   NA coronavirus world   web
@@ -1244,18 +1256,19 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 ## 13 Barcelona   61 coronavirus world   web
 ## 14  San Jose   NA coronavirus world   web
 ## 15     Plano   NA coronavirus world   web</code></pre>
+<p>Milano, Roma, Madrid, Barcelona…</p>
 </div>
 <div id="tendències-per-categoria-temàtica" class="section level3">
 <h3>Tendències per categoria temàtica</h3>
-<p>Google classifica les cèrques en categories temàtiques.
+<p>Google classifica les cerques en categories temàtiques.
 Assigna un codi específic a cada categoria.
 p.ex. la categoria Salut, té el codi 45.</p>
-<p>Tendències cerca de “coronavirus” en categoria Salut
-<img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports-1.png" width="672" /></p>
+<p>Tendències cerca de “coronavirus” en categoria Salut</p>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports-1.png" width="672" /></p>
 <div id="p.ex.-categoria-negocis-i-industria" class="section level4">
 <h4>p.ex. categoria Negocis i Industria</h4>
 <p>Tendències cerca de “coronavirus” en categoria “Business &amp; Industrial”.
-Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, “business”, “work”, “economy”, “poverty”), dins d’aquesta categoria.</p>
+Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, “business”, “work”, “economy”, “logistics”), dins d’aquesta categoria.</p>
 <p><img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports2-1.png" width="672" /></p>
 <p>Resultats temes relacionats amb “coronavirus” en categoria “Business &amp; Industrial”</p>
 <pre><code>##    subject related_topics            value     keyword category
@@ -1278,7 +1291,7 @@ Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, �
 </div>
 <div id="tendències-en-diferents-medis-de-google" class="section level3">
 <h3>Tendències en diferents medis de Google</h3>
-<p>Top Cerques relacionades amb “coronavirus” a <em>Youtube</em></p>
+<p>Resultats top cerques relacionades amb “coronavirus” a <em>Youtube</em></p>
 <pre><code>##    subject related_topics          value     keyword category
 ## 1      100            top    Coronavirus coronavirus        0
 ## 2        9            top          China coronavirus        0
@@ -1289,14 +1302,14 @@ Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, �
 ## 7        2            top          Wuhan coronavirus        0
 ## 8        1            top Italian people coronavirus        0
 ## 9        1            top         Mexico coronavirus        0
-## 10       1            top        Patient coronavirus        0
-## 11       1            top   Donald Trump coronavirus        0
-## 12       1            top       Hospital coronavirus        0
-## 13       1            top  Coronaviridae coronavirus        0
-## 14       1            top           Peru coronavirus        0
-## 15       1            top          Truth coronavirus        0</code></pre>
-<p>The Simpsons (?)…</p>
-<p>O Top cerques relacionades amb “coronavirus” a <em>Google News</em></p>
+## 10       1            top            Map coronavirus        0
+## 11       1            top        Patient coronavirus        0
+## 12       1            top   Donald Trump coronavirus        0
+## 13       1            top       Hospital coronavirus        0
+## 14       1            top  Coronaviridae coronavirus        0
+## 15       1            top           Peru coronavirus        0</code></pre>
+<p>…The Simpsons (?);)</p>
+<p>O top cerques relacionades amb “coronavirus” a <em>Google News</em></p>
 <pre><code>##     subject related_topics            value     keyword category
 ## 1       100            top      Coronavirus coronavirus        0
 ## 2         4            top            Italy coronavirus        0
