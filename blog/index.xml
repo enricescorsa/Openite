@@ -18,7 +18,7 @@
       
       <guid>/blog/googletrends/</guid>
       <description>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb Google Trends. Hi ha un paquet convenient per fer-ho amb r: el paquet gtrendsR. Provem-lo:
-Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” a tot el món
+Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” arreu del món
 Tendència en els darrers mesos:Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya i EE.</description>
     </item>
     

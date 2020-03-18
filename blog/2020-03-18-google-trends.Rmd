@@ -35,7 +35,7 @@ library(gtrendsR)
 
 ### Tendència els darrers anys 
 
-Mirem la tendència en les cerques sobre "Coronavirus" a tot el món
+Mirem la tendència en les cerques sobre "Coronavirus" arreu del món
 
 ```{r trends, echo=FALSE}
 library(gtrendsR)
@@ -52,44 +52,35 @@ Podem mostrar les diferents tendències segons localitzacions específiques: Xin
 
 library(gtrendsR)
 
-trend <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "today 1-m", geo = c("CN", "IT", "ES", "US"))
+trend <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "today 1-m", geo = c("FR", "IT", "ES", "US", "PT"))
 plot(trend)
 
 ```
 
-
-### En els darrers 7 dies:
-
-```{r trends7, echo=FALSE}
-
-library(gtrendsR)
-
-trend <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "now 7-d", geo = c("CN", "IT", "ES", "US"))
-plot(trend)
-```
 
 ### En les darreres 4 hores:
 
 Interès en "coronavirus" (nombre de hits en el temps) en les darreres 4 hores
 ```{r resultrends, echo=FALSE}
 
-quatrehores <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "now 4-H", geo = c("CN", "IT", "ES", "US"))
+quatrehores <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "now 4-H", geo = c("FR", "IT", "ES", "US", "PT"))
 plot (quatrehores)
 #si vull veure interes en dues regions: head(gtrends(c("Catalonia"), geo = c("GB", "US"))$interest_over_time)
 ```
+
 
 ### Top temes relacionats:
 
 Resultats de temes relacionats amb "coronavirus":
 ```{r top, echo=FALSE}
-head(gtrends("coronavirus")$related_topics, 10)
+head(gtrends("coronavirus")$related_topics, 15)
 ```
 
 ### Top cerques relacionades:
 
 cerques relacionades amb "coronavirus":
 ```{r toprelatedsearches, echo=FALSE}
-head(gtrends("coronavirus")$related_queries, 10)
+head(gtrends("coronavirus")$related_queries, 15)
 ```
 
 
@@ -97,7 +88,7 @@ head(gtrends("coronavirus")$related_queries, 10)
 
 Interès en "coronavirus" per Ciutat
 ```{r intcity, echo=FALSE}
-head(gtrends("coronavirus")$interest_by_city, 10)
+head(gtrends("coronavirus")$interest_by_city, 15)
 ```
 
 
@@ -115,9 +106,11 @@ plot(health)
 
 #### p.ex. categoria Negocis i Industria
 
-Tendències cerca de "coronavirus" en categoria "Business & Industrial"
+Tendències cerca de "coronavirus" en categoria "Business & Industrial". 
+Busquem quina és la tendència d'una sèrie de paraules ("coronavirus", "business", "work", "economy", "poverty"), dins d'aquesta categoria.
+
 ```{r topcatsports2, echo=FALSE}
-industry <- gtrends(c("coronavirus", "business", "work"),category = 12, time = "today 1-m" )
+industry <- gtrends(c("coronavirus", "business", "work", "economy", "poverty"),category = 12, time = "today 1-m" )
 plot(industry)
 ```
 
@@ -125,7 +118,7 @@ plot(industry)
 
 Resultats temes relacionats amb "coronavirus" en categoria "Business & Industrial"
 ```{r catsports, echo=FALSE}
-head(gtrends(c("coronavirus"), category = 12)$related_topics, 10)
+head(gtrends(c("coronavirus"), category = 12)$related_topics, 15)
 ```
 
 
@@ -134,13 +127,14 @@ head(gtrends(c("coronavirus"), category = 12)$related_topics, 10)
 
 Top Cerques relacionades amb "coronavirus" a _Youtube_
 ```{r topnewsrel, echo=FALSE}
-head(gtrends("coronavirus", gprop = "youtube")$related_topics, 10) 
+head(gtrends("coronavirus", gprop = "youtube")$related_topics, 15) 
 ```
 
-The Simpsons?...
+The Simpsons (?)...
 
-O Top cerques relacionades amb "coronavirus" a _google news_
+O Top cerques relacionades amb "coronavirus" a _Google News_
+
 ```{r toprisingnewsrel, echo=FALSE}
-head(gtrends("coronavirus", gprop = "news")$related_topics, 10) 
+head(gtrends("coronavirus", gprop = "news")$related_topics, 15) 
 ```
 
