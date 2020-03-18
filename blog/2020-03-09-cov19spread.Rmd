@@ -3,8 +3,15 @@ title: "Mapa interactiu de l'expansió del COVID-19"
 author: Enric Escorsa
 date: '2020-02-02'
 slug: coronavirus
-categories: []
-tags: []
+categories:
+  - experiments
+tags:  
+  - "covid-19"
+  - coronavirus
+  - visualization
+  - geolocation
+  - mapping
+  - leaflet
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''

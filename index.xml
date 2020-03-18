@@ -6,10 +6,21 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 16 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Google Trends</title>
+      <link>/blog/googletrends/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/googletrends/</guid>
+      <description>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb Google Trends. Hi ha un paquet convenient per fer-ho amb r: el paquet gtrendsR. Provem-lo:
+Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” a tot el món
+Tendència en els darrers mesos:Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya i EE.</description>
+    </item>
     
     <item>
       <title>Evolució dels casos de COVID-19 a Europa</title>
@@ -133,7 +144,9 @@ Amb el llenguatge de programació estadística R i usant el paquet wikipediatren
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/home/</guid>
-      <description>This is a blog about data &amp;amp; landscapes, an experiment and above all, an excuse to learn #Rstats</description>
+      <description>This is a blog about data &amp;amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go
+ Aquest és un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprender a programar en #Rstats i compartir el que aprenc sobre la marxa
+ Este es un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</description>
     </item>
     
     <item>

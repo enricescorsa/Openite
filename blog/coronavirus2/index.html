@@ -1145,6 +1145,12 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     
                         <ul>
                           
+                            <li class="middot"><a href="/tags/covid-19">covid-19</a> </li>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
+                          
+                            <li class="middot"><a href="/tags/visualization">visualization</a> </li>
+                          
                         </ul>
                     </div>
                     <div class="tags">
@@ -1180,7 +1186,7 @@ View(COVID_19_distribucio_mundial)</code></pre>
 <p>Representem gràfics per país de l’evolució dels casos a Europa</p>
 <pre class="r"><code>COVID_19_eu &lt;- COVID_19_distribucio_mundial %&gt;% filter(EU == &quot;EU&quot;)
 
-ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
+ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line(color = &quot;#FBA25C&quot;) +
     facet_wrap(~CountryExp, scales = &quot;free_y&quot;) +
     ggtitle(&quot;Evolució de nous casos de COVID-19&quot;) +
     labs(subtitle = &quot;Europa&quot;, x = &quot;Data&quot;, y = &quot;Nous casos confirmats&quot;) + theme_minimal()</code></pre>
@@ -1189,10 +1195,10 @@ ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
 <pre class="r"><code>COVID_19_paisos &lt;- COVID_19_distribucio_mundial %&gt;% filter(CountryExp == c(&quot;Spain&quot;,&quot;Germany&quot;,&quot;France&quot;,&quot;Portugal&quot;))
 
 COVID_19_evolucio &lt;-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
-    labs(title = &quot;Evolució de Nous Casos de COVID-19&quot;, subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;, x = &quot;Data&quot;, y = &quot;Nous casos confirmats&quot;)
+    labs(title = &quot;Evolució de Nous Casos de COVID-19&quot;, subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;, x = &quot;Data&quot;, y = &quot;Nous Casos confirmats&quot;)
 
 COVID_19_evolucio_log &lt;-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
-    labs(title = &quot;Evolució de Nous Casos de COVID-19 (escala logarítmica)&quot;, subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;, x = &quot;Data&quot;, y = &quot;Nous casos confirmats&quot;)
+    labs(title = &quot;Evolució de Nous Casos de COVID-19 (escala logarítmica)&quot;, subtitle = &quot;Espanya, França, Alemanya i Portugal&quot;, x = &quot;Data&quot;, y = &quot;Nous Casos confirmats&quot;)
 
        
 #usem el paquet patchwork per posar els dos plots junts
@@ -1249,6 +1255,11 @@ combinatm + plot_layout(guides = &quot;collect&quot;)</code></pre>
                 </div>
                 
                 <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/googletrends/">Google Trends</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
                 
             </div>
             

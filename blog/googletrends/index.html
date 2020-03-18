@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.63.2" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Enric Escorsa O&#39;Callaghan" />
-<meta property="twitter:title" content="Enric Escorsa O&#39;Callaghan">
+<meta property="og:url" content="/blog/googletrends/" />
+<meta property="og:title" content="Google Trends" />
+<meta property="twitter:title" content="Google Trends">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="A blog about data &amp; landscapes.">
-<meta property="twitter:description" content="A blog about data &amp; landscapes.">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Enric Escorsa O&#39;Callaghan
+     Enric Escorsa O&#39;Callaghan - Google Trends 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/googletrends/">
 
 
 <style media="screen">
@@ -1067,8 +1066,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Enric Escorsa O&#39;Callaghan" />
-
 
 </head>
 
@@ -1076,7 +1073,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1115,52 +1112,238 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p><em>This is a blog about data &amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go</em></p>
-<hr>
-<p><em>Aquest és un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprender a programar en #Rstats i compartir el que aprenc sobre la marxa</em></p>
-<hr>
-<p><em>Este es un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</em></p>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    Google Trends
+    
+
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Wed Mar 18 2020 00:00:00 UTC">Mar 18, 2020</div>
                     
-                        <li class="groupby">Mar, 2020</li>
                         
-                            <li class="post-item">
-    <span class="meta">Mar 18, 2020</span>
-    
-    <a href="/blog/"><span>Blog</span></a>
-    
-</li>
-
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
                         
                     
-                    </ul>
-
                     
-                
+                    <div class="reading-time middot">4 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/google-trends">google trends</a> </li>
+                          
+                            <li class="middot"><a href="/tags/trends">trends</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb <em>Google Trends</em>. Hi ha un paquet convenient per fer-ho amb r: el paquet <em>gtrendsR</em>. Provem-lo:</p>
+<div id="tendència-els-darrers-anys" class="section level3">
+<h3>Tendència els darrers anys</h3>
+<p>Mirem la tendència en les cerques sobre “Coronavirus” a tot el món</p>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trends-1.png" width="672" /></p>
+</div>
+<div id="tendència-en-els-darrers-mesos" class="section level3">
+<h3>Tendència en els darrers mesos:</h3>
+<p>Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya i EE.UU.</p>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trendsmes-1.png" width="672" /></p>
+</div>
+<div id="en-els-darrers-7-dies" class="section level3">
+<h3>En els darrers 7 dies:</h3>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trends7-1.png" width="672" /></p>
+</div>
+<div id="en-les-darreres-4-hores" class="section level3">
+<h3>En les darreres 4 hores:</h3>
+<p>Interès en “coronavirus” (nombre de hits en el temps) en les darreres 4 hores
+<img src="/blog/2020-03-18-google-trends_files/figure-html/resultrends-1.png" width="672" /></p>
+</div>
+<div id="top-temes-relacionats" class="section level3">
+<h3>Top temes relacionats:</h3>
+<p>Resultats de temes relacionats amb “coronavirus”:</p>
+<pre><code>##    subject related_topics            value     keyword category
+## 1      100            top      Coronavirus coronavirus        0
+## 2        8            top          Symptom coronavirus        0
+## 3        4            top            Virus coronavirus        0
+## 4        4            top            Italy coronavirus        0
+## 5        3            top            China coronavirus        0
+## 6        2            top Italian Language coronavirus        0
+## 7        2            top   Italian people coronavirus        0
+## 8        2            top            Spain coronavirus        0
+## 9        1            top        Influenza coronavirus        0
+## 10       1            top        Infection coronavirus        0</code></pre>
+</div>
+<div id="top-cerques-relacionades" class="section level3">
+<h3>Top cerques relacionades:</h3>
+<p>cerques relacionades amb “coronavirus”:</p>
+<pre><code>##    subject related_queries                value     keyword category
+## 1      100             top               corona coronavirus        0
+## 2       93             top coronavirus symptoms coronavirus        0
+## 3       88             top   coronavirus update coronavirus        0
+## 4       82             top                virus coronavirus        0
+## 5       76             top     coronavirus news coronavirus        0
+## 6       57             top         corona virus coronavirus        0
+## 7       53             top    coronavirus cases coronavirus        0
+## 8       51             top    china coronavirus coronavirus        0
+## 9       47             top   coronavirus italia coronavirus        0
+## 10      46             top       coronavirus uk coronavirus        0</code></pre>
+</div>
+<div id="interès-per-ciutat" class="section level3">
+<h3>Interès per Ciutat:</h3>
+<p>Interès en “coronavirus” per Ciutat</p>
+<pre><code>##    location hits     keyword   geo gprop
+## 1     Turin   NA coronavirus world   web
+## 2   Bologna   NA coronavirus world   web
+## 3    Naples   NA coronavirus world   web
+## 4     Milan  100 coronavirus world   web
+## 5  Florence   NA coronavirus world   web
+## 6      Rome   82 coronavirus world   web
+## 7  Valencia   NA coronavirus world   web
+## 8   Seville   NA coronavirus world   web
+## 9    Madrid   75 coronavirus world   web
+## 10     Lyon   NA coronavirus world   web</code></pre>
+</div>
+<div id="tendències-per-categoria-temàtica" class="section level3">
+<h3>Tendències per categoria temàtica</h3>
+<p>Google classifica les cèrques en categories temàtiques.
+Assigna un codi específic a cada categoria.
+p.ex. la categoria Salut, té el codi 45.</p>
+<p>Tendències cerca de “coronavirus” en categoria Salut
+<img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports-1.png" width="672" /></p>
+<div id="p.ex.-categoria-negocis-i-industria" class="section level4">
+<h4>p.ex. categoria Negocis i Industria</h4>
+<p>Tendències cerca de “coronavirus” en categoria “Business &amp; Industrial”
+<img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports2-1.png" width="672" /></p>
+<p>Resultats temes relacionats amb “coronavirus” en categoria “Business &amp; Industrial”</p>
+<pre><code>##    subject related_topics            value     keyword category
+## 1      100            top      Coronavirus coronavirus       12
+## 2        5            top            Italy coronavirus       12
+## 3        4            top            China coronavirus       12
+## 4        4            top Italian Language coronavirus       12
+## 5        4            top   Italian people coronavirus       12
+## 6        2            top          Symptom coronavirus       12
+## 7        2            top            Virus coronavirus       12
+## 8        2            top            Death coronavirus       12
+## 9        1            top            Spain coronavirus       12
+## 10       1            top     Disinfection coronavirus       12</code></pre>
+</div>
+</div>
+<div id="tendències-en-diferents-medis-de-google" class="section level3">
+<h3>Tendències en diferents medis de Google</h3>
+<p>Top Cerques relacionades amb “coronavirus” a <em>Youtube</em></p>
+<pre><code>##    subject related_topics          value     keyword category
+## 1      100            top    Coronavirus coronavirus        0
+## 2        9            top          China coronavirus        0
+## 3        7            top          Virus coronavirus        0
+## 4        3            top        Symptom coronavirus        0
+## 5        2            top          Italy coronavirus        0
+## 6        2            top   The Simpsons coronavirus        0
+## 7        2            top          Wuhan coronavirus        0
+## 8        1            top Italian people coronavirus        0
+## 9        1            top         Mexico coronavirus        0
+## 10       1            top        Patient coronavirus        0</code></pre>
+<p>The Simpsons?…</p>
+<p>O Top cerques relacionades amb “coronavirus” a <em>google news</em></p>
+<pre><code>##     subject related_topics            value     keyword category
+## 1       100            top      Coronavirus coronavirus        0
+## 2         4            top            Italy coronavirus        0
+## 3         2            top Italian Language coronavirus        0
+## 4         2            top   Italian people coronavirus        0
+## 5         1            top          Symptom coronavirus        0
+## 6         1            top          Vaccine coronavirus        0
+## 7         1            top    Coronaviridae coronavirus        0
+## 8         1            top        Infection coronavirus        0
+## 9         1            top            Wuhan coronavirus        0
+## 10 Breakout         rising            Italy coronavirus        0</code></pre>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/coronavirus2/">Evolució dels casos de COVID-19 a Europa</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

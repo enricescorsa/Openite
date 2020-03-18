@@ -6,10 +6,21 @@
     <description>Recent content in Blog on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 16 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Google Trends</title>
+      <link>/blog/googletrends/</link>
+      <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/googletrends/</guid>
+      <description>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb Google Trends. Hi ha un paquet convenient per fer-ho amb r: el paquet gtrendsR. Provem-lo:
+Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” a tot el món
+Tendència en els darrers mesos:Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya i EE.</description>
+    </item>
     
     <item>
       <title>Evolució dels casos de COVID-19 a Europa</title>

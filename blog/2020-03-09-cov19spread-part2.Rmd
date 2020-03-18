@@ -3,8 +3,12 @@ title: "Evolució dels casos de COVID-19 a Europa"
 author: Enric Escorsa
 date: '2020-03-16'
 slug: coronavirus2
-categories: []
-tags: []
+categories:
+  - experiments
+tags:  
+  - "covid-19"
+  - coronavirus
+  - visualization
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
@@ -41,7 +45,7 @@ Representem gràfics per país de l'evolució dels casos a Europa
 
 COVID_19_eu <- COVID_19_distribucio_mundial %>% filter(EU == "EU")
 
-ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line() +
+ggplot(COVID_19_eu, aes(x = DateRep, y = NewConfCases)) + geom_line(color = "#FBA25C") +
     facet_wrap(~CountryExp, scales = "free_y") +
     ggtitle("Evolució de nous casos de COVID-19") +
     labs(subtitle = "Europa", x = "Data", y = "Nous casos confirmats") + theme_minimal()
@@ -53,10 +57,10 @@ Evolució de nous casos a països propers
 COVID_19_paisos <- COVID_19_distribucio_mundial %>% filter(CountryExp == c("Spain","Germany","France","Portugal"))
 
 COVID_19_evolucio <-ggplot(COVID_19_paisos, aes(x = DateRep, y = NewConfCases, col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
-    labs(title = "Evolució de Nous Casos de COVID-19", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous casos confirmats")
+    labs(title = "Evolució de Nous Casos de COVID-19", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous Casos confirmats")
 
 COVID_19_evolucio_log <-ggplot(COVID_19_paisos, aes(x = DateRep, y = log10(NewConfCases), col = CountryExp)) + geom_line(size = 0.8) + theme_minimal() +
-    labs(title = "Evolució de Nous Casos de COVID-19 (escala logarítmica)", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous casos confirmats")
+    labs(title = "Evolució de Nous Casos de COVID-19 (escala logarítmica)", subtitle = "Espanya, França, Alemanya i Portugal", x = "Data", y = "Nous Casos confirmats")
 
        
 #usem el paquet patchwork per posar els dos plots junts
