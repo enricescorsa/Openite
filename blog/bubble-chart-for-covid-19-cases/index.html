@@ -15,9 +15,9 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/googletrends/" />
-<meta property="og:title" content="Google Trends" />
-<meta property="twitter:title" content="Google Trends">
+<meta property="og:url" content="/blog/bubble-chart-for-covid-19-cases/" />
+<meta property="og:title" content="Bubble chart for COVID-19 cases" />
+<meta property="twitter:title" content="Bubble chart for COVID-19 cases">
 
     <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
@@ -29,10 +29,10 @@
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - Google Trends 
+     Enric Escorsa O&#39;Callaghan - Bubble chart for COVID-19 cases 
 
 </title>
-<link rel="canonical" href="/blog/googletrends/">
+<link rel="canonical" href="/blog/bubble-chart-for-covid-19-cases/">
 
 
 <style media="screen">
@@ -1124,30 +1124,32 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     <div class="page-heading">
 
     
-    Google Trends
+    Bubble chart for COVID-19 cases
     
 
 </div>
 
                 </div>
                 <div class="meta">
-                    <div class="date" title="Wed Mar 18 2020 00:00:00 UTC">Mar 18, 2020</div>
+                    <div class="date" title="Thu Mar 19 2020 00:00:00 UTC">Mar 19, 2020</div>
                     
                         
                         <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
                         
                     
                     
-                    <div class="reading-time middot">5 minute read</div>
+                    <div class="reading-time middot">2 minute read</div>
                     
                     
                       <div class="tags">
                     
                         <ul>
                           
-                            <li class="middot"><a href="/tags/google-trends">google trends</a> </li>
+                            <li class="middot"><a href="/tags/bubble-chart">bubble chart</a> </li>
                           
-                            <li class="middot"><a href="/tags/trends">trends</a> </li>
+                            <li class="middot"><a href="/tags/visualization">visualization</a> </li>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
                           
                         </ul>
                     </div>
@@ -1167,166 +1169,58 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                 
     
     
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
+<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
 
 
-<p>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb <em>Google Trends</em>. Hi ha un paquet convenient per fer-ho amb r: el paquet <em>gtrendsR</em>. Provem-lo:</p>
-<pre class="r"><code>#primer carreguem el paqeut gtrendsR
-library(gtrendsR)</code></pre>
-<div id="tendència-els-darrers-anys" class="section level3">
-<h3>Tendència els darrers anys</h3>
-<p>Mirem la tendència en les cerques sobre “Coronavirus” arreu del món.</p>
-<pre class="r"><code>library(gtrendsR)
-trend &lt;- gtrends(&quot;coronavirus&quot;)
-plot(trend)</code></pre>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trends-1.png" width="672" /></p>
-</div>
-<div id="tendència-en-els-darrers-mesos" class="section level3">
-<h3>Tendència en els darrers mesos:</h3>
-<p>Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya, Portugal i EE.UU.</p>
-<pre class="r"><code>library(gtrendsR)
+<p><em>(darrera actualització 19/03/2020)</em></p>
+<p>Seguim provant d’entendre què està passant aquests dies tan crítics i incerts…
+Torno a prendre les dades actualitzades tal com es mostren al <em>European Centre for Disease Prevention and Control</em> (<a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases" class="uri">https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases</a>)</p>
+<pre class="r"><code>#carrego els paquets que necessito (rvest per fer webscrapping)
+library(tidyverse)
+library(rvest)
 
-trend &lt;- gtrends(c(&quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;), time = &quot;today 1-m&quot;, geo = c(&quot;FR&quot;, &quot;IT&quot;, &quot;ES&quot;, &quot;US&quot;, &quot;PT&quot;))
-plot(trend)</code></pre>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trendsmes-1.png" width="672" /></p>
-</div>
-<div id="en-les-darreres-4-hores" class="section level3">
-<h3>En les darreres 4 hores:</h3>
-<p>Interès en “coronavirus” (nombre de hits en el temps) en les darreres 4 hores.</p>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/resultrends-1.png" width="672" /></p>
-</div>
-<div id="top-temes-relacionats" class="section level3">
-<h3>Top temes relacionats:</h3>
-<p>Resultats de temes relacionats amb “coronavirus”:</p>
-<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_topics, 15)</code></pre>
-<pre><code>##    subject related_topics                    value     keyword category
-## 1      100            top              Coronavirus coronavirus        0
-## 2        8            top                  Symptom coronavirus        0
-## 3        4            top                    Virus coronavirus        0
-## 4        4            top                    Italy coronavirus        0
-## 5        3            top                    China coronavirus        0
-## 6        2            top         Italian Language coronavirus        0
-## 7        2            top           Italian people coronavirus        0
-## 8        2            top                    Spain coronavirus        0
-## 9        1            top                Influenza coronavirus        0
-## 10       1            top                Infection coronavirus        0
-## 11       1            top            Coronaviridae coronavirus        0
-## 12       1            top                    Wuhan coronavirus        0
-## 13       1            top                  Vaccine coronavirus        0
-## 14      &lt;1            top Johns Hopkins University coronavirus        0
-## 15      &lt;1            top                 Lombardy coronavirus        0</code></pre>
-</div>
-<div id="top-cerques-relacionades" class="section level3">
-<h3>Top cerques relacionades:</h3>
-<p>Cerques relacionades amb “coronavirus”:</p>
-<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_queries, 15)</code></pre>
-<pre><code>##    subject related_queries                value     keyword category
-## 1      100             top               corona coronavirus        0
-## 2       93             top coronavirus symptoms coronavirus        0
-## 3       88             top   coronavirus update coronavirus        0
-## 4       82             top                virus coronavirus        0
-## 5       76             top     coronavirus news coronavirus        0
-## 6       57             top         corona virus coronavirus        0
-## 7       54             top    coronavirus cases coronavirus        0
-## 8       51             top    china coronavirus coronavirus        0
-## 9       47             top   coronavirus italia coronavirus        0
-## 10      46             top       coronavirus uk coronavirus        0
-## 11      45             top      coronavirus map coronavirus        0
-## 12      42             top       el coronavirus coronavirus        0
-## 13      39             top     coronavirus 2020 coronavirus        0
-## 14      39             top   france coronavirus coronavirus        0
-## 15      31             top coronavirus sintomas coronavirus        0</code></pre>
-</div>
-<div id="interès-per-ciutat" class="section level3">
-<h3>Interès per Ciutat:</h3>
-<p>Interès en “coronavirus” per Ciutat</p>
-<pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$interest_by_city, 15)</code></pre>
-<pre><code>##     location hits     keyword   geo gprop
-## 1    Bologna   NA coronavirus world   web
-## 2      Turin   NA coronavirus world   web
-## 3     Naples   NA coronavirus world   web
-## 4      Milan  100 coronavirus world   web
-## 5   Florence   NA coronavirus world   web
-## 6       Rome   82 coronavirus world   web
-## 7   Valencia   NA coronavirus world   web
-## 8    Seville   NA coronavirus world   web
-## 9     Madrid   75 coronavirus world   web
-## 10      Lyon   NA coronavirus world   web
-## 11  Toulouse   NA coronavirus world   web
-## 12   Yonkers   NA coronavirus world   web
-## 13 Barcelona   61 coronavirus world   web
-## 14  San Jose   NA coronavirus world   web
-## 15     Plano   NA coronavirus world   web</code></pre>
-<p>Milano, Roma, Madrid, Barcelona…</p>
-</div>
-<div id="tendències-per-categoria-temàtica" class="section level3">
-<h3>Tendències per categoria temàtica</h3>
-<p>Google classifica les cerques en categories temàtiques.
-Assigna un codi específic a cada categoria.
-p.ex. la categoria Salut, té el codi 45.</p>
-<p>Tendències cerca de “coronavirus” en categoria Salut</p>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports-1.png" width="672" /></p>
-<div id="p.ex.-categoria-negocis-i-industria" class="section level4">
-<h4>p.ex. categoria Negocis i Industria</h4>
-<p>Tendències cerca de “coronavirus” en categoria “Business &amp; Industrial”.
-Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, “business”, “work”, “economy”, “logistics”), dins d’aquesta categoria.</p>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports2-1.png" width="672" /></p>
-<p>Resultats temes relacionats amb “coronavirus” en categoria “Business &amp; Industrial”</p>
-<pre><code>##    subject related_topics            value     keyword category
-## 1      100            top      Coronavirus coronavirus       12
-## 2        5            top            Italy coronavirus       12
-## 3        4            top            China coronavirus       12
-## 4        4            top Italian Language coronavirus       12
-## 5        4            top   Italian people coronavirus       12
-## 6        2            top          Symptom coronavirus       12
-## 7        2            top            Virus coronavirus       12
-## 8        2            top            Death coronavirus       12
-## 9        1            top            Spain coronavirus       12
-## 10       1            top     Disinfection coronavirus       12
-## 11       1            top     Stock market coronavirus       12
-## 12       1            top          Therapy coronavirus       12
-## 13       1            top           CAC 40 coronavirus       12
-## 14       1            top    Telecommuting coronavirus       12
-## 15       1            top             Mask coronavirus       12</code></pre>
-</div>
-</div>
-<div id="tendències-en-diferents-medis-de-google" class="section level3">
-<h3>Tendències en diferents medis de Google</h3>
-<p>Resultats top cerques relacionades amb “coronavirus” a <em>Youtube</em></p>
-<pre><code>##    subject related_topics          value     keyword category
-## 1      100            top    Coronavirus coronavirus        0
-## 2        9            top          China coronavirus        0
-## 3        7            top          Virus coronavirus        0
-## 4        3            top        Symptom coronavirus        0
-## 5        2            top          Italy coronavirus        0
-## 6        2            top   The Simpsons coronavirus        0
-## 7        2            top          Wuhan coronavirus        0
-## 8        1            top Italian people coronavirus        0
-## 9        1            top         Mexico coronavirus        0
-## 10       1            top            Map coronavirus        0
-## 11       1            top        Patient coronavirus        0
-## 12       1            top   Donald Trump coronavirus        0
-## 13       1            top       Hospital coronavirus        0
-## 14       1            top  Coronaviridae coronavirus        0
-## 15       1            top           Peru coronavirus        0</code></pre>
-<p>…The Simpsons (?);)</p>
-<p>O top cerques relacionades amb “coronavirus” a <em>Google News</em></p>
-<pre><code>##     subject related_topics            value     keyword category
-## 1       100            top      Coronavirus coronavirus        0
-## 2         4            top            Italy coronavirus        0
-## 3         2            top   Italian people coronavirus        0
-## 4         2            top Italian Language coronavirus        0
-## 5         1            top          Symptom coronavirus        0
-## 6         1            top          Vaccine coronavirus        0
-## 7         1            top    Coronaviridae coronavirus        0
-## 8         1            top        Infection coronavirus        0
-## 9         1            top            Wuhan coronavirus        0
-## 10 Breakout         rising            Italy coronavirus        0
-## 11 Breakout         rising   Italian people coronavirus        0
-## 12 Breakout         rising Italian Language coronavirus        0
-## 13 Breakout         rising          Vaccine coronavirus        0
-## 14 Breakout         rising        Infection coronavirus        0
-## 15 Breakout         rising            Wuhan coronavirus        0</code></pre>
-</div>
+#llegeixo la pàgina
+paginaecdc &lt;- read_html(&quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&quot;)
+
+#extrec taules
+taules &lt;- html_nodes(paginaecdc, &quot;table&quot;)
+
+llista_de_taules &lt;- paginaecdc %&gt;%
+        html_nodes(&quot;table&quot;) %&gt;%
+        .[1] %&gt;%
+        html_table(fill = TRUE)
+
+#prenc la taula que m&#39;interessa
+taula_coronavirus &lt;-llista_de_taules[[1]]
+
+#canvio el noms de les columnes
+colnames(taula_coronavirus) &lt;- c(&quot;Regio&quot;, &quot;Pais&quot;, &quot;Casos confirmats&quot;,
+                            &quot;Morts&quot;, &quot;Casos confirmats els darrers 15 dies&quot;)
+
+#Elimino la darrera fila de la taula on figura el total (que no m&#39;interessa per generar el gràfic)
+taula_coronavirus &lt;-taula_coronavirus %&gt;% filter(Regio != &quot;Total&quot;) </code></pre>
+<p>Ara provo de generar un gràfic de bombolles o <em>bubble chart</em> interactiu amb aquestes dades.
+Represento les 3 variables: nombre de casos i nombre de casos en els darrers 15 dies en l’eix <em>x</em>, l’eix <em>y</em> respectivament i el nombre de morts el represento amb la mida del cercle.</p>
+<p>Per generar la interactivitat uso el paquet <em>plotly</em>, que permet navegar en el gràfic, fer zoom i veure el text de cada bombolla en posar-s’hi a sobre amb el cursor.</p>
+<pre class="r"><code>library(plotly)
+
+g&lt;-ggplot(taula_coronavirus) +
+  geom_point(aes(x=taula_coronavirus$&quot;Casos confirmats els darrers 15 dies&quot;, y=taula_coronavirus$&quot;Casos confirmats&quot;, size = taula_coronavirus$&quot;Morts&quot;*100, fill=Regio, text = Pais), alpha = 0.5, show.legend = FALSE) + scale_size(range = c(0.5, 25)) + labs(title=&quot;Distribució geogràfica del COVID-19&quot;, x = &quot;Nous casos confirmats en els darrers 15 dies&quot;, y = &quot;Casos confirmats&quot;) + theme_minimal()
+#He assignat un color per Regió (Continent)
+
+#genero el gràfic interactiu amb plotly
+ggplotly(g,tooltip = c(&quot;Pais&quot;)) %&gt;% 
+  layout(showlegend=FALSE, hovermode=&quot;x&quot;)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"data":[{"x":[68,10,3,194,6,3,7,1,7,1,53,2,7,11,35,6,2,1,28,1,1,2,1,26,1,6,14,3,116,3,1,1,2],"y":[73,10,3,196,6,3,7,1,7,1,54,2,8,11,36,6,2,1,29,1,1,2,1,26,1,6,14,3,116,3,1,1,2],"text":["Algeria","Cameroon","Congo","Egypt","Ethiopia","Gabon","Ghana","Guinea","Kenya","Mauritania","Morocco","Namibia","Nigeria","Rwanda","Senegal","Seychelles","Sudan","Togo","Tunisia","Eswatini","Benin","Liberia","Somalia","Burkina_Faso","Central_African_Republic","Cote_dIvoire","Democratic_Republic_of_the_Congo","Equatorial_Guinea","South_Africa","United_Republic_of_Tanzania","Gambia","Djibouti","Zambia"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":0.5,"size":[5.8684303552931,1.88976377952756,1.88976377952756,5.8684303552931,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,4.18684799806156,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"Africa","legendgroup":"Africa","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[96,1,12,426,660,237,102,11,161,8,5,12,15,113,109,11,145,1,79,33,1,69,20,2,1,9,9290,1,1,1],"y":[97,1,12,428,690,238,102,11,168,8,5,12,15,118,109,11,145,1,79,33,1,69,21,2,1,9,9415,1,1,1],"text":["Argentina","Bahamas","Bolivia","Brazil","Canada","Chile","Colombia","Cuba","Ecuador","Guatemala","Guyana","Honduras","Jamaica","Mexico","Panama","Paraguay","Peru","Suriname","Uruguay","Venezuela","Antigua_and_Barbuda","Costa_Rica","Dominican_Republic","Saint_Lucia","Saint_Vincent_and_the_Grenadines","Trinidad_and_Tobago","United_States_of_America","Barbados","El_Salvador","Nicaragua"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(183,159,0,1)","opacity":0.5,"size":[4.18684799806156,1.88976377952756,1.88976377952756,5.13833143529155,6.76261526317354,1.88976377952756,1.88976377952756,3.51404760740955,4.70310589533163,3.51404760740955,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,21.7830966583553,1.88976377952756,1.88976377952756,1.88976377952756],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"America","legendgroup":"America","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[21,207,10,1,23,858,159,170,15025,138,423,605,51,37,86,120,754,13,5,0,32,297,44,199,444,203,66,134,23,60,0,68,170,3237,41,86,3],"y":[22,256,10,1,24,81238,165,172,17361,164,433,873,52,37,142,133,790,13,5,1,39,302,44,202,452,313,108,177,23,76,0,68,171,8565,42,113,3],"text":["Afghanistan","Bahrain","Bangladesh","Bhutan","Cambodia","China","India","Indonesia","Iran","Iraq","Israel","Japan","Jordan","Kazakhstan","Kuwait","Lebanon","Malaysia","Maldives","Mongolia","Nepal","Oman","Pakistan","Palestine","Philippines","Qatar","Singapore","Taiwan","Thailand","Uzbekistan","Vietnam","Myanmar","Brunei_Darussalam","Saudi_Arabia","South_Korea","Sri_Lanka","United_Arab_Emirates","Kyrgyzstan"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,56,1)","opacity":0.5,"size":[1.88976377952756,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,94.488188976378,4.70310589533163,5.52177283342527,56.6114978277469,7.51644801113571,1.88976377952756,10.6367998862354,1.88976377952756,1.88976377952756,1.88976377952756,5.13833143529155,4.18684799806156,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,8.5868575678676,1.88976377952756,1.88976377952756,3.51404760740955,3.51404760740955,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,17.3844439559697,1.88976377952756,1.88976377952756,1.88976377952756],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"Asia","legendgroup":"Asia","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[59,52,114,1622,31,42,1473,92,72,58,1107,256,362,8922,31,8002,411,73,234,364,33211,19,70,25,32,209,48,36,8,2023,1390,286,638,256,143,94,107,286,13565,1277,2973,191,18,36,517,1,41,99,2579,8],"y":[59,53,115,1646,34,46,1486,92,81,58,1115,258,369,9134,34,8198,418,73,250,366,35713,19,71,25,33,210,48,36,9,2051,1423,287,642,260,147,94,107,286,13716,1301,3010,191,19,36,522,1,42,109,2630,8],"text":["Albania","Andorra","Armenia","Austria","Azerbaijan","Belarus","Belgium","Bulgaria","Croatia","Cyprus","Denmark","Estonia","Finland","France","Georgia","Germany","Greece","Hungary","Iceland","Ireland","Italy","Kosovo","Latvia","Liechtenstein","Lithuania","Luxembourg","Malta","Moldova","Monaco","Netherlands","Norway","Poland","Portugal","Romania","Russia","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Turkey","Ukraine","Bosnia_and_Herzegovina","Czech_Republic","Holy_See","North_Macedonia","San_Marino","United_Kingdom","Montenegro"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":0.5,"size":[4.18684799806156,1.88976377952756,1.88976377952756,5.13833143529155,1.88976377952756,1.88976377952756,7.96727736233967,4.18684799806156,1.88976377952756,1.88976377952756,5.13833143529155,1.88976377952756,1.88976377952756,27.2618882601191,1.88976377952756,7.74620240686302,5.52177283342527,3.51404760740955,1.88976377952756,4.18684799806156,90.5286452344485,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,4.18684799806156,1.88976377952756,3.51404760740955,1.88976377952756,14.2599408722009,4.70310589533163,5.52177283342527,4.18684799806156,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,3.51404760740955,41.6100630760378,7.02620024221157,9.33316737088942,3.51404760740955,4.18684799806156,1.88976377952756,1.88976377952756,1.88976377952756,1.88976377952756,7.96727736233967,18.3744442196348,1.88976377952756],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"Europe","legendgroup":"Europe","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[524,26,3,3],"y":[565,28,3,3],"text":["Australia","New_Zealand","French_Polynesia","Guam"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(97,156,255,1)","opacity":0.5,"size":[5.8684303552931,1.88976377952756,1.88976377952756,1.88976377952756],"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"Oceania","legendgroup":"Oceania","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0],"y":[696],"text":"Cases_on_an_international_conveyance_Japan","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(245,100,227,1)","opacity":0.5,"size":6.18721484668736,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","name":"Other","legendgroup":"Other","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":54.7945205479452},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Distribució geogràfica del COVID-19","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1660.55,34871.55],"tickmode":"array","ticktext":["0","10000","20000","30000"],"tickvals":[-2.27373675443232e-013,10000,20000,30000],"categoryorder":"array","categoryarray":["0","10000","20000","30000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"Nous casos confirmats en els darrers 15 dies","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-4061.9,85299.9],"tickmode":"array","ticktext":["0","20000","40000","60000","80000"],"tickvals":[0,20000,40000,60000,80000],"categoryorder":"array","categoryarray":["0","20000","40000","60000","80000"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Casos confirmats","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":1},"hovermode":"x","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"12cc466745a4":{"x":{},"y":{},"size":{},"fill":{},"text":{},"type":"scatter"}},"cur_data":"12cc466745a4","visdat":{"12cc466745a4":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><em>(darrera actualització 19/03/2020)</em></p>
 
 
             </div>
@@ -1353,15 +1247,10 @@ Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, �
                 
                 <div>
                     <img class="icon" src="/img/back.svg" alt="back" />
-                    <a href="/blog/coronavirus2/">Evolució dels casos de COVID-19 a Europa</a>
+                    <a href="/blog/googletrends/">Google Trends</a>
                 </div>
                 
                 <div style="width: 100%;"></div>
-                
-                <div>
-                    <a href="/blog/bubble-chart-for-covid-19-cases/">Bubble chart for COVID-19 cases</a>
-                    <img class="icon" src="/img/next.svg" alt="next" />
-                </div>
                 
             </div>
             
