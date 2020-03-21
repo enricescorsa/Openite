@@ -51,7 +51,7 @@ taula_coronavirus <-taula_coronavirus %>% filter(Regio != "Total")
 
 
 Ara provo de generar un gràfic de bombolles o _bubble chart_ interactiu amb aquestes dades.
-Represento les 3 variables: nombre de casos i nombre de casos en els darrers 15 dies en l'eix _x_, l'eix _y_ respectivament i el nombre de morts el represento amb la mida del cercle.
+Represento les 3 variables: nombre de casos i nombre de casos en els darrers 15 dies en l'eix _x_ i l'eix _y_ respectivament i el nombre de morts el represento amb la mida del cercle.
 
 Per generar la interactivitat uso el paquet _plotly_, que permet navegar en el gràfic, fer zoom i veure el text de cada bombolla en posar-s'hi a sobre amb el cursor.
 
@@ -59,12 +59,12 @@ Per generar la interactivitat uso el paquet _plotly_, que permet navegar en el g
 library(plotly)
 
 g<-ggplot(taula_coronavirus) +
-  geom_point(aes(x=taula_coronavirus$"Casos confirmats els darrers 15 dies", y=taula_coronavirus$"Casos confirmats", size = taula_coronavirus$"Morts"*100, fill=Regio, text = Pais), alpha = 0.5, show.legend = FALSE) + scale_size(range = c(0.5, 25)) + labs(title="Distribució geogràfica del COVID-19", x = "Nous casos confirmats en els darrers 15 dies", y = "Casos confirmats") + theme_minimal()
+  geom_point(aes(x=taula_coronavirus$"Casos confirmats els darrers 15 dies", y=taula_coronavirus$"Casos confirmats", size = taula_coronavirus$"Morts", stroke=0, fill=Regio, text = paste("País:", Pais, "<br>Casos:", taula_coronavirus$"Casos confirmats", "<br>Morts:", Morts)), alpha = 0.5, show.legend = FALSE) + scale_size(range = c(0.5, 40)) + labs(title="Distribució geogràfica del COVID-19", x = "Nous casos confirmats en els darrers 15 dies", y = "Casos confirmats") + theme_minimal()
 #He assignat un color per Regió (Continent)
 
 #genero el gràfic interactiu amb plotly
-ggplotly(g,tooltip = c("Pais")) %>% 
-  layout(showlegend=FALSE, hovermode="x")
+ggplotly(g,tooltip = "text") %>% 
+  layout(showlegend=TRUE, hovermode="x")
 ```
 
 
