@@ -27,21 +27,24 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+_(darrera actualització 21/03/2020)_
+
 El tema del coronavirus ens preocupa?... Anem a analitzar tendències en les cerques temàtiques que fa la gent a  Google amb _Google Trends_. Hi ha un paquet convenient per fer-ho amb r: el paquet _gtrendsR_. Provem-lo:
 
 ```{r settings, warning=FALSE}
-#primer carreguem el paqeut gtrendsR
+#primer carreguem el paquet gtrendsR
 library(gtrendsR)
 ```
 
 
 ### Tendència els darrers anys 
 
-Mirem la tendència en les cerques sobre "Coronavirus" arreu del món.
+Mirem la tendència en les cerques sobre "Coronavirus" i el "COVID-19" arreu del món.
 
 ```{r trends, warning=FALSE}
 library(gtrendsR)
-trend <- gtrends("coronavirus")
+
+trend <- gtrends(c("coronavirus", "COVID-19"))
 plot(trend)
 ```
 
@@ -58,17 +61,24 @@ trend <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "
 plot(trend)
 
 ```
+### En els darrers 7 dies:
 
+Interès en "coronavirus" (nombre de hits en el temps) en les darrers 7 dies.
+
+```{r resultrends, echo=FALSE}
+
+setdies <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "now 7-d", geo = c("FR", "IT", "ES", "US", "PT"))
+plot (setdies)
+```
 
 ### En les darreres 4 hores:
 
 Interès en "coronavirus" (nombre de hits en el temps) en les darreres 4 hores.
 
-```{r resultrends, echo=FALSE}
+```{r resultrendsh, echo=FALSE}
 
 quatrehores <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "coronavirus"), time = "now 4-H", geo = c("FR", "IT", "ES", "US", "PT"))
 plot (quatrehores)
-#si vull veure interes en dues regions: head(gtrends(c("Catalonia"), geo = c("GB", "US"))$interest_over_time)
 ```
 
 
@@ -78,6 +88,9 @@ Resultats de temes relacionats amb "coronavirus":
 ```{r top, warning=FALSE}
 head(gtrends("coronavirus")$related_topics, 15)
 ```
+
+Una de les cerques relacionades fa referència al centre de recerca de la Johns Hopkins University. Una altra al comptador a temps real _Worldometers_: [https://www.worldometers.info/coronavirus/](https://www.worldometers.info/coronavirus/)
+
 
 ### Top cerques relacionades:
 

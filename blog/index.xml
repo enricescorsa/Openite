@@ -28,9 +28,10 @@ Seguim provant d’entendre què està passant aquests dies tan crítics i incer
       <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/googletrends/</guid>
-      <description>El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb Google Trends. Hi ha un paquet convenient per fer-ho amb r: el paquet gtrendsR. Provem-lo:
-#primer carreguem el paqeut gtrendsRlibrary(gtrendsR)Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” arreu del món.
-library(gtrendsR)trend &amp;lt;- gtrends(&amp;quot;coronavirus&amp;quot;)plot(trend)Tendència en els darrers mesos:Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya, Portugal i EE.</description>
+      <description>(darrera actualització 21/03/2020)
+El tema del coronavirus ens preocupa?… Anem a analitzar tendències en les cerques temàtiques que fa la gent a Google amb Google Trends. Hi ha un paquet convenient per fer-ho amb r: el paquet gtrendsR. Provem-lo:
+#primer carreguem el paquet gtrendsRlibrary(gtrendsR)Tendència els darrers anysMirem la tendència en les cerques sobre “Coronavirus” i el “COVID-19” arreu del món.
+library(gtrendsR)trend &amp;lt;- gtrends(c(&amp;quot;coronavirus&amp;quot;, &amp;quot;COVID-19&amp;quot;))plot(trend)Tendència en els darrers mesos:Podem mostrar les diferents tendències segons localitzacions específiques: Xina, Itàlia, Espanya, Portugal i EE.</description>
     </item>
     
     <item>
