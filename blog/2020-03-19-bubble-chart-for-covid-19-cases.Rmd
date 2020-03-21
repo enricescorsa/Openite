@@ -9,13 +9,15 @@ tags:
   - bubble chart
   - visualization
   - coronavirus
+  - "covid-19"
+  - joemquedoacasa
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
 meta_img: /images/image.jpg
 ---
 
-_(darrera actualització 19/03/2020)_
+_(darrera actualització 21/03/2020)_
 
 Seguim provant d'entendre què està passant aquests dies tan crítics i incerts...
 Torno a prendre les dades actualitzades tal com es mostren al _European Centre for Disease Prevention and Control_ (<https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases>)
@@ -66,4 +68,3 @@ ggplotly(g,tooltip = c("Pais")) %>%
 ```
 
 
-_(darrera actualització 19/03/2020)_

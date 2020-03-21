@@ -17,7 +17,7 @@
       <pubDate>Thu, 19 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/bubble-chart-for-covid-19-cases/</guid>
-      <description>(darrera actualització 19/03/2020)
+      <description>(darrera actualització 21/03/2020)
 Seguim provant d’entendre què està passant aquests dies tan crítics i incerts…Torno a prendre les dades actualitzades tal com es mostren al European Centre for Disease Prevention and Control (https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases)
 #carrego els paquets que necessito (rvest per fer webscrapping)library(tidyverse)library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases&amp;quot;)#extrec taulestaules &amp;lt;- html_nodes(paginaecdc, &amp;quot;table&amp;quot;)llista_de_taules &amp;lt;- paginaecdc %&amp;gt;%html_nodes(&amp;quot;table&amp;quot;) %&amp;gt;%.</description>
     </item>

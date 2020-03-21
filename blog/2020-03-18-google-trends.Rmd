@@ -8,6 +8,8 @@ categories:
 tags: 
   - google trends
   - trends
+  - "covid-19"
+  - coronavirus
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
@@ -130,15 +132,15 @@ head(gtrends(c("coronavirus"), category = 12)$related_topics, 15)
 
 ### Tendències en diferents medis de Google
 
-Resultats top cerques relacionades amb "coronavirus" a _Youtube_
+Resultats top cerques relacionades amb "coronavirus" a _Youtube_:
 
 ```{r topnewsrel, echo=FALSE}
 head(gtrends("coronavirus", gprop = "youtube")$related_topics, 15) 
 ```
 
-...The Simpsons (?);)
+...mmm...The Simpsons?...
 
-O top cerques relacionades amb "coronavirus" a _Google News_
+Top cerques relacionades amb "coronavirus" a _Google News_:
 
 ```{r toprisingnewsrel, echo=FALSE}
 head(gtrends("coronavirus", gprop = "news")$related_topics, 15) 
