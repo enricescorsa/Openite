@@ -10,6 +10,7 @@ tags:
   - trends
   - "covid-19"
   - coronavirus
+  - search
 description: Desc
 hacker_news_id: ''
 lobsters_id: ''
@@ -61,6 +62,7 @@ trend <- gtrends(c("coronavirus", "coronavirus", "coronavirus", "coronavirus", "
 plot(trend)
 
 ```
+
 ### En els darrers 7 dies:
 
 Interès en "coronavirus" (nombre de hits en el temps) en les darrers 7 dies.

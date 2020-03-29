@@ -1159,8 +1159,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                           
                             <li class="middot"><a href="/tags/t-sne">t-sne</a> </li>
                           
-                            <li class="middot"><a href="/tags/text-mining">text mining</a> </li>
-                          
                             <li class="middot"><a href="/tags/tools">tools</a> </li>
                           
                             <li class="middot"><a href="/tags/topic-modeling">topic modeling</a> </li>
@@ -1218,7 +1216,7 @@ head(elmeutext)</code></pre>
 ## [4]   We show that primordial nucleosynthesis in baryon inhomogeneous big-bang\nmodels can lead to significant heavy-element production while still satisfying\nall the light-element abundance constraints including the low lithium abundance\nobserved in population II stars. The parameters which admit this solution arise\nnaturally from the process of neutrino induced inflation of baryon\ninhomogeneities prior to the epoch of nucleosynthesis. These solutions entail a\nsmall fraction of baryons (\\le 2\\%) in very high density regions with local\nbaryon-to-photon ratio $\\eta^h\\approx 10^{-4}$, while most baryons are at a\nbaryon-to-photon ratio which optimizes the agreement with light-element\nabundances. The model would imply a unique signature of baryon inhomogeneities\nin the early universe, evidenced by the existence of primordial material\ncontaining heavy-element products of proton and alpha- burning reactions with\nan abundance of $[Z]\\sim -6 to -4$.\n                                                                                                                                                                                                                                                                                                                                     
 ## [5]   We derive the equation of state of a dilute atomic Bose gas with an\ninteratomic interaction that has a negative scattering length and argue that\ntwo continuous phase transitions, occuring in the gas due to quantum degeneracy\neffects, are preempted by a first-order gas-liquid or gas-solid transition\ndepending on the details of the interaction potential. We also discuss the\nconsequences of this result for future experiments with magnetically trapped\nspin-polarized atomic gasses such as lithium and cesium.\n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
 ## [6]   Motivated by the recent report of a $^6$Li detection in the atmosphere of\nHD~84937, we couple stellar evolution calculations with light isotope\nproduction via stellar flares. We find that as a consequence of their small\nconvective envelope mass near the turn-off point, low-metallicity dwarfs and\nsubgiants may possess observable amounts of $^6$Li arising from such flare\nactivity. We point out an observational test which could discriminate between\nflare produced $^6$Li and protostellar $^6$Li. In the $T_{\\rm eff}$ range\n$6000-6600$~K, the $^7$Li/$^6$Li ratio on the subgiant branch should increase\nas a function of $T_{\\rm eff}$ if flare production is important, whereas the\nsame ratio should be constant if a protostellar origin is the source of the\nobserved lithium. The absence of a flare produced variation in the\n$^7$Li/$^6$Li ratio would allow for a more reliable inference of the --\ncosmologically important -- atmospheric depletion mechanisms in stars.\n                                                                                                                                                                                                                                                                                                                        
-## 2345 Levels:   $R$-matrix calculations of the electron collisions with lithium atom at\nenergies below the $3s$ excitation threshold are presented. The $^1S^e$,\n$^3S^e$ and $^1P^o$ phase shifts calculated in the near-threshold energy range\nare in excellent agreement with previous theoretical studies. The threshold\nbehavior of the $^3P^o$ phase shift is accurately analyzed along with the\nresonance located at the scattering energy $\\sim60$ meV. The phase shifts and\ncross sections calculated here show two resonances below the $3s$ threshold\nthat have not been previously reported.\n ...</code></pre>
+## 2356 Levels:   $R$-matrix calculations of the electron collisions with lithium atom at\nenergies below the $3s$ excitation threshold are presented. The $^1S^e$,\n$^3S^e$ and $^1P^o$ phase shifts calculated in the near-threshold energy range\nare in excellent agreement with previous theoretical studies. The threshold\nbehavior of the $^3P^o$ phase shift is accurately analyzed along with the\nresonance located at the scattering energy $\\sim60$ meV. The phase shifts and\ncross sections calculated here show two resonances below the $3s$ threshold\nthat have not been previously reported.\n ...</code></pre>
 <pre class="r"><code>#puc guardar el corpus de text en un txt per usar després:
 write.table(elmeutext,&quot;elmeutext.txt&quot;,sep=&quot;\t&quot;,row.names=FALSE)</code></pre>
 <p>Anem a veure si podem analitzar-ne el contingut. Em baso en l’enfocament tidy textmining segons proposat per l’admirada <span class="citation">@JuliaSilge</span>, una metodologia d’anàlisi de dades textuals sumament interessant i que recomano conèixer.</p>
@@ -1238,20 +1236,20 @@ View(net) #veig la taula resultant
 #ordeno els termes més frequents de net
 net %&gt;%
   count(term, sort = TRUE)</code></pre>
-<pre><code>## # A tibble: 33,745 x 2
+<pre><code>## # A tibble: 33,873 x 2
 ##    term        n
 ##    &lt;chr&gt;   &lt;int&gt;
-##  1 the      2332
-##  2 and      2271
-##  3 lithium  2025
-##  4 for      1865
-##  5 with     1824
-##  6 that     1568
-##  7 are      1482
-##  8 this     1317
-##  9 from     1112
-## 10 which     966
-## # ... with 33,735 more rows</code></pre>
+##  1 the      2343
+##  2 and      2282
+##  3 lithium  2032
+##  4 for      1875
+##  5 with     1833
+##  6 that     1576
+##  7 are      1488
+##  8 this     1325
+##  9 from     1116
+## 10 which     972
+## # ... with 33,863 more rows</code></pre>
 <pre class="r"><code>#Hem vist que hi havia moltes paraules no rellevants (stopwords); elimino els que no vull creant-me primer una llista de stopwords i filtrant després amb aquesta (amb anti_join)
 elsmeusstopwords &lt;- tibble(term = c(as.character(1:10),
                                     &quot;the&quot;, &quot;results&quot;, &quot;our&quot;, &quot;very&quot;, &quot;stars.&quot;, &quot;found&quot;, &quot;using&quot;, &quot;show&quot;, &quot;based&quot;, &quot;present&quot;, &quot;find&quot;, &quot;not&quot;, &quot;observed&quot;, &quot;both&quot;, &quot;and&quot;, &quot;for&quot;, &quot;this&quot;, &quot;between&quot;, &quot;than&quot;, &quot;when&quot;, &quot;through&quot;, &quot;but&quot;, &quot;have&quot;, &quot;been&quot;, &quot;these&quot;, &quot;that&quot;, &quot;two&quot;,&quot;used&quot;, &quot;are&quot;, &quot;from&quot;, &quot;with&quot;, &quot;their&quot;, &quot;such&quot;, &quot;also&quot;, &quot;then&quot;, &quot;was&quot;, &quot;were&quot;, &quot;which&quot;, &quot;has&quot;, &quot;its&quot;, &quot;this&quot;, &quot;can&quot;, &quot;paper&quot;, &quot;study&quot;, &quot;presents&quot;, &quot;while&quot;, &quot;abundances&quot;))
@@ -1262,20 +1260,20 @@ View(netissim)
 #ara podem ordenar termes per freqüència
 netissim %&gt;%
   count(term, sort = TRUE)</code></pre>
-<pre><code>## # A tibble: 33,699 x 2
+<pre><code>## # A tibble: 33,827 x 2
 ##    term          n
 ##    &lt;chr&gt;     &lt;int&gt;
-##  1 lithium    2025
-##  2 high        587
+##  1 lithium    2032
+##  2 high        591
 ##  3 stars       535
-##  4 model       401
-##  5 other       394
-##  6 first       388
-##  7 low         388
-##  8 new         387
-##  9 abundance   386
-## 10 stellar     384
-## # ... with 33,689 more rows</code></pre>
+##  4 model       402
+##  5 other       395
+##  6 first       389
+##  7 low         389
+##  8 new         389
+##  9 energy      388
+## 10 abundance   386
+## # ... with 33,817 more rows</code></pre>
 </div>
 <div id="visualitzacions-del-contingut" class="section level2">
 <h2>Visualitzacions del contingut</h2>
@@ -1316,7 +1314,7 @@ parells %&gt;%
 <p>Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. “quantum” o “niobate”)</p>
 <pre class="r"><code>parells %&gt;%
   filter(item1 == &quot;quantum&quot;)</code></pre>
-<pre><code>## # A tibble: 6,366 x 3
+<pre><code>## # A tibble: 6,394 x 3
 ##    item1   item2            n
 ##    &lt;chr&gt;   &lt;chr&gt;        &lt;dbl&gt;
 ##  1 quantum niobate        117
@@ -1324,13 +1322,13 @@ parells %&gt;%
 ##  3 quantum demonstrate     70
 ##  4 quantum photon          66
 ##  5 quantum single          56
-##  6 quantum frequency       54
-##  7 quantum integrated      53
+##  6 quantum integrated      54
+##  7 quantum frequency       54
 ##  8 quantum waveguide       48
-##  9 quantum periodically    46
-## 10 quantum applications    46
-## # ... with 6,356 more rows</code></pre>
-<p>Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un post anterior.</p>
+##  9 quantum applications    47
+## 10 quantum periodically    46
+## # ... with 6,384 more rows</code></pre>
+<p>Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un <a href="https://enricescorsa.netlify.com/blog/topic-modeling-a-les-lletres-de-franco-battiato/">post anterior</a>.</p>
 <pre class="r"><code>#primer hem de transformar el nostre dataset netissim en una matriu dtm (inversament a com havíem fet abans). això ho podem fer amb cast_dtm
 netissim_dtm &lt;- netissim %&gt;%
   cast_dtm(document, term, count)
@@ -1344,20 +1342,20 @@ lda_netissim &lt;- LDA(netissim_dtm, k = 9, control = list(alpha = 0.1)) #decidi
 #per extraure les probabilitats que una paraula pertanyi a un topic (això s&#39;anomena beta)
 topics_netissim &lt;- tidy(lda_netissim, matrix = &quot;beta&quot;)
 topics_netissim</code></pre>
-<pre><code>## # A tibble: 303,291 x 3
+<pre><code>## # A tibble: 304,443 x 3
 ##    topic term        beta
 ##    &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;
-##  1     1 (lapw) 6.64e-  5
-##  2     2 (lapw) 3.00e-323
-##  3     3 (lapw) 1.85e-302
-##  4     4 (lapw) 1.50e-323
-##  5     5 (lapw) 1.40e-191
-##  6     6 (lapw) 6.24e-301
-##  7     7 (lapw) 1.13e-301
-##  8     8 (lapw) 0.       
-##  9     9 (lapw) 2.27e-321
-## 10     1 10%    1.71e-  4
-## # ... with 303,281 more rows</code></pre>
+##  1     1 (lapw) 5.61e-276
+##  2     2 (lapw) 1.07e-258
+##  3     3 (lapw) 4.02e-  5
+##  4     4 (lapw) 1.24e-275
+##  5     5 (lapw) 1.55e-279
+##  6     6 (lapw) 1.38e- 16
+##  7     7 (lapw) 9.77e-260
+##  8     8 (lapw) 5.22e-278
+##  9     9 (lapw) 2.81e-275
+## 10     1 10%    3.57e- 15
+## # ... with 304,433 more rows</code></pre>
 <p>Podem visualitzar els top termes de cada cluster amb barres de freqüència:</p>
 <pre class="r"><code>top_terms_per_clusters &lt;- topics_netissim  %&gt;%
   group_by(topic) %&gt;%
@@ -1366,18 +1364,18 @@ topics_netissim</code></pre>
   arrange(topic, -beta)
 top_terms_per_clusters</code></pre>
 <pre><code>## # A tibble: 90 x 3
-##    topic term            beta
-##    &lt;int&gt; &lt;chr&gt;          &lt;dbl&gt;
-##  1     1 lithium      0.0180 
-##  2     1 ionic        0.00509
-##  3     1 energy       0.00492
-##  4     1 dynamics     0.00395
-##  5     1 ions         0.00391
-##  6     1 high         0.00379
-##  7     1 diffusion    0.00370
-##  8     1 ion          0.00365
-##  9     1 structure    0.00341
-## 10     1 calculations 0.00334
+##    topic term       beta
+##    &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;
+##  1     1 lithium 0.0108 
+##  2     1 atoms   0.00508
+##  3     1 neutron 0.00466
+##  4     1 energy  0.00443
+##  5     1 beam    0.00370
+##  6     1 high    0.00367
+##  7     1 will    0.00361
+##  8     1 atomic  0.00312
+##  9     1 laser   0.00303
+## 10     1 optical 0.00302
 ## # ... with 80 more rows</code></pre>
 <pre class="r"><code>top_terms_per_clusters %&gt;%
   mutate(term = reorder(term, beta)) %&gt;%
@@ -1405,30 +1403,30 @@ wembe &lt;- read.vectors(&quot;wembe.bin&quot;)</code></pre>
 <p>Amb la funció nearest_to() podem buscar paraules properes (per cosine similarity) a una paraula determinada.</p>
 <pre class="r"><code>#p.ex. paraules properes a &quot;quantum&quot;
 nearest_to(wembe, wembe[[&quot;quantum&quot;]], 20)</code></pre>
-<pre><code>##              quantum           processing             memories 
-##         1.332268e-15         2.885485e-01         2.984713e-01 
-##        communication        long-distance       communication. 
-##         3.101729e-01         3.185687e-01         3.249692e-01 
-##            metrology       communication,              optics, 
-##         3.272757e-01         3.279103e-01         3.304848e-01 
-##               memory                nodes             networks 
-##         3.316627e-01         3.352681e-01         3.352716e-01 
-##            computers          processing.       communications 
-##         3.354547e-01         3.408333e-01         3.466919e-01 
-##              optics. microwave-to-optical             sensing, 
-##         3.469915e-01         3.537592e-01         3.584587e-01 
-##           chemistry.          processing, 
-##         3.602567e-01         3.615445e-01</code></pre>
+<pre><code>##              quantum             memories             networks 
+##         5.551115e-16         3.044400e-01         3.091644e-01 
+##              optics,        communication            metrology 
+##         3.092947e-01         3.114670e-01         3.123087e-01 
+##       communication.                nodes           processing 
+##         3.170599e-01         3.178998e-01         3.190190e-01 
+##       communication,        long-distance       communications 
+##         3.295741e-01         3.305697e-01         3.328099e-01 
+##               memory          processing.           photonics. 
+##         3.397277e-01         3.598428e-01         3.605102e-01 
+##            networks.          information              optics. 
+##         3.619881e-01         3.657141e-01         3.697320e-01 
+##             resource microwave-to-optical 
+##         3.721333e-01         3.762708e-01</code></pre>
 <pre class="r"><code>#o bé paraules properes a &quot;energy&quot;
 nearest_to(wembe, wembe[[&quot;energy&quot;]], 20)</code></pre>
-<pre><code>##        energy       energy,      energies     renewable       storage 
-##  6.661338e-16  3.598559e-01  3.718567e-01  3.875834e-01  4.068422e-01 
-##          cost  intermittent       nucleus     emittance   electricity 
-##  4.074532e-01  4.239406e-01  4.314286e-01  4.411044e-01  4.430966e-01 
-##     landscape technologies,            H2       impulse  photovoltaic 
-##  4.453544e-01  4.476338e-01  4.566204e-01  4.577531e-01  4.584274e-01 
-##       nucleon   gravimetric      storage,      cohesive          FWHM 
-##  4.661342e-01  4.673666e-01  4.691322e-01  4.734518e-01  4.745795e-01</code></pre>
+<pre><code>##        energy     renewable       energy,       storage  intermittent 
+##  1.554312e-15  3.591207e-01  3.709372e-01  4.063375e-01  4.171232e-01 
+##          cost       energy.  photovoltaic      energies     landscape 
+##  4.227831e-01  4.307293e-01  4.333873e-01  4.361450e-01  4.369086e-01 
+##   electricity            H2    deployment technologies,   gravimetric 
+##  4.369684e-01  4.458170e-01  4.459029e-01  4.555006e-01  4.638467e-01 
+##      cohesive       nucleus         cost,       impulse          FWHM 
+##  4.647929e-01  4.668857e-01  4.674046e-01  4.679314e-01  4.692206e-01</code></pre>
 </div>
 <div id="reducció-de-la-dimensionalitat-amb-t-sne" class="section level2">
 <h2>Reducció de la dimensionalitat amb T-SNE</h2>

@@ -11,7 +11,6 @@ tags:
   - nlp
   - r
   - t-sne
-  - text mining
   - tools
   - topic modeling
   - word2vec
@@ -170,7 +169,7 @@ parells %>%
 ```
 
 
-Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un post anterior.
+Tot seguit provarem de fer topic modeling utilitzant LDA (Latent Dirichlet Allocation). Ja havíem usat aquesta tècnica en un [post anterior](https://enricescorsa.netlify.com/blog/topic-modeling-a-les-lletres-de-franco-battiato/).
 
 ```{r message = FALSE, warning = FALSE}
 

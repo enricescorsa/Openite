@@ -1153,6 +1153,8 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                           
                             <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
                           
+                            <li class="middot"><a href="/tags/search">search</a> </li>
+                          
                         </ul>
                     </div>
                     <div class="tags">
@@ -1193,8 +1195,10 @@ plot(trend)</code></pre>
 
 trend &lt;- gtrends(c(&quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;, &quot;coronavirus&quot;), time = &quot;today 1-m&quot;, geo = c(&quot;FR&quot;, &quot;IT&quot;, &quot;ES&quot;, &quot;US&quot;, &quot;PT&quot;))
 plot(trend)</code></pre>
-<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trendsmes-1.png" width="672" />
-### En els darrers 7 dies:</p>
+<p><img src="/blog/2020-03-18-google-trends_files/figure-html/trendsmes-1.png" width="672" /></p>
+</div>
+<div id="en-els-darrers-7-dies" class="section level3">
+<h3>En els darrers 7 dies:</h3>
 <p>Interès en “coronavirus” (nombre de hits en el temps) en les darrers 7 dies.</p>
 <p><img src="/blog/2020-03-18-google-trends_files/figure-html/resultrends-1.png" width="672" /></p>
 </div>
@@ -1207,22 +1211,22 @@ plot(trend)</code></pre>
 <h3>Top temes relacionats:</h3>
 <p>Resultats de temes relacionats amb “coronavirus”:</p>
 <pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_topics, 15)</code></pre>
-<pre><code>##    subject related_topics                    value     keyword category
-## 1      100            top              Coronavirus coronavirus        0
-## 2        8            top                  Symptom coronavirus        0
-## 3        4            top                    Italy coronavirus        0
-## 4        4            top                    Virus coronavirus        0
-## 5        3            top                    China coronavirus        0
-## 6        2            top           Italian people coronavirus        0
-## 7        2            top         Italian Language coronavirus        0
-## 8        2            top                    Spain coronavirus        0
-## 9        1            top                Influenza coronavirus        0
-## 10       1            top                Infection coronavirus        0
-## 11       1            top                  Vaccine coronavirus        0
-## 12       1            top            Coronaviridae coronavirus        0
-## 13      &lt;1            top             Worldometers coronavirus        0
-## 14      &lt;1            top                    Cubit coronavirus        0
-## 15      &lt;1            top Johns Hopkins University coronavirus        0</code></pre>
+<pre><code>##    subject related_topics            value     keyword category
+## 1      100            top      Coronavirus coronavirus        0
+## 2        7            top          Symptom coronavirus        0
+## 3        4            top            Italy coronavirus        0
+## 4        4            top            Virus coronavirus        0
+## 5        3            top            Death coronavirus        0
+## 6        3            top    United States coronavirus        0
+## 7        2            top   United Kingdom coronavirus        0
+## 8        2            top   Italian people coronavirus        0
+## 9        2            top Italian Language coronavirus        0
+## 10       2            top            China coronavirus        0
+## 11       2            top           France coronavirus        0
+## 12       2            top            Spain coronavirus        0
+## 13       1            top        Infection coronavirus        0
+## 14       1            top          Country coronavirus        0
+## 15       1            top           Brazil coronavirus        0</code></pre>
 <p>Una de les cerques relacionades fa referència al centre de recerca de la Johns Hopkins University. Una altra al comptador a temps real <em>Worldometers</em>: <a href="https://www.worldometers.info/coronavirus/">https://www.worldometers.info/coronavirus/</a></p>
 </div>
 <div id="top-cerques-relacionades" class="section level3">
@@ -1231,41 +1235,41 @@ plot(trend)</code></pre>
 <pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$related_queries, 15)</code></pre>
 <pre><code>##    subject related_queries                value     keyword category
 ## 1      100             top               corona coronavirus        0
-## 2       99             top coronavirus symptoms coronavirus        0
-## 3       98             top   coronavirus update coronavirus        0
-## 4       82             top                virus coronavirus        0
-## 5       79             top     coronavirus news coronavirus        0
-## 6       63             top    coronavirus cases coronavirus        0
-## 7       57             top         corona virus coronavirus        0
-## 8       55             top       uk coronavirus coronavirus        0
-## 9       48             top    china coronavirus coronavirus        0
-## 10      47             top      coronavirus map coronavirus        0
-## 11      44             top   italia coronavirus coronavirus        0
-## 12      40             top   coronavirus france coronavirus        0
-## 13      33             top coronavirus sintomas coronavirus        0
-## 14      30             top       coronavirus us coronavirus        0
-## 15      30             top      usa coronavirus coronavirus        0</code></pre>
+## 2      100             top   coronavirus update coronavirus        0
+## 3       85             top coronavirus symptoms coronavirus        0
+## 4       71             top     news coronavirus coronavirus        0
+## 5       71             top    coronavirus cases coronavirus        0
+## 6       52             top         corona virus coronavirus        0
+## 7       50             top       uk coronavirus coronavirus        0
+## 8       43             top      coronavirus map coronavirus        0
+## 9       42             top    coronavirus china coronavirus        0
+## 10      41             top    coronavirus india coronavirus        0
+## 11      40             top   italia coronavirus coronavirus        0
+## 12      38             top   coronavirus france coronavirus        0
+## 13      31             top coronavirus sintomas coronavirus        0
+## 14      29             top                italy coronavirus        0
+## 15      29             top    coronavirus italy coronavirus        0</code></pre>
 </div>
 <div id="interès-per-ciutat" class="section level3">
 <h3>Interès per Ciutat:</h3>
 <p>Interès en “coronavirus” per Ciutat</p>
 <pre class="r"><code>head(gtrends(&quot;coronavirus&quot;)$interest_by_city, 15)</code></pre>
-<pre><code>##     location hits     keyword   geo gprop
-## 1      Turin   NA coronavirus world   web
-## 2    Bologna   NA coronavirus world   web
-## 3     Naples   NA coronavirus world   web
-## 4      Milan  100 coronavirus world   web
-## 5       Lyon   NA coronavirus world   web
-## 6    Seville   NA coronavirus world   web
-## 7   Valencia   NA coronavirus world   web
-## 8       Rome   83 coronavirus world   web
-## 9     Madrid   81 coronavirus world   web
-## 10   Palermo   NA coronavirus world   web
-## 11   Yonkers   NA coronavirus world   web
-## 12  San Jose   NA coronavirus world   web
-## 13 Barcelona   NA coronavirus world   web
-## 14     Plano   NA coronavirus world   web
-## 15    Dublin   NA coronavirus world   web</code></pre>
+<pre><code>##      location hits     keyword   geo gprop
+## 1       Turin   NA coronavirus world   web
+## 2      Naples   NA coronavirus world   web
+## 3       Milan  100 coronavirus world   web
+## 4     Seville   NA coronavirus world   web
+## 5    Valencia   NA coronavirus world   web
+## 6        Lyon   NA coronavirus world   web
+## 7      Madrid   91 coronavirus world   web
+## 8        Rome   87 coronavirus world   web
+## 9     Yonkers   NA coronavirus world   web
+## 10      Plano   NA coronavirus world   web
+## 11  Barcelona   NA coronavirus world   web
+## 12   San Jose   NA coronavirus world   web
+## 13 SÃ£o Paulo   66 coronavirus world   web
+## 14  San Diego   NA coronavirus world   web
+## 15     Dublin   NA coronavirus world   web</code></pre>
 <p>Milano, Roma, Madrid, Barcelona…</p>
 </div>
 <div id="tendències-per-categoria-temàtica" class="section level3">
@@ -1281,61 +1285,61 @@ p.ex. la categoria Salut, té el codi 45.</p>
 Busquem quina és la tendència d’una sèrie de paraules (“coronavirus”, “business”, “work”, “economy”, “logistics”), dins d’aquesta categoria.</p>
 <p><img src="/blog/2020-03-18-google-trends_files/figure-html/topcatsports2-1.png" width="672" /></p>
 <p>Resultats temes relacionats amb “coronavirus” en categoria “Business &amp; Industrial”</p>
-<pre><code>##    subject related_topics            value     keyword category
-## 1      100            top      Coronavirus coronavirus       12
-## 2        5            top            Italy coronavirus       12
-## 3        4            top   Italian people coronavirus       12
-## 4        4            top Italian Language coronavirus       12
-## 5        3            top            China coronavirus       12
-## 6        3            top           France coronavirus       12
-## 7        2            top            Death coronavirus       12
-## 8        2            top          Symptom coronavirus       12
-## 9        2            top            Virus coronavirus       12
-## 10       1            top            Spain coronavirus       12
-## 11       1            top     Stock market coronavirus       12
-## 12       1            top     Disinfection coronavirus       12
-## 13       1            top    Telecommuting coronavirus       12
-## 14       1            top     Donald Trump coronavirus       12
-## 15       1            top           CAC 40 coronavirus       12</code></pre>
+<pre><code>##    subject related_topics                        value     keyword category
+## 1      100            top                  Coronavirus coronavirus       12
+## 2        5            top                         News coronavirus       12
+## 3        5            top                        Italy coronavirus       12
+## 4        4            top             Italian Language coronavirus       12
+## 5        3            top               Italian people coronavirus       12
+## 6        3            top                United States coronavirus       12
+## 7        3            top                        China coronavirus       12
+## 8        3            top Dow Jones Industrial Average coronavirus       12
+## 9        2            top                       France coronavirus       12
+## 10       2            top                       Cheque coronavirus       12
+## 11       2            top                     Stimulus coronavirus       12
+## 12       2            top                        Death coronavirus       12
+## 13       2            top                      Symptom coronavirus       12
+## 14       2            top                        Virus coronavirus       12
+## 15       1            top                        Spain coronavirus       12</code></pre>
 </div>
 </div>
 <div id="tendències-en-diferents-medis-de-google" class="section level3">
 <h3>Tendències en diferents medis de Google</h3>
 <p>Resultats top cerques relacionades amb “coronavirus” a <em>Youtube</em>:</p>
-<pre><code>##    subject related_topics          value     keyword category
-## 1      100            top    Coronavirus coronavirus        0
-## 2        8            top          China coronavirus        0
-## 3        7            top          Virus coronavirus        0
-## 4        2            top        Symptom coronavirus        0
-## 5        2            top          Italy coronavirus        0
-## 6        2            top   The Simpsons coronavirus        0
-## 7        2            top          Wuhan coronavirus        0
-## 8        1            top Italian people coronavirus        0
-## 9        1            top         Mexico coronavirus        0
-## 10       1            top            Map coronavirus        0
-## 11       1            top   Donald Trump coronavirus        0
-## 12       1            top        Patient coronavirus        0
-## 13       1            top           Peru coronavirus        0
-## 14       1            top         Corona coronavirus        0
-## 15       1            top       Hospital coronavirus        0</code></pre>
+<pre><code>##    subject related_topics            value     keyword category
+## 1      100            top      Coronavirus coronavirus        0
+## 2        8            top            China coronavirus        0
+## 3        7            top            Virus coronavirus        0
+## 4        7            top             News coronavirus        0
+## 5        3            top            Italy coronavirus        0
+## 6        2            top          Symptom coronavirus        0
+## 7        2            top Italian Language coronavirus        0
+## 8        2            top   Italian people coronavirus        0
+## 9        2            top     The Simpsons coronavirus        0
+## 10       1            top            Wuhan coronavirus        0
+## 11       1            top              Map coronavirus        0
+## 12       1            top           Mexico coronavirus        0
+## 13       1            top    United States coronavirus        0
+## 14       1            top          Cardi B coronavirus        0
+## 15       1            top  Streaming media coronavirus        0</code></pre>
 <p>…mmm…The Simpsons?…</p>
 <p>Top cerques relacionades amb “coronavirus” a <em>Google News</em>:</p>
-<pre><code>##     subject related_topics            value     keyword category
-## 1       100            top      Coronavirus coronavirus        0
-## 2         4            top            Italy coronavirus        0
-## 3         2            top   Italian people coronavirus        0
-## 4         2            top Italian Language coronavirus        0
-## 5         1            top          Symptom coronavirus        0
-## 6         1            top          Vaccine coronavirus        0
-## 7         1            top    Coronaviridae coronavirus        0
-## 8         1            top        Infection coronavirus        0
-## 9        &lt;1            top            Wuhan coronavirus        0
-## 10 Breakout         rising            Italy coronavirus        0
-## 11 Breakout         rising   Italian people coronavirus        0
-## 12 Breakout         rising Italian Language coronavirus        0
-## 13 Breakout         rising            Wuhan coronavirus        0
-## 14    +450%         rising      Coronavirus coronavirus        0
-## 15    +350%         rising          Vaccine coronavirus        0</code></pre>
+<pre><code>##    subject related_topics            value     keyword category
+## 1      100            top      Coronavirus coronavirus        0
+## 2        4            top            Italy coronavirus        0
+## 3        3            top   United Kingdom coronavirus        0
+## 4        2            top   Italian people coronavirus        0
+## 5        2            top Italian Language coronavirus        0
+## 6        2            top              Map coronavirus        0
+## 7        2            top            Spain coronavirus        0
+## 8        1            top            Virus coronavirus        0
+## 9        1            top          Symptom coronavirus        0
+## 10       1            top          Vaccine coronavirus        0
+## 11       1            top      U.S. County coronavirus        0
+## 12       1            top        Infection coronavirus        0
+## 13       1            top      Switzerland coronavirus        0
+## 14       1            top    Coronaviridae coronavirus        0
+## 15      &lt;1            top            Wuhan coronavirus        0</code></pre>
 </div>
 
 

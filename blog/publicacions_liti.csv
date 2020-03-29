@@ -37875,7 +37875,7 @@ ground $\Sigma$ state and one direct path in the $\Pi$ state. We show that
 applying THz control pulses with specific time delays relative to the pumping,
 can significantly alter the population dynamics, as well as, the kinetic energy
 and angular distribution of the photofragments.
-","A. Tóth|A. Csehi|G. J. Halász|Á. Vibók","","http://arxiv.org/abs/1911.04323v1","http://arxiv.org/pdf/1911.04323v1","","","","","physics.chem-ph","physics.chem-ph"
+","A. Tóth|A. Csehi|G. J. Halász|Á. Vibók","","http://arxiv.org/abs/1911.04323v1","http://arxiv.org/pdf/1911.04323v1","http://dx.doi.org/10.1103/PhysRevResearch.2.013338","","Phys. Rev. Research 2, 013338 (2020)","10.1103/PhysRevResearch.2.013338","physics.chem-ph","physics.chem-ph"
 "2240","1911.04668v1","2019-11-12 04:36:38","2019-11-12 04:36:38","Emergent superconductivity in two-dimensional NiTe$_2$ crystals","  Despite growing interest in them, highly crystalline two-dimensional
 superconductors derived from exfoliated layered materials are few. Employing
 the anisotropic Migdal-Eliashberg formalism based on {\it ab initio}
@@ -39184,7 +39184,7 @@ demonstrate the potential application of superhydrophilic lithium exchanged
 vermiculite as a thin coating layer on microfiltration membranes to resist
 fouling, and thus, we address a major challenge for oil-water separation
 technology.
-","K. Huang|P. Rowe|C. Chi|V. Sreepal|T. Bohn|K. -G. Zhou|Y. Su|E. Prestat|P. Balakrishna Pillai|C. T. Cherian|A. Michaelides|R. R. Nair","","http://arxiv.org/abs/2002.04522v1","http://arxiv.org/pdf/2002.04522v1","","","","","physics.app-ph","physics.app-ph|cond-mat.mtrl-sci"
+","K. Huang|P. Rowe|C. Chi|V. Sreepal|T. Bohn|K. -G. Zhou|Y. Su|E. Prestat|P. Balakrishna Pillai|C. T. Cherian|A. Michaelides|R. R. Nair","","http://arxiv.org/abs/2002.04522v1","http://arxiv.org/pdf/2002.04522v1","http://dx.doi.org/10.1038/s41467-020-14854-4","","","10.1038/s41467-020-14854-4","physics.app-ph","physics.app-ph|cond-mat.mtrl-sci"
 "2316","2002.04749v1","2020-02-12 00:50:25","2020-02-12 00:50:25","Production of Lithium in Primordial Supernovae","  The first generation of stars is quite unique. The absence of metals likely
 affects their formation, with current models suggesting a much more top-heavy
 initial mass fraction than what we observe today, and some of their other
@@ -39335,7 +39335,26 @@ efficiency dispersion by changing the structural parameters of the
 metasurfaces. Our results would pave a way for developing novel compact
 coherent light sources for biosensing and optical communications, et al.
 ","Junjun Ma|Mengxin Ren|Wei Wu|Wei Cai|Jingjun Xu","","http://arxiv.org/abs/2002.06594v1","http://arxiv.org/pdf/2002.06594v1","","","","","physics.optics","physics.optics"
-"2325","2003.03259v2","2020-02-18 01:54:36","2020-03-09 01:03:20","Lithium niobate photonic-crystal electro-optic modulator","  Modern advanced photonic integrated circuits require dense integration of
+"2325","2003.11632v1","2020-02-17 17:38:27","2020-02-17 17:38:27","Stochastic reconstruction of periodic, three-dimensional multi-phase
+  electrode microstructures using generative adversarial networks","  The generation of multiphase porous electrode microstructures is a critical
+step in the optimisation of electrochemical energy storage devices. This work
+implements a deep convolutional generative adversarial network (DC-GAN) for
+generating realistic n-phase microstructural data. The same network
+architecture is successfully applied to two very different three-phase
+microstructures: A lithium-ion battery cathode and a solid oxide fuel cell
+anode. A comparison between the real and synthetic data is performed in terms
+of the morphological properties (volume fraction, specific surface area,
+triple-phase boundary) and transport properties (relative diffusivity), as well
+as the two-point correlation function. The results show excellent agreement
+between for datasets and they are also visually indistinguishable. By modifying
+the input to the generator, we show that it is possible to generate
+microstructure with periodic boundaries in all three directions. This has the
+potential to significantly reduce the simulated volume required to be
+considered representative and therefore massively reduce the computational cost
+of the electrochemical simulations necessary to predict the performance of a
+particular microstructure during optimisation.
+","Andrea Gayon-Lombardo|Lukas Mosser|Nigel P. Brandon|Samuel J. Cooper","","http://arxiv.org/abs/2003.11632v1","http://arxiv.org/pdf/2003.11632v1","","37 pages, 10 figures","","","cs.NE","cs.NE|cs.CV|68T10, 68T45, 92E99, 82D30|J.2; I.4.5; I.4"
+"2326","2003.03259v2","2020-02-18 01:54:36","2020-03-09 01:03:20","Lithium niobate photonic-crystal electro-optic modulator","  Modern advanced photonic integrated circuits require dense integration of
 high-speed electro-optic functional elements on a compact chip that consumes
 only moderate power. Energy efficiency, operation speed, and device dimension
 are thus crucial metrics underlying almost all current developments of photonic
@@ -39354,7 +39373,7 @@ at the wavelength scale paves a crucial foundation for realizing large-scale LN
 photonic integrated circuits that are of immense importance for broad
 applications in data communication, microwave photonics, and quantum photonics.
 ","Mingxiao Li|Jingwei Ling|Yang He|Usman A. Javid|Shixin Xue|Qiang Lin","","http://arxiv.org/abs/2003.03259v2","http://arxiv.org/pdf/2003.03259v2","","","","","physics.app-ph","physics.app-ph|eess.SP|physics.optics"
-"2326","2002.07502v1","2020-02-18 11:44:23","2020-02-18 11:44:23","Identity of the JET M-mode and the ASDEX Upgrade I-phase phenomena","  An H-mode plasma state free of edge-localized mode (ELM), close to the L-H
+"2327","2002.07502v1","2020-02-18 11:44:23","2020-02-18 11:44:23","Identity of the JET M-mode and the ASDEX Upgrade I-phase phenomena","  An H-mode plasma state free of edge-localized mode (ELM), close to the L-H
 transition with clear density and temperature pedestal has been observed both
 at the Joint European Torus (JET) and at the ASDEX Upgrade (AUG) tokamaks
 usually identified by a low frequency (LFO, 1-2 kHz), m=1, n=0 oscillation of
@@ -39380,7 +39399,7 @@ indicate that the regimes, the AUG I-phase and the JET M-mode, exhibit similar
 characteristics, which leads to the conclusion that the regimes are likely the
 same.
 ","D. I. Réfy|E. R. Solano|N. Vianello|S. Zoletnik|D. Dunai|B. Tál|M. Brix|R. Gomes|G. Birkenmeier|E. Wolfrum|F. Laggner|M. Griener|Ö. Asztalos|E. Delabie","for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1|for the ASDEX Upgrade Team, JET Contributors, and EUROfusion MST1","http://arxiv.org/abs/2002.07502v1","http://arxiv.org/pdf/2002.07502v1","http://dx.doi.org/10.1088/1741-4326/ab7594","26 pages, 14 figures","","10.1088/1741-4326/ab7594","physics.plasm-ph","physics.plasm-ph"
-"2327","2002.09206v1","2020-02-21 10:21:04","2020-02-21 10:21:04","Efficient light coupling between an ultra-low loss lithium niobate
+"2328","2002.09206v1","2020-02-21 10:21:04","2020-02-21 10:21:04","Efficient light coupling between an ultra-low loss lithium niobate
   waveguide and an adiabatically tapered single mode optical fiber","  A lithium niobate on insulator ridge waveguide allows constructing
 high-density photonic integrated circuits thanks to its small bending radius
 offered by the high index contrast. Meanwhile, the significant mode-field
@@ -39393,7 +39412,7 @@ Experimentally, though without anti-reflection coating, the measured coupling
 losses for TE and TM mode are 1.32 dB and 1.88 dB, respectively. Our technique
 paves a way for a broad range of on-chip lithium niobate applications.
 ","Ni Yao|Junxia Zhou|Renhong Gao|Jintian Lin|Min Wang|Ya Cheng|Wei Fang|Limin Tong","","http://arxiv.org/abs/2002.09206v1","http://arxiv.org/pdf/2002.09206v1","","8 pages, 5 figures","","","physics.optics","physics.optics|physics.app-ph"
-"2328","2002.11688v1","2020-02-22 00:00:59","2020-02-22 00:00:59","Hemolithin: a Meteoritic Protein containing Iron and Lithium","  This paper characterizes the first protein to be discovered in a meteorite.
+"2329","2002.11688v1","2020-02-22 00:00:59","2020-02-22 00:00:59","Hemolithin: a Meteoritic Protein containing Iron and Lithium","  This paper characterizes the first protein to be discovered in a meteorite.
 Amino acid polymers previously observed in Acfer 086 and Allende meteorites
 [1,2] have been further characterized in Acfer 086 via high precision MALDI
 mass spectrometry to reveal a principal unified structure of molecular weight
@@ -39410,7 +39429,7 @@ molecule is tipped by an iron-oxygen-iron grouping that in other terrestrial
 contexts has been proposed to be capable of absorbing photons and splitting
 water into hydroxyl and hydrogen moieties.
 ","Malcolm. W. McGeoch|Sergei Dikler|Julie E. M. McGeoch","","http://arxiv.org/abs/2002.11688v1","http://arxiv.org/pdf/2002.11688v1","","33 pages including 14 figures, 10 tables","","","astro-ph.EP","astro-ph.EP|physics.chem-ph"
-"2329","2002.10556v1","2020-02-24 21:48:31","2020-02-24 21:48:31","The lithium-rotation connection in the newly discovered young stellar
+"2330","2002.10556v1","2020-02-24 21:48:31","2020-02-24 21:48:31","The lithium-rotation connection in the newly discovered young stellar
   stream Psc-Eri (Meingast 1)","  Context. As a fragile element, lithium is a sensitive probe of physical
 processes occurring in stellar interiors. Aims. We aim at investigating the
 relationship between lithium abundance and rotation rate in low-mass members of
@@ -39426,7 +39445,7 @@ lithium-rotation connection thus seems to be universal over a restricted
 effective temperature range for low-mass stars at or close to the zero-age main
 sequence, and does not depend on environmental conditions.
 ","J. Arancibia-Silva|J. Bouvier|A. Bayo|P. A. B. Galli|W. Brandner|H. Bouy|D. Barrado","Instituto de Física y Astronomía, Universidad de Valparaíso, Chile|IPAG, Univ. Grenoble Alpes, France|Instituto de Física y Astronomía, Universidad de Valparaíso, Chile|Laboratoire d'Astrophysique de Bordeaux, Univ. Bordeaux, Pessac, France|Max Planck Institute for Astronomy, Heidelberg, Germany|Laboratoire d'Astrophysique de Bordeaux, Univ. Bordeaux, Pessac, France|Depto. Astrofísica, Centro de Astrobiología","http://arxiv.org/abs/2002.10556v1","http://arxiv.org/pdf/2002.10556v1","","5 pages, 2 figures, 1 table. Accepted to A&A letters","","","astro-ph.SR","astro-ph.SR|astro-ph.GA"
-"2330","2002.11724v1","2020-02-26 19:00:00","2020-02-26 19:00:00","Calculating transition amplitudes by variational quantum eigensolvers","  Variational quantum eigensolver (VQE) is an appealing candidate for the
+"2331","2002.11724v1","2020-02-26 19:00:00","2020-02-26 19:00:00","Calculating transition amplitudes by variational quantum eigensolvers","  Variational quantum eigensolver (VQE) is an appealing candidate for the
 application of near-term quantum computers. A technique introduced in [Higgot
 et al., Quantum 3, 156 (2019)], which is named variational quantum deflation
 (VQD), has extended the ability of the VQE framework for finding excited states
@@ -39447,7 +39466,7 @@ oscillator strength of lithium hydride in numerical simulations with shot
 noise. Our results illustrate the superiority of the VQD to find excited states
 and widen its applicability to various quantum systems.
 ","Yohei Ibe|Yuya O. Nakagawa|Takahiro Yamamoto|Kosuke Mitarai|Qi Gao|Takao Kobayashi","","http://arxiv.org/abs/2002.11724v1","http://arxiv.org/pdf/2002.11724v1","","10 pages, 6 figures","","","quant-ph","quant-ph|cond-mat.str-el|physics.chem-ph"
-"2331","2002.12866v1","2020-02-28 17:02:55","2020-02-28 17:02:55","Lithium abundances in globular clusters","  Lithium is created during the Big Bang nucleosynthesis and it is destroyed in
+"2332","2002.12866v1","2020-02-28 17:02:55","2020-02-28 17:02:55","Lithium abundances in globular clusters","  Lithium is created during the Big Bang nucleosynthesis and it is destroyed in
 stellar interiors at relatively low temperatures. However, it should be
 preserved in the stellar envelopes of unevolved stars and progressively diluted
 during mixing processes. In particular, after the first dredge-up along the
@@ -39462,7 +39481,7 @@ the largest sample of GCs stars (about 2000, both dwarfs and giants) for which
 the lithium has been analysed homogeneously.
 ","N. Sanna|E. Franciosini|E. Pancino|A. Mucciarelli","","http://arxiv.org/abs/2002.12866v1","http://arxiv.org/pdf/2002.12866v1","","4 pages, 2 figures, proceedings of the conference ""Lithium in the
   Universe: to Be or not to Be""","","","astro-ph.SR","astro-ph.SR|astro-ph.GA"
-"2332","2002.12902v1","2020-02-28 18:11:52","2020-02-28 18:11:52","Chemistry on quantum computers with virtual quantum subspace expansion","  Several novel methods for performing calculations relevant to quantum
+"2333","2002.12902v1","2020-02-28 18:11:52","2020-02-28 18:11:52","Chemistry on quantum computers with virtual quantum subspace expansion","  Several novel methods for performing calculations relevant to quantum
 chemistry on quantum computers have been proposed but not yet explored
 experimentally. Virtual quantum subspace expansion [T. Takeshita et al., Phys.
 Rev. X 10, 011004 (2020)] is one such algorithm developed for modeling complex
@@ -39476,7 +39495,7 @@ generalized eigenvalue problem that is a crucial component of the algorithm.
 Our results demonstrate that virtual quantum subspace expansion works well in
 practice.
 ","Miroslav Urbanek|Daan Camps|Roel Van Beeumen|Wibe A. de Jong","","http://arxiv.org/abs/2002.12902v1","http://arxiv.org/pdf/2002.12902v1","","","","","quant-ph","quant-ph|physics.chem-ph"
-"2333","2003.00379v1","2020-03-01 02:11:21","2020-03-01 02:11:21","Inverse design of photonic crystals through automatic differentiation","  Gradient-based inverse design in photonics has already achieved remarkable
+"2334","2003.00379v1","2020-03-01 02:11:21","2020-03-01 02:11:21","Inverse design of photonic crystals through automatic differentiation","  Gradient-based inverse design in photonics has already achieved remarkable
 results in designing small-footprint, high-performance optical devices. The
 adjoint variable method, which allows for the efficient computation of
 gradients, has played a major role in this success. However, gradient-based
@@ -39497,7 +39516,7 @@ class of simulations, and more broadly highlights the importance that automatic
 differentiation could play in the future for tracking and optimizing
 complicated physical models.
 ","Momchil Minkov|Ian A. D. Williamson|Lucio C. Andreani|Dario Gerace|Beicheng Lou|Alex Y. Song|Tyler W. Hughes|Shanhui Fan","","http://arxiv.org/abs/2003.00379v1","http://arxiv.org/pdf/2003.00379v1","","","","","physics.optics","physics.optics|cs.CE|physics.app-ph|physics.comp-ph"
-"2334","2003.00705v2","2020-03-02 08:16:07","2020-03-09 17:26:17","A Critical Review of the Scientific and Economic Efficacy of Lithium
+"2335","2003.00705v2","2020-03-02 08:16:07","2020-03-09 17:26:17","A Critical Review of the Scientific and Economic Efficacy of Lithium
   Lorentz Force Accelerators","  Electromagnetic propulsion technology has been thought to provide a potential
 form of future spacecraft propulsion for some time. In contrast to ion
 thrusters, which utilize the Coulomb force to accelerate positively charged
@@ -39519,7 +39538,7 @@ Force Accelerators may present a promising near-term form of spacecraft
 propulsion for rapid exploration of the solar system, however much more data is
 needed to analyze the efficacy of large-scale configurations.
 ","Alec Angus","","http://arxiv.org/abs/2003.00705v2","http://arxiv.org/pdf/2003.00705v2","","7 pages, 3 figures","","","physics.app-ph","physics.app-ph|physics.plasm-ph|physics.space-ph"
-"2335","2003.01379v1","2020-03-03 07:56:04","2020-03-03 07:56:04","Filled Carbon Nanotubes as Anode Materials for Lithium-Ion Batteries","  Downsizing well-established materials to the nanoscale is a key route to
+"2336","2003.01379v1","2020-03-03 07:56:04","2020-03-03 07:56:04","Filled Carbon Nanotubes as Anode Materials for Lithium-Ion Batteries","  Downsizing well-established materials to the nanoscale is a key route to
 novel functionalities, in particular if different functionalities are merged in
 hybrid nanomaterials. Hybrid carbon-based hierarchical nanostructures are
 particularly promising for electrochemical energy storage since they combine
@@ -39542,7 +39561,7 @@ reversible capacity. The results imply that encapsulating nanostructures inside
 CNT can provide a route to new high-performance nanocomposite anode materials
 for LIB.
 ","Elisa Thauer|Alexander Ottmann|Philip Schneider|Lucas Möller|Lukas Deeg|Rouven Zeus|Florian Wilhelmi|Lucas Schlestein|Christoph Neef|Rasha Ghunaim|Markus Gellesch|Christian Nowka|Maik Scholz|Marcel Haft|Sabine Wurmehl|Karolina Wenelska|Ewa Mijowska|Aakanksha Kapoor|Ashna Bajpai|Silke Hampel|Rüdiger Klingeler","","http://arxiv.org/abs/2003.01379v1","http://arxiv.org/pdf/2003.01379v1","http://dx.doi.org/10.3390/molecules25051064","Invited","Molecules 25, 1064 (2020) (open access)","10.3390/molecules25051064","physics.app-ph","physics.app-ph|cond-mat.mtrl-sci"
-"2336","2003.03216v1","2020-03-04 10:38:14","2020-03-04 10:38:14","Techno-economic model of a second-life energy storage system for
+"2337","2003.03216v1","2020-03-04 10:38:14","2020-03-04 10:38:14","Techno-economic model of a second-life energy storage system for
   utility-scale solar power considering li-ion calendar and cycle aging","  While the use of energy storage combined with grid-scale photovoltaic power
 plants continues to grow, given current lithium-ion battery prices, there
 remains uncertainty about the profitability of these solar-plus-storage
@@ -39570,7 +39589,7 @@ it is possible for EV manufacturers to sell second-life batteries for less than
 60 percent of their original price to developers of profitable
 solar-plus-storage projects.
 ","Ian Mathews|Bolun Xu|Wei He|Vanessa Barreto|Tonio Buonassisi|Ian Marius Peters","","http://arxiv.org/abs/2003.03216v1","http://arxiv.org/pdf/2003.03216v1","","19 pages, 6 figures","","","physics.soc-ph","physics.soc-ph|eess.SP"
-"2337","2003.03443v1","2020-03-06 21:16:27","2020-03-06 21:16:27","Anodic Decomposition of Surface Films on High Voltage Spinel Surfaces --
+"2338","2003.03443v1","2020-03-06 21:16:27","2020-03-06 21:16:27","Anodic Decomposition of Surface Films on High Voltage Spinel Surfaces --
   Density Function Theory and Experimental Study","  Oxidative decomposition of organic-solvent-based liquid electrolytes at
 cathode material interfaces has been identified as a main reason for rapid
 capacity fade in high-voltage lithium ion batteries. The evolution of ""cathode
@@ -39591,7 +39610,7 @@ associated with dissolution or oxidation of native Li2CO3 films, which is
 removed before the electrolyte is in contact with oxide surfaces, are also
 explored.
 ","Kevin Leung| Rosy|Malachi Noked","","http://arxiv.org/abs/2003.03443v1","http://arxiv.org/pdf/2003.03443v1","http://dx.doi.org/10.1063/1.5131447","8 figures","Journal of Chemical Physics volume 151, article 234713 (2019)","10.1063/1.5131447","cond-mat.mtrl-sci","cond-mat.mtrl-sci|physics.chem-ph"
-"2338","2003.03539v1","2020-03-07 09:05:32","2020-03-07 09:05:32","A high-resolution spectroscopic study of two new Na- and Al-rich field
+"2339","2003.03539v1","2020-03-07 09:05:32","2020-03-07 09:05:32","A high-resolution spectroscopic study of two new Na- and Al-rich field
   giants -- likely globular cluster escapees in the Galactic halo","  The stars SDSS J064655.6+411620.5 and SDSS J193712.01+502455.5 are relatively
 bright stars that were initially observed as part of the SDSS/MARVELS
 pre-survey. They were selected, on the basis of their weak CH $G$-bands, along
@@ -39608,7 +39627,7 @@ bright escapees provide a unique opportunity to study the nucleosynthesis
 events of globular clusters in great detail, and shed light on their
 chemical-enrichment histories.
 ","Avrajit Bandyopadhyay|Sivarani Thirupathi|Timothy C. Beers|A. Susmitha","","http://arxiv.org/abs/2003.03539v1","http://arxiv.org/pdf/2003.03539v1","http://dx.doi.org/10.1093/mnras/staa671","8 pages, 5 figures, 3 tables, Accepted for publication in MNRAS","","10.1093/mnras/staa671","astro-ph.SR","astro-ph.SR|astro-ph.GA"
-"2339","2003.03547v1","2020-03-07 10:46:14","2020-03-07 10:46:14","Multiple quasi phase matched second harmonic generation in phase
+"2340","2003.03547v1","2020-03-07 10:46:14","2020-03-07 10:46:14","Multiple quasi phase matched second harmonic generation in phase
   reversal optical superlattice structure","  Domain-engineered quasi-phase-matching (QPM) devices are known for its
 versatility and ability to tune the nonlinear optical frequency conversion
 process. In this paper, a simple approach is presented to generate multiple
@@ -39625,7 +39644,7 @@ generated by distributing four PR domains in specific locations of the PROS QPM
 device. The dependency of the PR domain and its location in the PROS QPM device
 are analyzed to design desirable multi-wavelength converters
 ","Toijam Sunder Meetei|Meerasha Mubarak Ali|Shanmugam Boomadevi|Krishnamoorthy Pandiyan","","http://arxiv.org/abs/2003.03547v1","http://arxiv.org/pdf/2003.03547v1","","","","","physics.optics","physics.optics"
-"2340","2003.04473v1","2020-03-10 00:31:42","2020-03-10 00:31:42","Quantum process tomography of a controlled-phase gate for time-bin
+"2341","2003.04473v1","2020-03-10 00:31:42","2020-03-10 00:31:42","Quantum process tomography of a controlled-phase gate for time-bin
   qubits","  Time-bin qubits, where information is encoded in a single photon at different
 times, have been widely used in optical fiber and waveguide based quantum
 communications. With the recent developments in distributed quantum
@@ -39642,7 +39661,7 @@ logic gates used in quantum computational circuits can be implemented with
 time-bin qubits, and thus it is a significant step forward for realization of
 distributed quantum computation based on time-bin qubits.
 ","Hsin-Pin Lo|Takuya Ikuta|Nobuyuki Matsuda|Toshimori Honjo|William J. Munro|Hiroki Takesue","","http://arxiv.org/abs/2003.04473v1","http://arxiv.org/pdf/2003.04473v1","http://dx.doi.org/10.1103/PhysRevApplied.13.034013","10 pages, 5 figures, 1 table","Phys. Rev. Applied 13, 034013(2020)","10.1103/PhysRevApplied.13.034013","quant-ph","quant-ph"
-"2341","2003.04533v2","2020-03-10 05:00:57","2020-03-11 17:39:02","An integrated lithium-niobate electro-optic platform for spectrally
+"2342","2003.04533v2","2020-03-10 05:00:57","2020-03-11 17:39:02","An integrated lithium-niobate electro-optic platform for spectrally
   tailored dual-comb spectroscopy","  A high-resolution broad-spectral-bandwidth spectrometer on a chip would
 create new opportunities for gas-phase molecular fingerprinting, especially in
 environmental sensing. A resolution high enough to observe transitions at
@@ -39657,7 +39676,7 @@ spectrally-tailored multiplexed sensing, which allows for interrogation of
 non-adjacent spectral regions, here separated by 6.6 THz (220 cm-1), without
 compromising the signal-to-noise ratio.
 ","Amirhassan Shams-Ansari|Mengjie Yu|Zaijun Chen|Christian Reimer|Mian Zhang|Nathalie Picqué|Marko Loncar","","http://arxiv.org/abs/2003.04533v2","http://arxiv.org/pdf/2003.04533v2","","","","","physics.app-ph","physics.app-ph|physics.optics"
-"2342","2003.04921v1","2020-03-10 18:26:56","2020-03-10 18:26:56","Direct measurement of the terrestrial $^7$Be $L/K$ capture ratio in
+"2343","2003.04921v1","2020-03-10 18:26:56","2020-03-10 18:26:56","Direct measurement of the terrestrial $^7$Be $L/K$ capture ratio in
   cryogenic tantalum","  We report a high-statistics measurement of the $L/K$ orbital electron capture
 (EC) ratio in $^7$Be embedded in cryogenic Ta. The thin Ta film formed part of
 a high-resolution superconducting tunnel junction (STJ) radiation detector that
@@ -39671,7 +39690,7 @@ neutrino modeling, and the cosmological lithium problem. This Letter presents
 the first experiment that uses STJs for nuclear-recoil detection, opening a new
 experimental avenue for low-energy precision measurements with rare isotopes.
 ","S. Fretwell|K. G. Leach|C. Bray|G. B. Kim|J. Dilling|A. Lennarz|X. Mougeot|F. Ponce|C. Ruiz|J. Stackhouse|S. Friedrich","","http://arxiv.org/abs/2003.04921v1","http://arxiv.org/pdf/2003.04921v1","","5 pages, 3 figures. Submitted to Physical Review Letters","","","nucl-ex","nucl-ex|astro-ph.SR|nucl-th"
-"2343","2003.04922v1","2020-03-10 18:29:04","2020-03-10 18:29:04","Machine-learning assisted cross-domain prediction of ionic conductivity
+"2344","2003.04922v1","2020-03-10 18:29:04","2020-03-10 18:29:04","Machine-learning assisted cross-domain prediction of ionic conductivity
   in sodium and lithium-based superionic conductors","  Solid state lithium- and sodium-ion batteries utilize solid ionicly
 conducting compounds as electrolytes. However, the ionic conductivity of such
 materials tends to be lower than their liquid counterparts, necessitating
@@ -39698,7 +39717,7 @@ utility of such a simple, yet interpretable tool provides opportunities for
 initial screening of potential candidates as solid-state electrolytes through
 the use of existing data.
 ","Yijie Xu|Yun Zong|Kedar Hippalgaonkar","","http://arxiv.org/abs/2003.04922v1","http://arxiv.org/pdf/2003.04922v1","","26 pages","","","cond-mat.mtrl-sci","cond-mat.mtrl-sci"
-"2344","2003.05381v1","2020-03-11 16:02:36","2020-03-11 16:02:36","Abundance analyses of Li-enriched and normal giants in the GALAH survey","  Compositions of lithium-enriched and normal giants among the GALAH survey are
+"2345","2003.05381v1","2020-03-11 16:02:36","2020-03-11 16:02:36","Abundance analyses of Li-enriched and normal giants in the GALAH survey","  Compositions of lithium-enriched and normal giants among the GALAH survey are
 compared. Except for Li, the only detectable abundance difference between
 lithium-enriched and normal giants among the investigated elements from carbon
 to europium occurs for carbon. Among Li-rich giants with A(Li) = 1.8 to 3.1,
@@ -39717,9 +39736,9 @@ among normal giants is about one percent and slightly dependent on metallicity
 ([Fe/H]). Li-enriched and normal giants are found to have similar projected
 rotational velocity which suggest that Li-enrichment in giants is not linked to
 scenarios such as mergers and tidal interaction between binary stars.
-"," Deepak|David L. Lambert|Bacham Eswar Reddy","","http://arxiv.org/abs/2003.05381v1","http://arxiv.org/pdf/2003.05381v1","","20 pages, 14 figures, accepted for publication in the Monthly Notices
-  of the Royal Astronomical Society on March 09, 2020","","","astro-ph.SR","astro-ph.SR"
-"2345","2003.06161v1","2020-03-13 09:25:00","2020-03-13 09:25:00","Monolithic photonic chips for multi-channel frequency mixers and single
+"," Deepak|David L. Lambert|Bacham Eswar Reddy","","http://arxiv.org/abs/2003.05381v1","http://arxiv.org/pdf/2003.05381v1","http://dx.doi.org/10.1093/mnras/staa729","20 pages, 14 figures, accepted for publication in the Monthly Notices
+  of the Royal Astronomical Society on March 09, 2020","","10.1093/mnras/staa729","astro-ph.SR","astro-ph.SR"
+"2346","2003.06161v1","2020-03-13 09:25:00","2020-03-13 09:25:00","Monolithic photonic chips for multi-channel frequency mixers and single
   photon detectors","  Lithium niobate photonic chip could realize diverse optical engineering for
 various applications benefiting from its excellent optical performances. In
 this letter, we demonstrate monolithic photonic chips for multi-channel
@@ -39738,7 +39757,7 @@ channels of more than 71 dB, which are excellent for the extensive applications
 of monolithic photonic chips in fields including deep space laser
 communication, high-rate quantum key distribution and single-photon imaging.
 ","Ming-Yang Zheng|Quan Yao|Bing Wang|Xiuping Xie|Qiang Zhang|Jian-Wei Pan","","http://arxiv.org/abs/2003.06161v1","http://arxiv.org/pdf/2003.06161v1","","15 pages, 6 figures","","","physics.app-ph","physics.app-ph|physics.ins-det|physics.optics|quant-ph"
-"2346","2003.07483v1","2020-03-17 00:55:04","2020-03-17 00:55:04","Pump depletion in parametric down-conversion with low pump energies","  We report the efficient generation of high-gain parametric down-conversion,
+"2347","2003.07483v1","2020-03-17 00:55:04","2020-03-17 00:55:04","Pump depletion in parametric down-conversion with low pump energies","  We report the efficient generation of high-gain parametric down-conversion,
 including pump depletion, with pump powers as low as 100 $\mu$W (energies
 $0.1$~$\mu$J/pulse) and conversion efficiencies up to 33%. In our simple
 configuration, the pump beam is tightly focused into a periodically poled
@@ -39748,3 +39767,189 @@ the pump power increases to reach the depleted pump regime. We interpret our
 experimental results as a clear signature of the interplay between the pump and
 the PDC beams in highly efficient parametric down-conversion sources.
 ","Jefferson Flórez|Jeff S. Lundeen|Maria V. Chekhova","","http://arxiv.org/abs/2003.07483v1","http://arxiv.org/pdf/2003.07483v1","","5 pages, 4 figures","","","quant-ph","quant-ph"
+"2348","2003.08804v1","2020-03-17 10:41:33","2020-03-17 10:41:33","A Hybrid Phase Field Model for Fracture Induced by Lithium Diffusion in
+  Electrode Particles of Li-ion Batteries","  Lithium-ion batteries (LIBs) of high energy density and light-weight design,
+have found wide applications in electronic devices and systems. Degradation
+mechanisms that caused by lithiation is a main challenging problem for LIBs
+with high capacity electrodes like silicon (Si), which eventually can reduce
+the lifetime of batteries. In this paper, a hybrid phase field model (PFM) is
+proposed to study the fracture behavior of LIB electrodes. The model considers
+the coupling effects between lithium (Li) -ion diffusion process, stress
+evolution and crack propagation. Also, the dependency of Elastic properties on
+the concentration magnitude of Li-ion is considered. A numerical implementation
+based on a MATLAB finite element (FE) code is elaborated. Then, the proposed
+hybrid PF approach is applied to a Nanowire (NW) Si electrode particle. It is
+shown that the hybrid model shows less tendency to crack growth than the
+isotropic model.
+","Masoud Ahmadi","","http://arxiv.org/abs/2003.08804v1","http://arxiv.org/pdf/2003.08804v1","","","","","cs.CE","cs.CE"
+"2349","2003.07972v1","2020-03-17 22:39:03","2020-03-17 22:39:03","State of Charge Estimation of Parallel Connected Battery Cells via
+  Descriptor System Theory","  This manuscript presents an algorithm for individual Lithium-ion (Li-ion)
+battery cell state of charge (SOC) estimation when multiple cells are connected
+in parallel, using only terminal voltage and total current measurements. For
+battery packs consisting of thousands of cells, it is desirable to estimate
+individual SOCs by only monitoring the total current in order to reduce sensing
+cost. Mathematically, series connected cells yield dynamics given by ordinary
+differential equations under classical full voltage sensing. In contrast,
+parallel connected cells are evidently more challenging because the dynamics
+are governed by a nonlinear descriptor system, including differential equations
+and algebraic equations arising from voltage and current balance across cells.
+An observer with linear output error injection is formulated, where the
+individual cell SOCs and local currents are locally observable from the total
+current and voltage measurements. The asymptotic convergence of differential
+and algebraic states is established by considering local Lipschitz continuity
+property of system nonlinearities. Simulation results on LiNiMnCoO$_2$/Graphite
+(NMC) cells illustrate convergence for SOCs, local currents, and terminal
+voltage.
+","Dong Zhang|Luis D. Couto|Sebastien Benjamin|Wente Zeng|Daniel F. Coutinho|Scott J. Moura","","http://arxiv.org/abs/2003.07972v1","http://arxiv.org/pdf/2003.07972v1","","7 pages, 4 figures, 1 table, accepted by 2020 American Control
+  Conference","","","eess.SY","eess.SY|cs.SY"
+"2350","2003.08294v1","2020-03-18 15:54:50","2020-03-18 15:54:50","Functionalized MXenes as Effective Polyselenides Immobilizer for
+  Lithium-Selenium Batteries: A Density Functional Theory (DFT) Study","  The practical applications of lithium selenium (Li-Se) batteries are impeded
+primarily due to the dissolution and migration of higher order polyselenides
+(Li2Sen) into the electrolyte (known as shuttle effect) and inactive deposition
+of lower order polyselenides. The high electrical conductivity and mechanical
+strengths of MXenes make them a suitable candidate to provide adequate
+anchoring to prevent polyselenides dissolution and improved electrochemical
+performance. Herein, we used density functional theory (DFT) calculations to
+understand the binding mechanism of Li2Sen on graphene and surface
+functionalized Ti3C2 MXenes. We used graphene as reference material to assess
+Li2Sen binding strengths on functionalized Ti3C2X2 (where X = S, O, F, and Cl).
+We observed that Ti3C2S2 and Ti3C2O2 exhibit superior anchoring behavior
+compared to graphene, Ti3C2F2, and Ti3C2Cl2. The calculated Li2Sen adsorption
+strength provided by S and O terminated Ti3C2 are stronger than the commonly
+used ether-based electrolyte, which is a requisite for effective suppression of
+the Li2Sen shuttling. The adsorbed Li2Sen on Ti3C2X2 and graphene retains their
+structural integrity without a chemical decomposition. The density of states
+(DOS) analysis exhibits that the conductive behavior of the Ti3C2X2 is
+preserved even after Li2Sen adsorption, which can stimulate the electrochemical
+activity of involved Li2Sen chemistry. Based on our unprecedented results,
+Ti3C2S2 and Ti3C2O2 are found to exhibit superior anchoring behavior for Li2Sen
+adsorption, which can be leveraged for designing effective selenium-based
+cathode materials to boost the electrochemical performance of the Li-Se battery
+system
+","Rahul Jayan|Md Mahbubul Islam","","http://arxiv.org/abs/2003.08294v1","http://arxiv.org/pdf/2003.08294v1","","","","","cond-mat.mtrl-sci","cond-mat.mtrl-sci"
+"2351","2003.09036v1","2020-03-19 22:35:22","2020-03-19 22:35:22","Computational Design of Stable and Highly Ion-conductive Materials using
+  Multi-objective Bayesian Optimization: Case Studies on Diffusion of Oxygen
+  and Lithium","  Ion-conducting solid electrolytes are widely used for a variety of purposes.
+Therefore, designing highly ion-conductive materials is in strongly demand.
+Because of advancement in computers and enhancement of computational codes,
+theoretical simulations have become effective tools for investigating the
+performance of ion-conductive materials. However, an exhaustive search
+conducted by theoretical computations can be prohibitively expensive. Further,
+for practical applications, both dynamic conductivity as well as static
+stability must be satisfied at the same time. Therefore, we propose a
+computational framework that simultaneously optimizes dynamic conductivity and
+static stability; this is achieved by combining theoretical calculations and
+the Bayesian multi-objective optimization that is based on the Pareto
+hyper-volume criterion. Our framework iteratively selects the candidate
+material, which maximizes the expected increase in the Pareto hyper-volume
+criterion; this is a standard optimality criterion of multi-objective
+optimization. Through two case studies on oxygen and lithium diffusions, we
+show that ion-conductive materials with high dynamic conductivity and static
+stability can be efficiently identified by our framework.
+","Masayuki Karasuyama|Hiroki Kasugai|Tomoyuki Tamura|Kazuki Shitara","","http://arxiv.org/abs/2003.09036v1","http://arxiv.org/pdf/2003.09036v1","","","","","physics.comp-ph","physics.comp-ph|cond-mat.mtrl-sci"
+"2352","2003.09793v1","2020-03-22 03:30:52","2020-03-22 03:30:52","Optical anapole mode in nanostructured lithium niobate for enhancing
+  second harmonic generation","  Second harmonic generation (SHG) with a material of large transparency is an
+attractive way of generating coherent light sources at exotic wavelength range
+such as VUV, UV and visible light. It is of critical importance to improve
+nonlinear conversion efficiency in order to find practical applications in
+quantum light source and high resolution nonlinear microscopy, etc. Here an
+enhanced SHG with conversion efficiency up to the order of 0.01% at SH
+wavelength of 282 nm under 11 GW/cm2 pump power via the excitation of anapole
+in lithium niobite (LiNbO3, or LN) nanodisk through the dominating d33
+nonlinear coefficient is investigated. The anapole has advantages of strongly
+suppressing far-field scattering and well-confined internal field which helps
+to boost the nonlinear conversion. Anapoles in LN nanodisk is facilitated by
+high index contrast between LN and substrate with properties of near-zero-index
+via hyperbolic metamaterial structure design. By tailoring the multi-layers
+structure of hyperbolic metamaterials, the anapole excitation wavelength can be
+tuned at different wavelengths. It indicates that an enhanced SHG can be
+achieved at a wide range of pump light wavelengths via different design of the
+epsilon-near-zero (ENZ) hyperbolic metamaterials substrates. The proposed
+nanostructure in this work might hold significances for the enhanced
+light-matter interactions at the nanoscale such as integrated optics.
+","Yang Li|Zhijin Huang|Zhan Sui|Huajiang Chen|Xinyue Zhang|Heyuan Guan|Wentao Qiu|Jiangli Dong|Wenguo Zhu|Jianhui Yu|Huihui Lu|Zhe Chen","","http://arxiv.org/abs/2003.09793v1","http://arxiv.org/pdf/2003.09793v1","","","","","physics.optics","physics.optics"
+"2353","2003.09835v1","2020-03-22 08:02:23","2020-03-22 08:02:23","Fulleryne, a new member of the carbon cages family","  In this study, based on density functional theory (DFT), we propose a new
+branch of pseudo-fullerenes which contain triple bonds with sp hybridization.
+We should call these new nanostructures fullerynes, according to IUPAC. We
+present four samples with the chemical formula of C4nHn, and structures derived
+from fullerenes. We compare the structural and electronic properties of these
+structures with those of two common fullerene and fullerene systems. The
+calculated electron affinities of the sampled fullerynes are negative, and much
+smaller than those of fullerenes, so they should be chemically more stable than
+fullerenes. Although fulleranes also exhibit higher chemical stability than
+fullerynes, but pentagon or hexagon of the fullerane structures cannot pass
+ions and molecules. Applications of fullerynes can be included in the storage
+of ions and gases at the nanoscale. On the other hand, they can also be used as
+cathode/anode electrodes in lithium-ion batteries.
+","Mohammad Qasemnazhand|Farhad Khoeini|Farah Marsusi","","http://arxiv.org/abs/2003.09835v1","http://arxiv.org/pdf/2003.09835v1","","18 pages, 9 figures","","","cond-mat.mtrl-sci","cond-mat.mtrl-sci|physics.comp-ph"
+"2354","2003.09839v1","2020-03-22 08:40:14","2020-03-22 08:40:14","A New Update Rule of RLSEKF-based Joint-estimation Filters for Real-time
+  SOH SOC Identification","  In order to accurately estimate the SOC and SOH of a lithium-ion battery used
+in an electric vehicle (EV), we propose an Adaptive Diagonal Forgetting Factor
+Recursive Least Square (ADFF-RLS) for accurate battery parameter estimation.
+ADFFRLS includes two new proposals in the existing DFF-RLS; The first is an
+excitation tag that changes the behavior of the DFFRLS and the EKF according to
+the dynamics of the input data. The second is auto-tuning that automatically
+finds the optimal value of RLS forgetting factor based on condition number
+(CN). Based on this, we proposed a joint estimation algorithm of ADFF-RLS and
+Extended Kalman Filter (EKF). To verify the accuracy of the proposed algorithm,
+we used experimental data of hybrid pattern battery cells mixed with dynamic
+and static patterns. In addition, we added a current measurement error that
+occurs when measuring at EV, and realized data that is closer to actual
+environment. This data was applied to two conventional estimation algorithms
+(Coulomb counting, Single EKF), two joint estimation algorithms (RLS & EKF,
+DFF-RLS & EKF) and ADFF-RLS & EKF. As a result, the proposed algorithm showed
+higher SOC and SOH estimation accuracy in various driving patterns and actual
+EV driving environment than previous studies.
+","Kwangrae Kim|Minho Kim|Suwon Kang|Jungwook Yu|Jungsoo Kim|Huiyong Chun|Soohee Han","","http://arxiv.org/abs/2003.09839v1","http://arxiv.org/pdf/2003.09839v1","","","","","eess.SY","eess.SY|cs.SY"
+"2355","2003.11137v1","2020-03-24 22:31:45","2020-03-24 22:31:45","Nitrogen magneto-ionics","  So far, magneto-ionics, understood as voltage-driven ion transport in
+magnetic materials, has largely relied on controlled migration of oxygen
+ion/vacancy and, to a lesser extent, lithium and hydrogen. Here, we demonstrate
+efficient, room-temperature, voltage-driven nitrogen transport (i.e., nitrogen
+magneto-ionics) by electrolyte-gating of a single CoN film (without an
+ion-reservoir layer). Nitrogen magneto-ionics in CoN is compared to oxygen
+magneto-ionics in Co3O4, both layers showing a nanocrystalline
+face-centered-cubic structure and reversible voltage-driven ON-OFF
+ferromagnetism. In contrast to oxygen, nitrogen transport occurs uniformly
+creating a plane-wave-like migration front, without assistance of diffusion
+channels. Nitrogen magneto-ionics requires lower threshold voltages and
+exhibits enhanced rates and cyclability. This is due to the lower activation
+energy for ion diffusion and the lower electronegativity of nitrogen compared
+to oxygen. These results are appealing for the use of magneto-ionics in nitride
+semiconductor devices, in applications requiring endurance and moderate speeds
+of operation, such as brain-inspired computing.
+","Julius de Rojas|Alberto Quintana|Aitor Lopeandía|Joaquín Salguero|Beatriz Muñiz|Fatima Ibrahim|Mairbek Chshiev|Maciej O. Liedke|Maik Butterling|Andreas Wagner|Veronica Sireus|Llibertat Abad|Christopher J. Jensen|Kai Liu|Josep Nogués|José L. Costa-Krämer|Enric Menéndez|Jordi Sort","","http://arxiv.org/abs/2003.11137v1","http://arxiv.org/pdf/2003.11137v1","","35 pages, 5 main figures, 1 Table, supplementary information included","","","cond-mat.mtrl-sci","cond-mat.mtrl-sci"
+"2356","2003.11599v1","2020-03-25 19:43:58","2020-03-25 19:43:58","On-chip self-referencing using integrated lithium niobate waveguides","  The measurement and stabilization of the carrier-envelope offset frequency
+$f_{\textrm{CEO}}$ via self-referencing is paramount for optical frequency comb
+generation which has revolutionized precision frequency metrology,
+spectroscopy, and optical clocks. Over the past decade, the development of
+chip-scale platforms has enabled compact integrated waveguides for
+supercontinuum generation. However, there is a critical need for an on-chip
+self-referencing system that is adaptive to different pump wavelengths,
+requires low pulse energy, and does not require complicated processing. Here,
+we demonstrate efficient carrier-envelope offset frequency $f_{\textrm{CEO}}$
+stabilization of a modelocked laser with only 107 pJ of pulse energy via
+self-referencing in an integrated lithium niobate waveguide. We realize an
+$f$-$2f$ interferometer through second-harmonic generation and subsequent
+supercontinuum generation in a single dispersion-engineered waveguide with a
+stabilization performance equivalent to a conventional off-chip module. The
+$f_{\textrm{CEO}}$ beatnote is measured over a pump wavelength range of 70 nm.
+We theoretically investigate our system using a single nonlinear envelope
+equation with contributions from both second- and third-order nonlinearities.
+Our modeling reveals rich ultrabroadband nonlinear dynamics and confirms that
+the initial second harmonic generation followed by supercontinuum generation
+with the remaining pump is responsible for the generation of a strong
+$f_{\textrm{CEO}}$ signal as compared to a traditional $f$-$2f$ interferometer.
+Our technology provides a highly-simplified system that is robust, low cost,
+and adaptable for precision metrology for use outside a research laboratory.
+","Yoshitomo Okawachi|Mengjie Yu|Boris Desiatov|Bok Young Kim|Tobias Hansson|Marko Loncar|Alexander L. Gaeta","","http://arxiv.org/abs/2003.11599v1","http://arxiv.org/pdf/2003.11599v1","","","","","physics.optics","physics.optics|physics.app-ph"
+"2357","2003.11715v1","2020-03-26 02:59:46","2020-03-26 02:59:46","Generation of 0.7 mJ multicycle 15 THz radiation by phase-matched
+  optical rectification in lithium niobate","  We demonstrate efficient multicycle terahertz pulse generation at 14.6 THz
+from large-area lithium niobate crystals by using high-energy (up to 2 J)
+femtosecond Ti:sapphire laser pulses. Such terahertz radiation is produced by
+phase-matched optical rectification in lithium niobate. Experimentally, we
+achieve maximal terahertz energy of 0.71 mJ with conversion efficiency of
+$\sim$0.04%. We also find that the effective interaction length for optimal
+terahertz conversion is fundamentally limited by terahertz absorption, laser
+pulse stretching by material dispersion, and terahertz-induced nonlinear
+cascading effects on the driving laser pulse.
+","Dogeun Jang|Jae Hee Sung|Seong Ku Lee|Chul Kang|Ki-Yong Kim","","http://arxiv.org/abs/2003.11715v1","http://arxiv.org/pdf/2003.11715v1","","4 figures","","","physics.optics","physics.optics"

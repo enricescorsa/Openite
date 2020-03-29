@@ -37168,6 +37168,24 @@ efficiency dispersion by changing the structural parameters of the
 metasurfaces. Our results would pave a way for developing novel compact
 coherent light sources for biosensing and optical communications, et al.
 "
+"  The generation of multiphase porous electrode microstructures is a critical
+step in the optimisation of electrochemical energy storage devices. This work
+implements a deep convolutional generative adversarial network (DC-GAN) for
+generating realistic n-phase microstructural data. The same network
+architecture is successfully applied to two very different three-phase
+microstructures: A lithium-ion battery cathode and a solid oxide fuel cell
+anode. A comparison between the real and synthetic data is performed in terms
+of the morphological properties (volume fraction, specific surface area,
+triple-phase boundary) and transport properties (relative diffusivity), as well
+as the two-point correlation function. The results show excellent agreement
+between for datasets and they are also visually indistinguishable. By modifying
+the input to the generator, we show that it is possible to generate
+microstructure with periodic boundaries in all three directions. This has the
+potential to significantly reduce the simulated volume required to be
+considered representative and therefore massively reduce the computational cost
+of the electrochemical simulations necessary to predict the performance of a
+particular microstructure during optimisation.
+"
 "  Modern advanced photonic integrated circuits require dense integration of
 high-speed electro-optic functional elements on a compact chip that consumes
 only moderate power. Energy efficiency, operation speed, and device dimension
@@ -37566,4 +37584,181 @@ the photon number statistics for both the pump and the down-converted beams as
 the pump power increases to reach the depleted pump regime. We interpret our
 experimental results as a clear signature of the interplay between the pump and
 the PDC beams in highly efficient parametric down-conversion sources.
+"
+"  Lithium-ion batteries (LIBs) of high energy density and light-weight design,
+have found wide applications in electronic devices and systems. Degradation
+mechanisms that caused by lithiation is a main challenging problem for LIBs
+with high capacity electrodes like silicon (Si), which eventually can reduce
+the lifetime of batteries. In this paper, a hybrid phase field model (PFM) is
+proposed to study the fracture behavior of LIB electrodes. The model considers
+the coupling effects between lithium (Li) -ion diffusion process, stress
+evolution and crack propagation. Also, the dependency of Elastic properties on
+the concentration magnitude of Li-ion is considered. A numerical implementation
+based on a MATLAB finite element (FE) code is elaborated. Then, the proposed
+hybrid PF approach is applied to a Nanowire (NW) Si electrode particle. It is
+shown that the hybrid model shows less tendency to crack growth than the
+isotropic model.
+"
+"  This manuscript presents an algorithm for individual Lithium-ion (Li-ion)
+battery cell state of charge (SOC) estimation when multiple cells are connected
+in parallel, using only terminal voltage and total current measurements. For
+battery packs consisting of thousands of cells, it is desirable to estimate
+individual SOCs by only monitoring the total current in order to reduce sensing
+cost. Mathematically, series connected cells yield dynamics given by ordinary
+differential equations under classical full voltage sensing. In contrast,
+parallel connected cells are evidently more challenging because the dynamics
+are governed by a nonlinear descriptor system, including differential equations
+and algebraic equations arising from voltage and current balance across cells.
+An observer with linear output error injection is formulated, where the
+individual cell SOCs and local currents are locally observable from the total
+current and voltage measurements. The asymptotic convergence of differential
+and algebraic states is established by considering local Lipschitz continuity
+property of system nonlinearities. Simulation results on LiNiMnCoO$_2$/Graphite
+(NMC) cells illustrate convergence for SOCs, local currents, and terminal
+voltage.
+"
+"  The practical applications of lithium selenium (Li-Se) batteries are impeded
+primarily due to the dissolution and migration of higher order polyselenides
+(Li2Sen) into the electrolyte (known as shuttle effect) and inactive deposition
+of lower order polyselenides. The high electrical conductivity and mechanical
+strengths of MXenes make them a suitable candidate to provide adequate
+anchoring to prevent polyselenides dissolution and improved electrochemical
+performance. Herein, we used density functional theory (DFT) calculations to
+understand the binding mechanism of Li2Sen on graphene and surface
+functionalized Ti3C2 MXenes. We used graphene as reference material to assess
+Li2Sen binding strengths on functionalized Ti3C2X2 (where X = S, O, F, and Cl).
+We observed that Ti3C2S2 and Ti3C2O2 exhibit superior anchoring behavior
+compared to graphene, Ti3C2F2, and Ti3C2Cl2. The calculated Li2Sen adsorption
+strength provided by S and O terminated Ti3C2 are stronger than the commonly
+used ether-based electrolyte, which is a requisite for effective suppression of
+the Li2Sen shuttling. The adsorbed Li2Sen on Ti3C2X2 and graphene retains their
+structural integrity without a chemical decomposition. The density of states
+(DOS) analysis exhibits that the conductive behavior of the Ti3C2X2 is
+preserved even after Li2Sen adsorption, which can stimulate the electrochemical
+activity of involved Li2Sen chemistry. Based on our unprecedented results,
+Ti3C2S2 and Ti3C2O2 are found to exhibit superior anchoring behavior for Li2Sen
+adsorption, which can be leveraged for designing effective selenium-based
+cathode materials to boost the electrochemical performance of the Li-Se battery
+system
+"
+"  Ion-conducting solid electrolytes are widely used for a variety of purposes.
+Therefore, designing highly ion-conductive materials is in strongly demand.
+Because of advancement in computers and enhancement of computational codes,
+theoretical simulations have become effective tools for investigating the
+performance of ion-conductive materials. However, an exhaustive search
+conducted by theoretical computations can be prohibitively expensive. Further,
+for practical applications, both dynamic conductivity as well as static
+stability must be satisfied at the same time. Therefore, we propose a
+computational framework that simultaneously optimizes dynamic conductivity and
+static stability; this is achieved by combining theoretical calculations and
+the Bayesian multi-objective optimization that is based on the Pareto
+hyper-volume criterion. Our framework iteratively selects the candidate
+material, which maximizes the expected increase in the Pareto hyper-volume
+criterion; this is a standard optimality criterion of multi-objective
+optimization. Through two case studies on oxygen and lithium diffusions, we
+show that ion-conductive materials with high dynamic conductivity and static
+stability can be efficiently identified by our framework.
+"
+"  Second harmonic generation (SHG) with a material of large transparency is an
+attractive way of generating coherent light sources at exotic wavelength range
+such as VUV, UV and visible light. It is of critical importance to improve
+nonlinear conversion efficiency in order to find practical applications in
+quantum light source and high resolution nonlinear microscopy, etc. Here an
+enhanced SHG with conversion efficiency up to the order of 0.01% at SH
+wavelength of 282 nm under 11 GW/cm2 pump power via the excitation of anapole
+in lithium niobite (LiNbO3, or LN) nanodisk through the dominating d33
+nonlinear coefficient is investigated. The anapole has advantages of strongly
+suppressing far-field scattering and well-confined internal field which helps
+to boost the nonlinear conversion. Anapoles in LN nanodisk is facilitated by
+high index contrast between LN and substrate with properties of near-zero-index
+via hyperbolic metamaterial structure design. By tailoring the multi-layers
+structure of hyperbolic metamaterials, the anapole excitation wavelength can be
+tuned at different wavelengths. It indicates that an enhanced SHG can be
+achieved at a wide range of pump light wavelengths via different design of the
+epsilon-near-zero (ENZ) hyperbolic metamaterials substrates. The proposed
+nanostructure in this work might hold significances for the enhanced
+light-matter interactions at the nanoscale such as integrated optics.
+"
+"  In this study, based on density functional theory (DFT), we propose a new
+branch of pseudo-fullerenes which contain triple bonds with sp hybridization.
+We should call these new nanostructures fullerynes, according to IUPAC. We
+present four samples with the chemical formula of C4nHn, and structures derived
+from fullerenes. We compare the structural and electronic properties of these
+structures with those of two common fullerene and fullerene systems. The
+calculated electron affinities of the sampled fullerynes are negative, and much
+smaller than those of fullerenes, so they should be chemically more stable than
+fullerenes. Although fulleranes also exhibit higher chemical stability than
+fullerynes, but pentagon or hexagon of the fullerane structures cannot pass
+ions and molecules. Applications of fullerynes can be included in the storage
+of ions and gases at the nanoscale. On the other hand, they can also be used as
+cathode/anode electrodes in lithium-ion batteries.
+"
+"  In order to accurately estimate the SOC and SOH of a lithium-ion battery used
+in an electric vehicle (EV), we propose an Adaptive Diagonal Forgetting Factor
+Recursive Least Square (ADFF-RLS) for accurate battery parameter estimation.
+ADFFRLS includes two new proposals in the existing DFF-RLS; The first is an
+excitation tag that changes the behavior of the DFFRLS and the EKF according to
+the dynamics of the input data. The second is auto-tuning that automatically
+finds the optimal value of RLS forgetting factor based on condition number
+(CN). Based on this, we proposed a joint estimation algorithm of ADFF-RLS and
+Extended Kalman Filter (EKF). To verify the accuracy of the proposed algorithm,
+we used experimental data of hybrid pattern battery cells mixed with dynamic
+and static patterns. In addition, we added a current measurement error that
+occurs when measuring at EV, and realized data that is closer to actual
+environment. This data was applied to two conventional estimation algorithms
+(Coulomb counting, Single EKF), two joint estimation algorithms (RLS & EKF,
+DFF-RLS & EKF) and ADFF-RLS & EKF. As a result, the proposed algorithm showed
+higher SOC and SOH estimation accuracy in various driving patterns and actual
+EV driving environment than previous studies.
+"
+"  So far, magneto-ionics, understood as voltage-driven ion transport in
+magnetic materials, has largely relied on controlled migration of oxygen
+ion/vacancy and, to a lesser extent, lithium and hydrogen. Here, we demonstrate
+efficient, room-temperature, voltage-driven nitrogen transport (i.e., nitrogen
+magneto-ionics) by electrolyte-gating of a single CoN film (without an
+ion-reservoir layer). Nitrogen magneto-ionics in CoN is compared to oxygen
+magneto-ionics in Co3O4, both layers showing a nanocrystalline
+face-centered-cubic structure and reversible voltage-driven ON-OFF
+ferromagnetism. In contrast to oxygen, nitrogen transport occurs uniformly
+creating a plane-wave-like migration front, without assistance of diffusion
+channels. Nitrogen magneto-ionics requires lower threshold voltages and
+exhibits enhanced rates and cyclability. This is due to the lower activation
+energy for ion diffusion and the lower electronegativity of nitrogen compared
+to oxygen. These results are appealing for the use of magneto-ionics in nitride
+semiconductor devices, in applications requiring endurance and moderate speeds
+of operation, such as brain-inspired computing.
+"
+"  The measurement and stabilization of the carrier-envelope offset frequency
+$f_{\textrm{CEO}}$ via self-referencing is paramount for optical frequency comb
+generation which has revolutionized precision frequency metrology,
+spectroscopy, and optical clocks. Over the past decade, the development of
+chip-scale platforms has enabled compact integrated waveguides for
+supercontinuum generation. However, there is a critical need for an on-chip
+self-referencing system that is adaptive to different pump wavelengths,
+requires low pulse energy, and does not require complicated processing. Here,
+we demonstrate efficient carrier-envelope offset frequency $f_{\textrm{CEO}}$
+stabilization of a modelocked laser with only 107 pJ of pulse energy via
+self-referencing in an integrated lithium niobate waveguide. We realize an
+$f$-$2f$ interferometer through second-harmonic generation and subsequent
+supercontinuum generation in a single dispersion-engineered waveguide with a
+stabilization performance equivalent to a conventional off-chip module. The
+$f_{\textrm{CEO}}$ beatnote is measured over a pump wavelength range of 70 nm.
+We theoretically investigate our system using a single nonlinear envelope
+equation with contributions from both second- and third-order nonlinearities.
+Our modeling reveals rich ultrabroadband nonlinear dynamics and confirms that
+the initial second harmonic generation followed by supercontinuum generation
+with the remaining pump is responsible for the generation of a strong
+$f_{\textrm{CEO}}$ signal as compared to a traditional $f$-$2f$ interferometer.
+Our technology provides a highly-simplified system that is robust, low cost,
+and adaptable for precision metrology for use outside a research laboratory.
+"
+"  We demonstrate efficient multicycle terahertz pulse generation at 14.6 THz
+from large-area lithium niobate crystals by using high-energy (up to 2 J)
+femtosecond Ti:sapphire laser pulses. Such terahertz radiation is produced by
+phase-matched optical rectification in lithium niobate. Experimentally, we
+achieve maximal terahertz energy of 0.71 mJ with conversion efficiency of
+$\sim$0.04%. We also find that the effective interaction length for optimal
+terahertz conversion is fundamentally limited by terahertz absorption, laser
+pulse stretching by material dispersion, and terahertz-induced nonlinear
+cascading effects on the driving laser pulse.
 "

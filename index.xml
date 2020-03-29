@@ -6,10 +6,20 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 19 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pdf to text</title>
+      <link>/blog/pdf-to-text/</link>
+      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/pdf-to-text/</guid>
+      <description>Em proposo analitzar el contingut d’un arxiu PDF. L’arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( Universal Basic Income ) coordinat per Ugo Gentilini (@Ugentilini) anomenat “Exploring Universal Basic Income” disponible aquí.Vull basar-me en aquest enfocament de Garrick Aden-Buie (@grrrck) per extraure’n i representar-ne el contingut.
+#primer carrego paquets necessarislibrary(tidyverse)library(ggpage)library(tidytext)library(stringr)library(pdftools)library(tidyverse)#llegeixo pdf ja baixat de la URL (http://documents.</description>
+    </item>
     
     <item>
       <title>Bubble chart for COVID-19 cases</title>

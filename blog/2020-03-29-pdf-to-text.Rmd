@@ -1,0 +1,143 @@
+---
+title: Pdf to text
+author: Enric Escorsa
+date: '2020-03-29'
+slug: pdf-to-text
+categories:
+  - experiments
+tags:
+  - ubi
+  - pdf
+  - text
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Em proposo analitzar el contingut d'un arxiu PDF. L'arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( _Universal Basic Income_ ) coordinat per Ugo Gentilini (@Ugentilini) anomenat "Exploring Universal Basic Income" disponible [aquí](http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf). 
+Vull basar-me en [aquest enfocament](https://www.garrickadenbuie.com/blog/redacted-text-extracted-mueller-report/) de Garrick Aden-Buie (@grrrck) per extraure'n i representar-ne el contingut.
+
+```{r, warning=FALSE, message=FALSE}
+#primer carrego paquets necessaris
+library(tidyverse)
+library(ggpage)
+library(tidytext)
+library(stringr)
+library(pdftools)
+library(tidyverse)
+
+#llegeixo pdf ja baixat de la URL (http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf) al meu directori local i amb el paquet pdftools el transformo en un csv per a que estigui en format tidytext
+meu_text <- pdftools::pdf_text("Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf")
+
+meu_report <- tibble(
+  page = 1:length(meu_text),
+  text = meu_text
+) %>% 
+  separate_rows(text, sep = "\n") %>% 
+  group_by(page) %>% 
+  mutate(line = row_number()) %>% 
+  ungroup() %>% 
+  select(page, line, text)
+
+#el guardo com a csv
+write_csv(meu_report, "meu_report.csv")
+
+
+#el llegeixo
+library(tidyverse)
+meu_report <- read_csv("meu_report.csv")
+```
+
+
+Un cop llegit puc fer un recompte de les paraules més mencionades
+
+```{r, warning=FALSE, message=FALSE}
+report_net <- meu_report %>%
+  unnest_tokens(word, text)
+
+# eliminar stop words
+data(stop_words)
+
+report_net <- report_net %>%
+  anti_join(stop_words)
+
+recompte_paraules <- report_net %>%
+  count(word, sort = TRUE) %>%
+  filter(!str_detect(word, "[0-9]")) # remove numbers
+
+recompte_paraules
+```
+
+Els Països que apareixen més mencionats en aquest informe son: India (140), Brasil (66), Regne Unit (57), Indonesia (51), Russia (44), Chile (42), Mozambique i Finlandia (38).
+
+Puc fer un núvol de paraules per representar les paraules més freqüents
+
+```{r, warning=FALSE, message=FALSE}
+library(wordcloud)
+wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
+          max.words=150, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(8, "Dark2"))
+```
+
+
+
+Finalment, per veure en quines pàgines del informe es mencionen les paraules que m'interessa podria generar una representació visual del document
+
+```{r, warning=FALSE, message=FALSE}
+
+pagines <- 
+  meu_report %>% 
+  # pagines sense apenes text
+  complete(
+    page, 
+    line = 1:max(meu_report$line),
+    fill = list(text = "")
+  ) %>% 
+  # Pre-processament amb ggpage
+  ggpage_build(
+    ncol = 30, 
+    bycol = FALSE, 
+    page.col = "page", 
+    wtl = FALSE, 
+    x_space_pages = 10,
+    y_space_pages = 100
+  ) %>% 
+  mutate(
+    color = case_when(
+      str_detect(word, "benefit|benefits") ~ "beneficis",
+      str_detect(word, "impact|effects|evidence")     ~ "evidència",
+      TRUE ~ "normal"
+    ),
+    color = factor(color, c(
+      "beneficis", "evidència", "normal"
+    ))
+  )
+
+#fixar paleta de colors de ggthemes::pal_calc()
+colors <- rep("", length(levels(pagines$color)))
+names(colors) <- levels(pagines$color)
+colors["beneficis"]    <- "#FF4023"
+colors["evidència"]   <- "#EE8C00"
+colors["normal"]   <- "#d0d0d0"
+
+
+#finalment uso ggpage_plot() de ggpage per crear una visualitzacio de les pagines del report
+ggpage_plot(pagines) +
+  aes(fill = color) +
+  scale_fill_manual(
+    values = colors, 
+    breaks = setdiff(names(colors), "normal")
+  ) +
+  labs(fill = NULL, caption = "basat in @grrrck") +
+  guides(fill = guide_legend(nrow = 1)) +
+  theme(legend.position = "bottom")
+
+```
+
+
