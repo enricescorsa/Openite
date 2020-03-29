@@ -1138,7 +1138,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                         
                     
                     
-                    <div class="reading-time middot">3 minute read</div>
+                    <div class="reading-time middot">5 minute read</div>
                     
                     
                       <div class="tags">
@@ -1194,13 +1194,8 @@ meu_report &lt;- tibble(
   ungroup() %&gt;% 
   select(page, line, text)
 
-#el guardo com a csv
-write_csv(meu_report, &quot;meu_report.csv&quot;)
-
-
-#el llegeixo
-library(tidyverse)
-meu_report &lt;- read_csv(&quot;meu_report.csv&quot;)</code></pre>
+#les 25 primeres pagines son palla introductoria, presentacions, index, etc. Les suprimeixo
+meu_report &lt;- meu_report %&gt;% filter(page %in% (26:337))</code></pre>
 <p>Un cop llegit puc fer un recompte de les paraules més mencionades</p>
 <pre class="r"><code>report_net &lt;- meu_report %&gt;%
   unnest_tokens(word, text)
@@ -1208,36 +1203,103 @@ meu_report &lt;- read_csv(&quot;meu_report.csv&quot;)</code></pre>
 # eliminar stop words
 data(stop_words)
 
+#afegeixo algunes paraules més que veig que no m&#39;interessen als stopwords (noms dels autors de l&#39;informe i altres)
+library(tm)
+messtopwords &lt;- tibble(word =c(as.character(1:10),&quot;www.palgrave.com&quot;,&quot;palgrave&quot;,&quot;http&quot;,&quot;https&quot;, &quot;documents.worldbank.org&quot;, &quot;bibliography&quot;, &quot;pdf&quot;, &quot;ugo&quot;, &quot;gentilini&quot;, &quot;margaret&quot;, &quot;grosh&quot;, &quot;jamele&quot;, &quot;rigolini&quot;, &quot;ruslan&quot;, &quot;yemtsov&quot;, &quot;doi.org&quot;, &quot;0.0&quot;, &quot;0.7&quot;, &quot;bit.ly&quot;), lexicon=&quot;SMART&quot;)
+
+#uneixo dues taules de stopwords
+meus_stop_words &lt;- bind_rows(stop_words, messtopwords)
+                                    
 report_net &lt;- report_net %&gt;%
-  anti_join(stop_words)
+  anti_join(meus_stop_words)
 
 recompte_paraules &lt;- report_net %&gt;%
   count(word, sort = TRUE) %&gt;%
   filter(!str_detect(word, &quot;[0-9]&quot;)) # remove numbers
 
 recompte_paraules</code></pre>
-<pre><code>## # A tibble: 10,479 x 2
+<pre><code>## # A tibble: 10,109 x 2
 ##    word          n
 ##    &lt;chr&gt;     &lt;int&gt;
-##  1 income     1718
-##  2 ubi        1422
-##  3 social      920
-##  4 basic       857
-##  5 universal   522
-##  6 countries   519
-##  7 cash        507
-##  8 policy      479
-##  9 poverty     479
-## 10 programs    474
-## # ... with 10,469 more rows</code></pre>
+##  1 income     1661
+##  2 ubi        1345
+##  3 social      849
+##  4 basic       815
+##  5 countries   507
+##  6 universal   494
+##  7 cash        493
+##  8 programs    455
+##  9 policy      453
+## 10 poverty     453
+## # ... with 10,099 more rows</code></pre>
 <p>Els Països que apareixen més mencionats en aquest informe son: India (140), Brasil (66), Regne Unit (57), Indonesia (51), Russia (44), Chile (42), Mozambique i Finlandia (38).</p>
 <p>Puc fer un núvol de paraules per representar les paraules més freqüents</p>
 <pre class="r"><code>library(wordcloud)
 wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
           max.words=150, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(8, &quot;Dark2&quot;))</code></pre>
+          colors=brewer.pal(6, &quot;YlOrRd&quot;))</code></pre>
 <p><img src="/blog/2020-03-29-pdf-to-text_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Finalment, per veure en quines pàgines del informe es mencionen les paraules que m’interessa podria generar una representació visual del document</p>
+<p>Estaria bé també veure si apareixen alguns conceptes que m’interessen com per exemple: “Intel·ligència Artificial”, “Gig-economy”, “zero-hour contracts”, o “auto-ocupació”,… i sobretot veure amb quins altres conceptes estan correlacionats.</p>
+<p>La funció <em>pairwise_cor()</em> del paquet <em>widyr</em> ens permet trobar les principals correlacions de paraules en base a si apareixen sovint en la mateixa secció del document.</p>
+<pre class="r"><code>library(widyr)
+#primer extraiem les paraules de cada capitol
+unnested &lt;- meu_report %&gt;%
+        unnest_tokens(word, text) %&gt;%
+        filter(!word %in% meus_stop_words$word)
+
+#després usem la funció pairwise_cor per obtenir correlació
+word_cor &lt;- unnested %&gt;%
+   group_by(word) %&gt;%
+   filter(n() &gt;= 15) %&gt;%
+   pairwise_cor(word, page)</code></pre>
+<p>Amb quines paraules està més correlacionada, per exemple, la paraula “economy”</p>
+<pre class="r"><code>word_cor %&gt;%
+        arrange(desc(correlation)) %&gt;% filter(item1 == &quot;economy&quot;)</code></pre>
+<pre><code>## # A tibble: 1,011 x 3
+##    item1   item2        correlation
+##    &lt;chr&gt;   &lt;chr&gt;              &lt;dbl&gt;
+##  1 economy political          0.554
+##  2 economy policy             0.321
+##  3 economy research           0.301
+##  4 economy politics           0.297
+##  5 economy constituency       0.270
+##  6 economy radical            0.264
+##  7 economy support            0.253
+##  8 economy history            0.250
+##  9 economy uk                 0.248
+## 10 economy debate             0.244
+## # ... with 1,001 more rows</code></pre>
+<p>I la paraula “employment”?</p>
+<pre class="r"><code>word_cor %&gt;%
+        arrange(desc(correlation)) %&gt;% filter(item1 == &quot;employment&quot;)</code></pre>
+<pre><code>## # A tibble: 1,011 x 3
+##    item1      item2         correlation
+##    &lt;chr&gt;      &lt;chr&gt;               &lt;dbl&gt;
+##  1 employment labor               0.467
+##  2 employment wages               0.362
+##  3 employment workers             0.344
+##  4 employment job                 0.336
+##  5 employment jobs                0.333
+##  6 employment market              0.297
+##  7 employment wage                0.291
+##  8 employment force               0.291
+##  9 employment opportunities       0.259
+## 10 employment bastagli            0.238
+## # ... with 1,001 more rows</code></pre>
+<p>Podem representar totes aquestes relacions (vincles entre les paraules més correlacionades)</p>
+<pre class="r"><code>library(igraph)
+library(ggraph)
+word_cor %&gt;%
+  filter(!is.na(correlation),
+         correlation &gt; .65) %&gt;%
+  graph_from_data_frame() %&gt;%
+  ggraph(layout = &quot;fr&quot;) +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = &quot;#EE8C00&quot;, size = 2) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()</code></pre>
+<p><img src="/blog/2020-03-29-pdf-to-text_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Finalment, per veure en quines pàgines de l’informe es mencionen paraules que m’interessen podria generar una representació visual del document.</p>
 <pre class="r"><code>pagines &lt;- 
   meu_report %&gt;% 
   # pagines sense apenes text
@@ -1248,7 +1310,7 @@ wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq =
   ) %&gt;% 
   # Pre-processament amb ggpage
   ggpage_build(
-    ncol = 30, 
+    ncol = 20, 
     bycol = FALSE, 
     page.col = &quot;page&quot;, 
     wtl = FALSE, 
@@ -1258,20 +1320,24 @@ wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq =
   mutate(
     color = case_when(
       str_detect(word, &quot;benefit|benefits&quot;) ~ &quot;beneficis&quot;,
-      str_detect(word, &quot;impact|effects|evidence&quot;)     ~ &quot;evidència&quot;,
+      str_detect(word, &quot;impact|effects|evidence&quot;) ~ &quot;evidència&quot;,
+      str_detect(word, &quot;gig|gig-economy&quot;) ~ &quot;gig-economy&quot;,
+      str_detect(word, &quot;zero-hour|zero-hour contract|zero hour contracts|zero-hour contracts&quot;) ~ &quot;zero-hour contracts&quot;,
+      str_detect(word, &quot;artificial|AI&quot;)  ~ &quot;AI&quot;,    
       TRUE ~ &quot;normal&quot;
     ),
-    color = factor(color, c(
-      &quot;beneficis&quot;, &quot;evidència&quot;, &quot;normal&quot;
-    ))
+    color = factor(color, c(&quot;beneficis&quot;, &quot;evidència&quot;, &quot;gig-economy&quot;, &quot;zero-hour contracts&quot;, &quot;AI&quot;, &quot;normal&quot;))
   )
 
 #fixar paleta de colors de ggthemes::pal_calc()
 colors &lt;- rep(&quot;&quot;, length(levels(pagines$color)))
 names(colors) &lt;- levels(pagines$color)
-colors[&quot;beneficis&quot;]    &lt;- &quot;#FF4023&quot;
-colors[&quot;evidència&quot;]   &lt;- &quot;#EE8C00&quot;
-colors[&quot;normal&quot;]   &lt;- &quot;#d0d0d0&quot;
+colors[&quot;beneficis&quot;] &lt;- &quot;#FF4023&quot;
+colors[&quot;evidència&quot;] &lt;- &quot;#EE8C00&quot;
+colors[&quot;gig-economy&quot;] &lt;- &quot;#FE4722&quot;
+colors[&quot;zero-hour contracts&quot;] &lt;- &quot;#F6A414&quot;
+colors[&quot;AI&quot;] &lt;- &quot;#CC5102&quot;
+colors[&quot;normal&quot;] &lt;- &quot;#d0d0d0&quot;
 
 
 #finalment uso ggpage_plot() de ggpage per crear una visualitzacio de les pagines del report
@@ -1283,8 +1349,9 @@ ggpage_plot(pagines) +
   ) +
   labs(fill = NULL, caption = &quot;basat in @grrrck&quot;) +
   guides(fill = guide_legend(nrow = 1)) +
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="/blog/2020-03-29-pdf-to-text_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+  theme(legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/blog/2020-03-29-pdf-to-text_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>No es menciona a l’informe ni la gig-economy, ni els contractes zero hores, i només molt esporàdicament la Intel·ligència Artificial…</p>
 
 
             </div>

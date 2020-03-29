@@ -45,13 +45,9 @@ meu_report <- tibble(
   ungroup() %>% 
   select(page, line, text)
 
-#el guardo com a csv
-write_csv(meu_report, "meu_report.csv")
+#les 25 primeres pagines son palla introductoria, presentacions, index, etc. Les suprimeixo
+meu_report <- meu_report %>% filter(page %in% (26:337))
 
-
-#el llegeixo
-library(tidyverse)
-meu_report <- read_csv("meu_report.csv")
 ```
 
 
@@ -64,8 +60,15 @@ report_net <- meu_report %>%
 # eliminar stop words
 data(stop_words)
 
+#afegeixo algunes paraules més que veig que no m'interessen als stopwords (noms dels autors de l'informe i altres)
+library(tm)
+messtopwords <- tibble(word =c(as.character(1:10),"www.palgrave.com","palgrave","http","https", "documents.worldbank.org", "bibliography", "pdf", "ugo", "gentilini", "margaret", "grosh", "jamele", "rigolini", "ruslan", "yemtsov", "doi.org", "0.0", "0.7", "bit.ly"), lexicon="SMART")
+
+#uneixo dues taules de stopwords
+meus_stop_words <- bind_rows(stop_words, messtopwords)
+                                    
 report_net <- report_net %>%
-  anti_join(stop_words)
+  anti_join(meus_stop_words)
 
 recompte_paraules <- report_net %>%
   count(word, sort = TRUE) %>%
@@ -82,12 +85,60 @@ Puc fer un núvol de paraules per representar les paraules més freqüents
 library(wordcloud)
 wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
           max.words=150, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(8, "Dark2"))
+          colors=brewer.pal(6, "YlOrRd"))
+```
+
+Estaria bé també veure si apareixen alguns conceptes que m'interessen com per exemple: "Intel·ligència Artificial", "Gig-economy", "zero-hour contracts", o "auto-ocupació",... i sobretot veure amb quins altres conceptes estan correlacionats.
+
+
+La funció _pairwise_cor()_ del paquet _widyr_ ens permet trobar les principals correlacions de paraules en base a si apareixen sovint en la mateixa secció del document.
+
+```{r, warning=FALSE, message=FALSE}
+library(widyr)
+#primer extraiem les paraules de cada capitol
+unnested <- meu_report %>%
+        unnest_tokens(word, text) %>%
+        filter(!word %in% meus_stop_words$word)
+
+#després usem la funció pairwise_cor per obtenir correlació
+word_cor <- unnested %>%
+   group_by(word) %>%
+   filter(n() >= 15) %>%
+   pairwise_cor(word, page)
+```
+
+Amb quines paraules està més correlacionada, per exemple, la paraula "economy"
+
+```{r, warning=FALSE, message=FALSE}
+word_cor %>%
+        arrange(desc(correlation)) %>% filter(item1 == "economy")
+```
+
+I la paraula "employment"?
+
+```{r, warning=FALSE, message=FALSE}
+word_cor %>%
+        arrange(desc(correlation)) %>% filter(item1 == "employment")
+```
+
+Podem representar totes aquestes relacions (vincles entre les paraules més correlacionades)
+
+```{r, warning=FALSE, message=FALSE}
+library(igraph)
+library(ggraph)
+word_cor %>%
+  filter(!is.na(correlation),
+         correlation > .65) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = correlation), show.legend = FALSE) +
+  geom_node_point(color = "#EE8C00", size = 2) +
+  geom_node_text(aes(label = name), repel = TRUE) +
+  theme_void()
 ```
 
 
-
-Finalment, per veure en quines pàgines del informe es mencionen les paraules que m'interessa podria generar una representació visual del document
+Finalment, per veure en quines pàgines de l'informe es mencionen paraules que m'interessen podria generar una representació visual del document.
 
 ```{r, warning=FALSE, message=FALSE}
 
@@ -101,7 +152,7 @@ pagines <-
   ) %>% 
   # Pre-processament amb ggpage
   ggpage_build(
-    ncol = 30, 
+    ncol = 20, 
     bycol = FALSE, 
     page.col = "page", 
     wtl = FALSE, 
@@ -111,20 +162,24 @@ pagines <-
   mutate(
     color = case_when(
       str_detect(word, "benefit|benefits") ~ "beneficis",
-      str_detect(word, "impact|effects|evidence")     ~ "evidència",
+      str_detect(word, "impact|effects|evidence") ~ "evidència",
+      str_detect(word, "gig|gig-economy") ~ "gig-economy",
+      str_detect(word, "zero-hour|zero-hour contract|zero hour contracts|zero-hour contracts") ~ "zero-hour contracts",
+      str_detect(word, "artificial|AI")  ~ "AI",    
       TRUE ~ "normal"
     ),
-    color = factor(color, c(
-      "beneficis", "evidència", "normal"
-    ))
+    color = factor(color, c("beneficis", "evidència", "gig-economy", "zero-hour contracts", "AI", "normal"))
   )
 
 #fixar paleta de colors de ggthemes::pal_calc()
 colors <- rep("", length(levels(pagines$color)))
 names(colors) <- levels(pagines$color)
-colors["beneficis"]    <- "#FF4023"
-colors["evidència"]   <- "#EE8C00"
-colors["normal"]   <- "#d0d0d0"
+colors["beneficis"] <- "#FF4023"
+colors["evidència"] <- "#EE8C00"
+colors["gig-economy"] <- "#FE4722"
+colors["zero-hour contracts"] <- "#F6A414"
+colors["AI"] <- "#CC5102"
+colors["normal"] <- "#d0d0d0"
 
 
 #finalment uso ggpage_plot() de ggpage per crear una visualitzacio de les pagines del report
@@ -136,8 +191,8 @@ ggpage_plot(pagines) +
   ) +
   labs(fill = NULL, caption = "basat in @grrrck") +
   guides(fill = guide_legend(nrow = 1)) +
-  theme(legend.position = "bottom")
+  theme(legend.position = "top")
 
 ```
 
-
+No es menciona a l'informe ni la gig-economy, ni els contractes zero hores, i només molt esporàdicament la Intel·ligència Artificial...
