@@ -147,7 +147,7 @@ Amb el llenguatge de programació estadística R i usant el paquet wikipediatren
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>/projects/rquer/</guid>
-      <description>Escribí un librito, muy elemental, como una introducción a R para no programadores. Se llama &amp;ldquo;R que R&amp;rdquo; (nombre poco original, ya sé). El libro mismo está escrito desde R con el paquete Bookdown, creado por el gran @YihuiXie. Si quieres, puedes escribir libros así, usando el paquete bookdown y colgarlos en la red. Aquí lo podéis ver:
+      <description>Escribí un breve libro de introducción básica al lenguaje de programacion R, dirigido a no programadores (y animándoles a empezar a serlo). Se llama &amp;ldquo;R que R&amp;rdquo; (nombre poco original, ya sé). El libro mismo está escrito desde R con el paquete Bookdown, creado por el gran @YihuiXie. Si quieres, puedes escribir libros así, usando el paquete bookdown y colgarlos en la red. Lo podéis leer aquí:
  Libro &amp;ldquo;R que R&amp;rdquo;  </description>
     </item>
     
