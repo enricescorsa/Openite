@@ -1179,7 +1179,6 @@ library(ggpage)
 library(tidytext)
 library(stringr)
 library(pdftools)
-library(tidyverse)
 
 #llegeixo pdf ja baixat de la URL (http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf) al meu directori local i amb el paquet pdftools el transformo en un csv per a que estigui en format tidytext
 meu_text &lt;- pdftools::pdf_text(&quot;Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf&quot;)
@@ -1214,11 +1213,10 @@ report_net &lt;- report_net %&gt;%
   anti_join(meus_stop_words)
 
 recompte_paraules &lt;- report_net %&gt;%
-  count(word, sort = TRUE) %&gt;%
-  filter(!str_detect(word, &quot;[0-9]&quot;)) # remove numbers
+  count(word, sort = TRUE)
 
 recompte_paraules</code></pre>
-<pre><code>## # A tibble: 10,109 x 2
+<pre><code>## # A tibble: 11,806 x 2
 ##    word          n
 ##    &lt;chr&gt;     &lt;int&gt;
 ##  1 income     1661
@@ -1231,23 +1229,23 @@ recompte_paraules</code></pre>
 ##  8 programs    455
 ##  9 policy      453
 ## 10 poverty     453
-## # ... with 10,099 more rows</code></pre>
+## # ... with 11,796 more rows</code></pre>
 <p>Els Països que apareixen més mencionats en aquest informe son: India (140), Brasil (66), Regne Unit (57), Indonesia (51), Russia (44), Chile (42), Mozambique i Finlandia (38).</p>
 <p>Puc fer un núvol de paraules per representar les paraules més freqüents</p>
 <pre class="r"><code>library(wordcloud)
 wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
-          max.words=150, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(6, &quot;YlOrRd&quot;))</code></pre>
+          max.words=125, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(4, &quot;Set1&quot;))</code></pre>
 <p><img src="/blog/2020-03-29-pdf-to-text_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>Estaria bé també veure si apareixen alguns conceptes que m’interessen com per exemple: “Intel·ligència Artificial”, “Gig-economy”, “zero-hour contracts”, o “auto-ocupació”,… i sobretot veure amb quins altres conceptes estan correlacionats.</p>
 <p>La funció <em>pairwise_cor()</em> del paquet <em>widyr</em> ens permet trobar les principals correlacions de paraules en base a si apareixen sovint en la mateixa secció del document.</p>
 <pre class="r"><code>library(widyr)
-#primer extraiem les paraules de cada capitol
+#primer extraiem les paraules del text
 unnested &lt;- meu_report %&gt;%
         unnest_tokens(word, text) %&gt;%
         filter(!word %in% meus_stop_words$word)
 
-#després usem la funció pairwise_cor per obtenir correlació
+#després usem la funció pairwise_cor per obtenir correlació a cada pàgina
 word_cor &lt;- unnested %&gt;%
    group_by(word) %&gt;%
    filter(n() &gt;= 15) %&gt;%
@@ -1332,11 +1330,11 @@ word_cor %&gt;%
 #fixar paleta de colors de ggthemes::pal_calc()
 colors &lt;- rep(&quot;&quot;, length(levels(pagines$color)))
 names(colors) &lt;- levels(pagines$color)
-colors[&quot;beneficis&quot;] &lt;- &quot;#FF4023&quot;
-colors[&quot;evidència&quot;] &lt;- &quot;#EE8C00&quot;
+colors[&quot;beneficis&quot;] &lt;- &quot;#DA121A&quot;
+colors[&quot;evidència&quot;] &lt;- &quot;#0F47AF&quot;
 colors[&quot;gig-economy&quot;] &lt;- &quot;#FE4722&quot;
 colors[&quot;zero-hour contracts&quot;] &lt;- &quot;#F6A414&quot;
-colors[&quot;AI&quot;] &lt;- &quot;#CC5102&quot;
+colors[&quot;AI&quot;] &lt;- &quot;#FFFF00&quot;
 colors[&quot;normal&quot;] &lt;- &quot;#d0d0d0&quot;
 
 

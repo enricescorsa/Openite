@@ -30,7 +30,6 @@ library(ggpage)
 library(tidytext)
 library(stringr)
 library(pdftools)
-library(tidyverse)
 
 #llegeixo pdf ja baixat de la URL (http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf) al meu directori local i amb el paquet pdftools el transformo en un csv per a que estigui en format tidytext
 meu_text <- pdftools::pdf_text("Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf")
@@ -71,8 +70,7 @@ report_net <- report_net %>%
   anti_join(meus_stop_words)
 
 recompte_paraules <- report_net %>%
-  count(word, sort = TRUE) %>%
-  filter(!str_detect(word, "[0-9]")) # remove numbers
+  count(word, sort = TRUE)
 
 recompte_paraules
 ```
@@ -84,8 +82,8 @@ Puc fer un núvol de paraules per representar les paraules més freqüents
 ```{r, warning=FALSE, message=FALSE}
 library(wordcloud)
 wordcloud(words = recompte_paraules$word, freq = recompte_paraules$n, min.freq = 1,
-          max.words=150, random.order=FALSE, rot.per=0.35, 
-          colors=brewer.pal(6, "YlOrRd"))
+          max.words=125, random.order=FALSE, rot.per=0.35, 
+          colors=brewer.pal(4, "Set1"))
 ```
 
 Estaria bé també veure si apareixen alguns conceptes que m'interessen com per exemple: "Intel·ligència Artificial", "Gig-economy", "zero-hour contracts", o "auto-ocupació",... i sobretot veure amb quins altres conceptes estan correlacionats.
@@ -95,12 +93,12 @@ La funció _pairwise_cor()_ del paquet _widyr_ ens permet trobar les principals 
 
 ```{r, warning=FALSE, message=FALSE}
 library(widyr)
-#primer extraiem les paraules de cada capitol
+#primer extraiem les paraules del text
 unnested <- meu_report %>%
         unnest_tokens(word, text) %>%
         filter(!word %in% meus_stop_words$word)
 
-#després usem la funció pairwise_cor per obtenir correlació
+#després usem la funció pairwise_cor per obtenir correlació a cada pàgina
 word_cor <- unnested %>%
    group_by(word) %>%
    filter(n() >= 15) %>%
@@ -174,11 +172,11 @@ pagines <-
 #fixar paleta de colors de ggthemes::pal_calc()
 colors <- rep("", length(levels(pagines$color)))
 names(colors) <- levels(pagines$color)
-colors["beneficis"] <- "#FF4023"
-colors["evidència"] <- "#EE8C00"
+colors["beneficis"] <- "#DA121A"
+colors["evidència"] <- "#0F47AF"
 colors["gig-economy"] <- "#FE4722"
 colors["zero-hour contracts"] <- "#F6A414"
-colors["AI"] <- "#CC5102"
+colors["AI"] <- "#FFFF00"
 colors["normal"] <- "#d0d0d0"
 
 

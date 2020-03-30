@@ -18,7 +18,7 @@
       
       <guid>/blog/pdf-to-text/</guid>
       <description>Em proposo analitzar el contingut d’un arxiu PDF. L’arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( Universal Basic Income ) coordinat per Ugo Gentilini (@Ugentilini) anomenat “Exploring Universal Basic Income” disponible aquí.Vull basar-me en aquest enfocament de Garrick Aden-Buie (@grrrck) per extraure’n i representar-ne el contingut.
-#primer carrego paquets necessarislibrary(tidyverse)library(ggpage)library(tidytext)library(stringr)library(pdftools)library(tidyverse)#llegeixo pdf ja baixat de la URL (http://documents.</description>
+#primer carrego paquets necessarislibrary(tidyverse)library(ggpage)library(tidytext)library(stringr)library(pdftools)#llegeixo pdf ja baixat de la URL (http://documents.</description>
     </item>
     
     <item>
