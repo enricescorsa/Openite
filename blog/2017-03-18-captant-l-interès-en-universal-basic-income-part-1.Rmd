@@ -24,7 +24,7 @@ Un indicador d’aquest interès es podria derivar d’observar les vegades que 
 
 Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(wikipediatrend)
 library(ggplot2)
 #recupero el número visites a la pagina de wikipedia (https://en.wikipedia.org/wiki/Basic_income) els darrers 5 anys

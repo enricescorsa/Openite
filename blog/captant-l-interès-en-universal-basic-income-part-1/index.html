@@ -1138,7 +1138,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                         
                     
                     
-                    <div class="reading-time middot">6 minute read</div>
+                    <div class="reading-time middot">5 minute read</div>
                     
                     
                       <div class="tags">
@@ -1170,22 +1170,8 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <p>Aconseguir que cada persona del món pugui tenir dret a una renda bàsica -el que es coneix com a Universal Basic Income (UBI)– sembla ser un tema d’interès creixent.</p>
 <p>Un indicador d’aquest interès es podria derivar d’observar les vegades que la gent visita la pàgina de wikipedia per saber de què va aquest tema.</p>
 <p>Amb el llenguatge de programació estadística R i usant el paquet wikipediatrend podem veure això.</p>
-<pre class="r"><code>library(wikipediatrend)</code></pre>
-<pre><code>## 
-##   [wikipediatrend]
-##     
-##   Note:
-##     
-##     - Data before 2016-01-01 
-##       * is provided by petermeissner.de and
-##       * was prepared in a project commissioned by the Hertie School of Governance (Prof. Dr. Simon Munzert)
-##       * and supported by the Daimler and Benz Foundation.
-##     
-##     - Data from 2016-01-01 onwards 
-##       * is provided by the Wikipedia Foundation
-##       * via its pageviews package and API.
-## </code></pre>
-<pre class="r"><code>library(ggplot2)
+<pre class="r"><code>library(wikipediatrend)
+library(ggplot2)
 #recupero el número visites a la pagina de wikipedia (https://en.wikipedia.org/wiki/Basic_income) els darrers 5 anys
 page_views &lt;-
 wp_trend(
