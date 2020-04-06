@@ -20,8 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-Em proposo analitzar el contingut d'un arxiu PDF. L'arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( _Universal Basic Income_ ) coordinat per Ugo Gentilini (@Ugentilini) anomenat "Exploring Universal Basic Income" disponible [aquí](http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf). 
-Vull basar-me en [aquest enfocament](https://www.garrickadenbuie.com/blog/redacted-text-extracted-mueller-report/) de Garrick Aden-Buie (@grrrck) per extraure'n i representar-ne el contingut.
+Em proposo analitzar el contingut d'un arxiu PDF. L'arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( _Universal Basic Income_ ) anomenat "Exploring Universal Basic Income" disponible [aquí](http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf). 
+Vull basar-me en [aquest enfocament](https://www.garrickadenbuie.com/blog/redacted-text-extracted-mueller-report/) de **Garrick Aden-Buie** (@grrrck) per extraure'n i representar-ne el contingut.
 
 ```{r, warning=FALSE, message=FALSE}
 #primer carrego paquets necessaris

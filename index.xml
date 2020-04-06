@@ -6,10 +6,21 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Text mining poetry</title>
+      <link>/blog/text-mining-poetry/</link>
+      <pubDate>Sun, 05 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/text-mining-poetry/</guid>
+      <description>Quins temes evoquen els poetes? Quin vocabulari fan servir? com hi juguen?Quin sentiment transmeten?
+És possible respondre a aquestes preguntes?Em proposo fer un petit experiment a partir d’un anàlisi dels textos de poetes actuals. Sé que perdré mil matissos. La part interpretativa de la declamació dels poemes, per començar, no quedarà reflectida. I, al capdavall, cal analitzar la poesia? O tan sols sentir-la?
+Intentem tanmateix veure què passa i juguem amb aquesta dissecció mecànica de les paraules vives dels poetes al nostre laboratori frankenstein de dades.</description>
+    </item>
     
     <item>
       <title>Pdf to text</title>
@@ -17,8 +28,8 @@
       <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/pdf-to-text/</guid>
-      <description>Em proposo analitzar el contingut d’un arxiu PDF. L’arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( Universal Basic Income ) coordinat per Ugo Gentilini (@Ugentilini) anomenat “Exploring Universal Basic Income” disponible aquí.Vull basar-me en aquest enfocament de Garrick Aden-Buie (@grrrck) per extraure’n i representar-ne el contingut.
-#primer carrego paquets necessarislibrary(tidyverse)library(ggpage)library(tidytext)library(stringr)library(pdftools)#llegeixo pdf ja baixat de la URL (http://documents.</description>
+      <description>Em proposo analitzar el contingut d’un arxiu PDF. L’arxiu que llegiré amb R és un informe recent del Banc Mundial sobre la Renda Bàsica Universal ( Universal Basic Income ) anomenat “Exploring Universal Basic Income” disponible aquí.Vull basar-me en aquest enfocament de Garrick Aden-Buie (@grrrck) per extraure’n i representar-ne el contingut.
+#primer carrego paquets necessarislibrary(tidyverse)library(ggpage)library(tidytext)library(stringr)library(pdftools)#llegeixo pdf ja baixat de la URL (http://documents.worldbank.org/curated/en/993911574784667955/pdf/Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.pdf) al meu directori local i amb el paquet pdftools el transformo en un csv per a que estigui en format tidytextmeu_text &amp;lt;- pdftools::pdf_text(&amp;quot;Exploring-Universal-Basic-Income-A-Guide-to-Navigating-Concepts-Evidence-and-Practices.</description>
     </item>
     
     <item>
@@ -147,7 +158,7 @@ Amb el llenguatge de programació estadística R i usant el paquet wikipediatren
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>/projects/rquer/</guid>
-      <description>Escribí un breve libro de introducción básica al lenguaje de programacion R, dirigido a no programadores (y animándoles a empezar a serlo). Se llama &amp;ldquo;R que R&amp;rdquo; (nombre poco original, ya sé). El libro mismo está escrito desde R con el paquete Bookdown, creado por el gran @YihuiXie. Si quieres, puedes escribir libros así, usando el paquete bookdown y colgarlos en la red. Lo podéis leer aquí:
+      <description>Escribí un breve libro de introducción básica al lenguaje de programacion R, dirigido a no programadores (y animándoles a empezar a serlo). Se llama &amp;ldquo;R que R&amp;rdquo; (nombre poco original, lo sé). El libro mismo está escrito desde R con el paquete Bookdown, creado por el gran @YihuiXie. Si quieres, puedes escribir libros así y colgarlos en abierto en la red. Lo podéis leer aquí:
  Libro &amp;ldquo;R que R&amp;rdquo;  </description>
     </item>
     
@@ -166,9 +177,9 @@ Amb el llenguatge de programació estadística R i usant el paquet wikipediatren
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/home/</guid>
-      <description>This is a blog about data &amp;amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go
- Aquest és un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprender a programar en #Rstats i compartir el que aprenc sobre la marxa
- Este es un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</description>
+      <description>A blog about data &amp;amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go
+ Un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprendre a programar en #Rstats i compartir el que aprenc sobre la marxa
+ Un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</description>
     </item>
     
     <item>

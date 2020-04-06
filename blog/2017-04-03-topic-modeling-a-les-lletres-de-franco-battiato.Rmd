@@ -148,7 +148,7 @@ write.csv(topic1ToTopic2,file=paste("Topic1ToTopic2.csv"))
 write.csv(topic2ToTopic3,file=paste("Topic2ToTopic3.csv"))
 ```
 
-Finalment, utilitzem el fantàstic paquet LDAvis, desenvolupat per Carson Sievert de l’Iowa State University, que ens permet generar una visualització interactiva dels 5 tòpics i explorar els termes continguts, situant el cursor a sobre de cadascún d’ells.
+Finalment, utilitzem el fantàstic paquet LDAvis, desenvolupat per **Carson Sievert** de l’Iowa State University, que ens permet generar una visualització interactiva dels 5 tòpics i explorar els termes continguts, situant el cursor a sobre de cadascún d’ells.
 
 ```{r eval = FALSE}
 #install.packages("LDAvis")

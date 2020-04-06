@@ -1276,7 +1276,7 @@ sort(topicProbabilities[x,])[k-1]/sort(topicProbabilities[x,])[k-2])
 #escriure-ho en un arxiu csv
 write.csv(topic1ToTopic2,file=paste(&quot;Topic1ToTopic2.csv&quot;))
 write.csv(topic2ToTopic3,file=paste(&quot;Topic2ToTopic3.csv&quot;))</code></pre>
-<p>Finalment, utilitzem el fantàstic paquet LDAvis, desenvolupat per Carson Sievert de l’Iowa State University, que ens permet generar una visualització interactiva dels 5 tòpics i explorar els termes continguts, situant el cursor a sobre de cadascún d’ells.</p>
+<p>Finalment, utilitzem el fantàstic paquet LDAvis, desenvolupat per <strong>Carson Sievert</strong> de l’Iowa State University, que ens permet generar una visualització interactiva dels 5 tòpics i explorar els termes continguts, situant el cursor a sobre de cadascún d’ells.</p>
 <pre class="r"><code>#install.packages(&quot;LDAvis&quot;)
 library(LDAvis)
  

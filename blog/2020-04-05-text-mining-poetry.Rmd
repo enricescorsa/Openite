@@ -1,0 +1,428 @@
+---
+title: Text mining poetry
+author: Enric Escorsa
+date: '2020-04-05'
+slug: text-mining-poetry
+categories:
+  - Experiments
+tags:
+  - Poetry
+  - Slam
+  - Text mining
+  - nlp
+  - sentiment analysis
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+Quins temes evoquen els poetes? Quin vocabulari fan servir? com hi juguen?
+Quin sentiment transmeten?
+
+És possible respondre a aquestes preguntes? 
+Em proposo fer un petit experiment a partir d'un anàlisi dels textos de poetes actuals. Sé que perdré mil matissos. La part interpretativa de la declamació dels poemes, per començar, no quedarà reflectida. I, al capdavall, cal analitzar la poesia? O tan sols sentir-la?
+
+Intentem tanmateix veure què passa i juguem amb aquesta dissecció mecànica de les paraules vives dels poetes al nostre laboratori frankenstein de dades.
+
+Com a dades per a l'estudi prendré els textos de la competició poètica [*Poetry slam barcelona*](https://www.cccb.org/ca/projectes/fitxa/poetry-slam-barcelona/45755) que es fa mensualment al *Centre de Cultura Contemporànea de Barcelona (cccb)*. Es un acte amb un format interessant, en què els poetes tenen 3 minuts per declamar les seves creacions poètiques originals i acte seguit, representants escollits a l'atzar d'entre el públic puntuen la seva performance en pissarres. S'escullen uns finalistes que passen a una segona ronda de la qual en sorgeix finalment un guanyador d'aquella edició.
+
+
+## Obtenir i examinar les dades a analitzar
+
+_Poetry Slam Barcelona_ enregistra les intervencions dels poetes que participen en cada competició i penja els videos al seu canal *Youtube* [https://www.youtube.com/user/PoetrySlamBarcelona](https://www.youtube.com/user/PoetrySlamBarcelona). Hi ha una opció a *Youtube* que permet obtenir una transcripció automàtica de l'audio de la representació poètica en format de text. M'he entretingut a descarregar-me'ls. N'hi ha 331 en total, corresponents a les interpretacions de tots els poetes que han quedat finalistes o han guanyat cada competició celebrada, des que va iniciar l'any 2011. 
+
+* Nota: A dia d'avui encara no he aconseguit obtenir el text de tots ells. Me'n falten encara més de 100; per tant, mentre no els tingui tots els resultats que obtingui seran incomplerts...  
+
+* Nota: A més m'adono esgarrifat que la transcripció que fa Google és força deficient. Cal corregir paraules del text manualment en la majoria dels casos (més feina de la que em pensava...)  
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+#el text que m'he descarregat conté els indicadors de temps de cada sentència (timestamps) del tipus "01:32" (minuts:segons). Abans de llegir el csv, per eliminar-los, els reemplaço i elimino fent servir l'expressió regular `\d{2}:\d{2}` (és a dir, tot el que siguin dos digits numèrics, seguits per dos punts, seguits de dos digits numérics).
+
+
+#D'entrada carreguem paquets necessaris per fer minería de textos amb R
+library(tm)
+library(dplyr)
+library(tidytext)
+library(topicmodels)
+library(ggplot2)
+
+```
+
+Llegeixo del meu directori l'arxiu "poetryslambcn.csv" obtingut de volcar els resultats de la cerca feta a youtube en una taula; per cada poeta tinc el mes i any de la intervenció, si va quedar finalista o guanyador, la llengua amb què va recitar i la transcripció del text recitat. 
+
+* Nota: No voldria ofendre cap poeta que no volgués aparèixer, així que per preservar la seva identitat he substituit els seus nom per inicials.
+
+Vet aquí una mostra:
+
+```{r message = FALSE, warning = FALSE}
+lesmevesdades <- read.csv("poetryslambcn.csv",  sep = ",")
+lesmevesdades <- lesmevesdades %>% select(-poetafullname)
+head(lesmevesdades)
+```
+
+
+Tenim dades desde 2011 fins al febrer del 2020.
+
+
+```{r, message = FALSE, warning = FALSE}
+library(lubridate)
+ggplot(data = lesmevesdades) + 
+  geom_bar(mapping = aes(x = as.factor(año), fill= categoria), width = 0.9) + theme_minimal() +  xlab("poetes participants en cada edició")+ ylab("")
+```
+
+La llengua predominant que escullen els poetes al *Poetry Slam Barcelona* és la castellana, però n'hi ha alguns, pocs, que reciten en català i algún altre en anglès i italià.
+
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+ggplot(data = lesmevesdades) + 
+  geom_bar(mapping = aes(x = as.factor(año), fill= llengua), width = 0.9) + theme_minimal() +  xlab("llengua dels poemes")+ ylab("")
+```
+
+
+
+
+En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el "circuit" segur que sabrà qui són ;):
+
+```{r warning=F, message=F}
+
+guanyadors <- lesmevesdades %>%
+  group_by(poeta, categoria) %>%
+  filter(categoria=="ganador") %>%
+  summarise(vegades = n()) %>% 
+  arrange(desc(vegades))
+
+head(guanyadors, n = 8)
+
+``` 
+
+
+
+## Analitzar el text
+
+Anem ara a analitzar els textos dels poetes.
+
+```{r message = FALSE, warning = FALSE}
+#filtro per idioma per poder analitzar els texts homogèniament.
+#Per ara només prenc les poesies en castellà, que son la majoria
+lesmevesdades <- lesmevesdades %>%
+  filter(llengua == "castellano")
+ 
+#N'extrec el text que és el que m'interessa
+elmeutext <- lesmevesdades$texto 
+```
+
+
+Provem d'analitzar-ne el contingut. Per fer-ho em baso en l’enfocament tidy textmining segons proposat per la científica de dades **@JuliaSilge**. Creem un corpus amb el text i el transformem en una matriu document-terme (dtm). N'extraiem els termes.
+
+
+```{r echo=FALSE, message = FALSE, warning = FALSE}
+#Primer obtinc un corpus de text que pugui tractar
+corpustext <- Corpus(VectorSource(elmeutext)) 
+ 
+#transformo el corpus de text a matriu document-terme (dtm)
+dtm <- DocumentTermMatrix(corpustext)
+ 
+#N'extrec els termes
+terms <- Terms(dtm)
+head(terms)
+```
+
+
+Ara posem la matriu en format net -és a dir, una taula amb  columnes: terme i frequència d’aparició- mitjançant la funció _tidy_, elimino stopwords (paraules irrellevants tals com preposicions i alguna altra- i ordeno per freqüència.
+
+```{r, message = FALSE, warning = FALSE}
+net <- tidy(dtm)
+
+#ordeno els termes més frequents de net
+net %>%
+  count(term, sort = TRUE)
+net$term <- iconv(net$term, 'LATIN1', 'LATIN1') 
+
+#creo una llista de les paraules que no vull (stopwords)
+elsmeusstopwords <- tibble(term = c(as.character(1:10), "la", "el", "que","nos", "los", "las", "por", "un", "una", "de", "del", "como", "para", "sus", "tus", "pero", "porque", "con", "sin", "en", "mis", "hasta", "más", "desde", "o", "su", "te", "le", "este", "esta", "tu", "al", "lo", "me", "se", "a", "y", "[música]", "[aplausos]"))
+
+#i uso aquesta llista per filtrar-les (mitjançant "anti_join") de les que tenia per a que em quedi un corpus net
+netissim <- net %>% anti_join(elsmeusstopwords)
+netissim$term <- iconv(netissim$term, 'LATIN1', 'LATIN1') 
+
+#ara podem ordenar termes per freqüència
+netissim %>%
+  count(term, sort = TRUE)
+```
+
+
+### Visualitzacions del contingut
+
+Arribats a aquest punt podem fer un núvol de paraules dels termes amb el paquet _wordcloud_ per tenir una primera visualització general dels continguts.
+
+```{r echo=FALSE, message = FALSE, warning = FALSE}
+library(wordcloud)
+
+
+netissim %>% 
+  anti_join(elsmeusstopwords) %>%
+  count(term) %>%
+  with(wordcloud(term, n, max.words = 300))
+
+```
+
+
+
+Per percebre els continguts a un nivell més estructural analitzem coocurrències o parells de termes que apareixen més freqüentment junts en les sentències i podem representar-los en una xarxa de co-ocurrències.
+
+```{r echo=FALSE, message = FALSE, warning = FALSE}
+#Ho podem fer amb el paquet widyr i la funció pairwise.
+library(devtools)
+#install_github("dgrtwo/widyr")
+library(widyr)
+ 
+parells <- netissim %>%
+  pairwise_count(term, document, sort = TRUE, upper = FALSE)
+View(parells) #per veure la taula que se'm crea (que conté la columna item1, la columna item2 i la columna n (frequència d'aparició conjunta de les dues paraules en una publicació)
+#(amb la funció pairwise_count simplement es recompten coocurrències, amb pairwise_cor es computa correlació)
+
+#Visualitzem el grafo de coocurrències (usant igraph
+# filtrem per les combinacions més comuns
+library(igraph)
+bigram_graph <- parells %>%
+  filter(n > 19) %>%
+  graph_from_data_frame()
+
+library(ggraph)
+set.seed(2017)
+
+a <- grid::arrow(type = "closed", length = unit(.15, "inches"))
+
+ggraph(bigram_graph, layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n), edge_colour = "Steelblue") +
+  geom_node_point(color = "steelblue", size = 1) +
+  geom_node_text(aes(label = name), vjust = 1, hjust = 1) +
+  labs(title = " Xarxa de Coocurrència de Paraules") +
+  theme_void()
+
+```
+
+
+Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. amor)
+
+```{r message = FALSE, warning = FALSE}
+parells %>%
+  filter(item1 == "amor")
+```
+
+
+
+
+### Anàlisi del vocabulari
+
+Tot seguit intentaré veure quins poetes fan servir més vocabulari, quins son més repetitus, etc.
+
+```{r echo=FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+paraulespoetes <- lesmevesdades %>%
+  filter(llengua == "castellano")
+paraulespoetes$texto <- as.character(paraulespoetes$texto)
+paraulespoetes <- paraulespoetes %>%  unnest_tokens(word, texto) %>%
+  anti_join(elsmeusstopwords, by = c("word" = "term")) 
+
+poetaparaules <- paraulespoetes%>%
+  select(poeta, word)
+head(poetaparaules)
+```
+
+
+Paraules més mencionades:
+
+```{r, message = FALSE, warning = FALSE}
+library(ggplot2)
+wordcounts <- paraulespoetes %>%
+  group_by(word) %>%
+  summarize(menciones = n())
+wordcounts <- wordcounts %>%
+  arrange(desc(menciones)) %>%
+  slice(1:15) 
+
+#aquí no he eliminat els stopwords
+wordcounts %>%
+  ggplot() + geom_bar(aes(x=reorder(word, menciones), y=menciones), stat = "identity") + theme_minimal() + xlab("paraules")+ ylab("nº mencions") + coord_flip() + theme(legend.position = "none")
+```
+
+Quines son les paraules més usades cada any?
+
+```{r, message = FALSE, warning = FALSE}
+paraulesany <- paraulespoetes %>%
+  group_by(word, año) %>%
+  summarize(menciones = n()) 
+
+topparaulesany <- paraulesany %>%
+  group_by(año) %>% top_n(15) %>% ungroup %>%
+  mutate (año = as.factor(año), word = reorder_within(word, menciones, año)) %>%
+  ggplot(aes(word, menciones, fill = año)) +
+  geom_col(show.legend = FALSE) +
+  scale_x_reordered() +
+facet_wrap(~año,  ncol=5, scales = "free") +
+  coord_flip() +
+  labs(x = NULL, y = "paraules més mencionades cada any") + theme_minimal()
+
+topparaulesany
+
+```
+
+Sembla que als poetes en general, els agrada dir "no"
+
+
+Poetes i paraules més repetides:
+
+```{r message = FALSE, warning = FALSE}
+repetitiu <- paraulespoetes %>%
+  group_by(poeta, word) %>%
+  summarize(n=n()) %>%
+  arrange(desc(n)) 
+repetitiu %>% select(word, n, poeta)
+```
+
+Paraules més repetides per cada poeta:
+
+```{r, message = FALSE, warning = FALSE}
+toprepetits <- repetitiu %>% 
+  filter(n>4) %>%
+  group_by(poeta) %>%
+  top_n(5, n) %>%
+  ungroup() %>%
+  arrange(poeta, -n)
+
+toprepetits %>%
+  mutate(word = reorder_within(word, n, poeta)) %>%
+  ggplot(aes(word, n, fill = factor(poeta))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ poeta, nrow = 5, scales = "free") +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(x = NULL, y = "paraules més repetides") + theme_minimal() + theme(legend.position = "none", axis.text.x=element_blank(), axis.ticks.x=element_blank())
+```
+
+
+
+Quins són els poetes amb més riquesa de vocabulari?
+
+```{r message = FALSE, warning = FALSE}
+uniques <- paraulespoetes %>%
+  group_by(poeta) %>%
+  summarize(n = length(unique(word))) %>%
+  arrange(desc(n))
+uniques
+```
+
+...però no tots els poetes tenen el mateix nombre de poemes. Cal normalitzar-ho en cada cas. Quants poemes tenia cada poeta?
+
+```{r message = FALSE, warning = FALSE}
+poemespoeta <- lesmevesdades %>%
+ count(poeta, sort = TRUE)
+poemespoeta
+```
+
+Doncs divideixo el nombre de paraules pel nombre de poemes de cada poeta
+
+```{r message = FALSE, warning = FALSE}
+#faig un join de la taula de paraules per poeta i la taula de nombre de poemes.
+ricvocab <-  full_join (uniques, poemespoeta, by="poeta")
+
+#creo la columna absparaules resultant amb mutate
+ricvocab <- ricvocab %>%  mutate (riquesavocab = n.x/n.y) %>% arrange(desc(riquesavocab))
+ricvocab
+```
+
+
+
+
+
+## Anàlisi de sentiments
+
+Intentem finalment analitzar els "sentiments" implícits en els textos poètics. El *sentiment analysis* és una tècnica que s'utilitza en processament del llegnuatge per determinar emocions, intencions, estats, en volums de text. Utilitzarem el paquet _syuzhet_ que usa quatre diccionaris i els desenvolupaments del grup de Processament del Llenguatge Natural de Stanford i en particular el lèxic d’emocions NRC elaborat per Saif Mohammad (disponible [aquí](https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)) .
+
+```{r message = FALSE, warning = FALSE}
+library(syuzhet)
+elmeutext = as.character(netissim$term)
+#eliminem signes de puntuació
+elmeutext<-gsub("[[:punct:]]"," ", elmeutext)
+#eliminem números (alphanumeric)
+elmeutext<-gsub("[^[:alnum:]]"," ", elmeutext)
+elsmeussentiments <-get_nrc_sentiment((elmeutext))#aquesta funció extrau els sentiments (pot trigar una mica...)
+
+#creo una taula amb els sentiments i total de cadascun
+sentimentscores <- data.frame(colSums(elsmeussentiments[,]))
+
+names(sentimentscores) <- "Score"
+sentimentscores <- cbind("sentiment"=rownames(sentimentscores),sentimentscores)
+rownames(sentimentscores) <- NULL
+
+library(stringr)
+#tradueixo el nom de les emocions en català
+sentimentscores$sentiment <- sentimentscores$sentiment %>% str_replace_all("positive", "positiu") %>% str_replace_all("anticipation", "expectativa") %>% str_replace_all("anger", "enuig") %>% str_replace_all("disgust", "fàstic") %>% str_replace_all("fear", "por") %>% str_replace_all("joy", "joia") %>% str_replace_all("sadness", "tristor") %>% str_replace_all("surprise", "sorpresa") %>% str_replace_all("trust", "confiança")%>% str_replace_all("negative", "negatiu") 
+
+#genero una visualització en barres
+ggplot(data=sentimentscores,aes(x=sentiment,y=Score))+
+ geom_bar(aes(fill=sentiment),stat = "identity")+
+ theme(legend.position="none")+
+ xlab("Emocions")+ylab("Nivell")+ ggtitle("Sentiments totals (segons el lèxic d'emocions NRC)") + theme_minimal() + scale_fill_manual("sentiment", values = c("negatiu" = "red", "positiu" = "green", "expectativa"= "grey", "enuig"= "grey",  "fàstic"= "grey",  "por"= "grey",  "joia"= "grey",  "tristor"= "grey",  "sorpresa"= "grey", "confiança"= "grey")) + theme(legend.position = "none") 
+```
+
+Els poemes són -segons l'anàlisi mitjançant aquest lèxic- més aviat negatius que positius en general. La tristor, l'enuig i la por hi són sentiments freqüents, però també hi ha poemes positius on la confiança és el sentiment predominant.
+
+Anem a veure com evoluciona el sentiment general de cada poeta en el temps. He après de **Chris Norval** @cnorval a fer aquest tipus d'anàlisi.
+
+```{r, message = FALSE, warning = FALSE}
+
+#veure anàlisi de l'evolució dels sentiments en el temps de Chris Norval: http://cnorval.github.io/2015/12/24/Sentiment_Analysis/ com fer aquest tipus d'anàlisi de l'evolució dels sentiments en el temps.
+  
+  
+lesmevesdades$texto <- as.vector(lesmevesdades$texto)
+lesmevesdades$sentiment <- get_sentiment(lesmevesdades$texto) %>% as.numeric()
+
+lesmevesdades %>%
+  group_by(poeta) %>%
+  summarise(min = min(sentiment), 
+            max = max(sentiment), 
+            mitjana = round(mean(sentiment), 2), 
+            mediana = median(sentiment), 
+            poemes = n())
+```
+
+Quina és l'evolució del sentiment dels poetes guanyadors de les edicions de *Poetry Slam Barcelona*?
+
+```{r, message = FALSE, warning = FALSE}
+
+lesmevesdades$order <- as.numeric(NA)
+guanyadors <- lesmevesdades %>% filter(categoria == "ganador") 
+
+guanyadors %>% 
+  ggplot(aes(guanyadors$"año", guanyadors$sentiment, color = poeta)) +
+    geom_line(size = 1) + 
+    scale_x_continuous(name = "\nTemps (2011-2020)") +
+    scale_y_continuous(name = "Sentiment\n", breaks = seq(-10, 10, by=5)) +
+    facet_wrap(~ poeta, scales = "free") + theme_minimal() + theme(legend.position = "none", axis.text.x=element_blank(), axis.ticks.x=element_blank()) 
+```
+
+Evolució del sentiment dels finalistes:
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+
+library(scales)
+lesmevesdades$order <- as.numeric(NA)
+finalistes <- lesmevesdades %>% filter(categoria == "finalista") 
+
+finalistes %>% 
+  ggplot(aes(finalistes$"año", finalistes$sentiment, color = poeta)) +
+    geom_line(size = 1) + 
+    scale_x_continuous(name = "\nTemps (2011-2020)") +
+    scale_y_continuous(name = "Sentiment\n", breaks = seq(-10, 10, by=5)) +
+    facet_wrap(~ poeta, scales = "free") + theme_minimal() + theme(legend.position = "none", axis.text.x=element_blank(), axis.ticks.x=element_blank())
+```
+
+
+* Nota: Com deia, em falten algunes dades -no he aconseguit descarregar encara els poemes de tothom (Per a alguns videos *Youtube* no genera la transcripció...)- i l'aport d'aquest anàlisi és més que discutible, però fa certa gràcia veure aquestes evolucions del sentiment que es transmet en el temps...
+
+Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la sutilesa de la poesia.
+

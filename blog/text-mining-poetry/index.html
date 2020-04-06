@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="A blog about data &amp; landscapes.">
+
+
+    <meta property="twitter:site" content="@EnricEscorsa">
+
+<meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/text-mining-poetry/" />
+<meta property="og:title" content="Text mining poetry" />
+<meta property="twitter:title" content="Text mining poetry">
+
+    <meta property="og:image" content="//images/image.jpg">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="//images/image.jpg">
+
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
+
+<title>
+
+
+     Enric Escorsa O&#39;Callaghan - Text mining poetry 
+
+</title>
+<link rel="canonical" href="/blog/text-mining-poetry/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('/fonts/Nexa Bold.otf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+a,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.header .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.header .container .logo {
+  
+  max-width: 100px;
+  
+  margin-left: -2em;
+}
+div.header .name {
+  padding-top: 20px;
+  font-size: 28px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  
+  text-transform: uppercase;
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 16px;
+  height: 16px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.footer .container .icons {
+  flex-grow: 0.5;
+  text-align: end;
+}
+div.main .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  
+  
+}
+div.main .content .page-heading {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  text-transform: uppercase;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  margin-bottom: 16px;
+}
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: list-item;
+  list-style: disc inside;
+}
+div.main .container .content .post-item .meta {
+  font-size: 14px;
+  color: #666666;
+  display: none;
+  min-width: 100px;
+}
+div.main .container .content .see-more {
+  font-style: italic;
+  float: right;
+  font-size: 0.9em;
+  margin-top: 2em;
+  color: #313537;
+}
+div.main .container .content .see-more:hover {
+  color: #666;
+}
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item .meta {
+    display: block;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #428bca;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #2a6496;
+}
+img {
+  max-width: 100%;
+}
+div.main .content {
+    width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Menlo', monospace;
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code {
+  color: #428bca !important;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: justify;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #7a7a7a;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+
+.wf-raleway-n4-active body, 
+.wf-raleway-n4-active div.header nav ul a,
+.wf-raleway-n7-active div.main .content .page-heading,
+.wf-raleway-n2-active div.main .container.f04 .content .num,
+.wf-raleway-n7-active div.main .content .markdown h1,
+.wf-raleway-n7-active div.main .content .markdown h2,
+.wf-raleway-n7-active div.main .content .markdown h3,
+.wf-raleway-n7-active div.main .content .markdown h4,
+.wf-raleway-n7-active div.main .content .markdown h5,
+.wf-raleway-n7-active div.main .content .markdown h6 {
+      font-family: 'Raleway';
+}
+
+.wf-merriweather-n3-active div.main .content .markdown {
+      font-family: 'Merriweather';
+}
+
+.wf-ubuntu-mono-n4-active div.main .content .markdown code,
+.wf-ubuntu-mono-n4-active div.main .content .markdown pre {
+      font-family: 'Ubuntu Mono';
+}
+
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+-webkit-justify-content: center;
+-moz-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+padding-top: 0 !important;
+}
+section {
+padding: 0 16px;
+margin-left: 100px;
+margin-right: 100px;
+
+max-width: 750px;
+
+}
+div.column {
+padding: 0 16px;
+
+max-width: 750px;
+
+}
+div.header {
+background-color: transparent;
+}
+div.header .container {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.header .container .logo {
+margin: 0;
+}
+div.header-home .container .logo {
+max-width: 216px;
+margin-left: 24px;
+}
+div.header-home .name-home {
+padding-top: 30px;
+font-size: 40px;
+}
+div.header-home nav ul a {
+font-size: 18px;
+}
+div.header .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.header .name {
+color: #333333;
+}
+div.header nav {
+font-size: 14px;
+margin-bottom: 0;
+}
+div.header nav ul {
+text-align: left;
+}
+div.header nav ul a {
+color: #666666;
+}
+div.header nav ul a:hover {
+color: #333333;
+}
+div.footer {
+background-color: transparent;
+}
+div.footer .container {
+flex-direction: row;
+}
+div.footer .container a {
+margin-left: 3px;
+margin-right: 3px;
+color: #666666;
+}
+div.footer .container a:hover {
+color: #333333;
+}
+div.footer .container a .icon {
+font-size: 18px;
+}
+div.footer .container a .icon.larger {
+font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+display: initial;
+}
+div.main .container.f04 {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.main .container.f04 .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+margin: 0 0 10px 0;
+font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+margin-bottom: 30px;
+}
+.container {
+padding: 0 30px;
+}
+div.header {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.footer {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.main {
+padding-top: 0;
+}
+div.main .content {
+  
+  font-size: 16px;
+  
+}
+div.main .container .content .post-item {
+display: flex;
+list-style: none;
+padding-left: 1.5em;
+}
+div.main .container .content .post-item .meta {
+display: block;
+}
+div.main .content .markdown blockquote {
+padding-right: 5rem;
+padding-left: 1.25rem;
+}
+div.main .content .navigation {
+-webkit-flex-direction: row;
+-moz-flex-direction: row;
+-ms-flex-direction: row;
+flex-direction: row;
+}
+div.main .content .navigation div {
+margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 769px)">
+  div.main .content .markdown figure {
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown img {
+max-width: 110%;
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown pre {
+width: 110%;
+margin-left: -4%;
+}
+
+</style>
+
+<noscript>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+</noscript>
+
+
+  <style type="text/css" media="screen">
+    .hljs{display:block;background:white;padding:0.5em;color:#333333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-string,.hljs-variable,.hljs-template-variable,.hljs-strong,.hljs-emphasis,.hljs-quote{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-literal,.hljs-symbol,.hljs-bullet,.hljs-attribute{color:#0086b3}.hljs-section,.hljs-name{color:#63a35c}.hljs-tag{color:#333333}.hljs-title,.hljs-attr,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);animation:a .5s both}@keyframes a{0%{filter:blur(20px)}to{filter:blur(0)}}
+
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    /*!
+ * Social Share Kit v1.0.7 (http://socialsharekit.com)
+ * Copyright 2015 Social Share Kit / Kaspars Sprogis.
+ * Licensed under Creative Commons Attribution-NonCommercial 3.0 license:
+ * https://github.com/darklow/social-share-kit/blob/master/LICENSE
+ * ---
+ */@font-face{font-family:'social-share-kit';src:url('/fonts/social-share-kit.eot');src:url('/fonts/social-share-kit.eot?#iefix') format('embedded-opentype'),url('/fonts/social-share-kit.woff') format('woff'),url('/fonts/social-share-kit.ttf') format('truetype'),url('/fonts/social-share-kit.svg#social-share-kit') format('svg');font-weight:normal;font-style:normal}.ssk:before{display:inline-block;font-family:"social-share-kit" !important;font-style:normal !important;font-weight:normal !important;font-variant:normal !important;text-transform:none !important;speak:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.ssk-facebook:before{content:"a";text-indent:4px;margin-right:-4px}.ssk-twitter:before{content:"b"}.ssk-google-plus:before{content:"v"}.ssk-google-plus-old:before{content:"c"}.ssk-email:before{content:"d";top:-1px;position:relative}.ssk-pinterest:before{content:"e"}.ssk-tumblr:before{content:"f"}.ssk-linkedin:before{content:"g"}.ssk-github:before{content:"h"}.ssk-vk:before{content:"i"}.ssk-instagram:before{content:"j"}.ssk-amazon:before{content:"k"}.ssk-skype:before{content:"s"}.ssk-youtube:before{content:"x"}.ssk-vimeo:before{content:"u"}.ssk-ebay:before{content:"p"}.ssk-apple:before{content:"l"}.ssk-behance:before{content:"q"}.ssk-dribble:before{content:"n"}.ssk-android:before{content:"o"}.ssk-whatsapp:before{content:"m"}.ssk-reddit:before{content:"r"}.ssk-reddit2:before{content:"t"}.ssk-link:before{content:"w"}.ssk{background-color:#757575;color:white;display:inline-block;font-size:22px;line-height:1px;margin-right:2px;margin-bottom:2px;padding:7px;text-align:center;text-decoration:none;transition:background-color .1s;-webkit-transition:background-color .1s;-moz-transition:background-color .1s;-ms-transition:background-color .1s;-o-transition:background-color .1s}.ssk:before,.ssk .glyphicon,.ssk .fa{position:relative;font-size:22px;top:0;vertical-align:middle}.ssk.ssk-xs,.ssk-xs>.ssk{padding:4px}.ssk.ssk-xs:before,.ssk-xs>.ssk:before,.ssk.ssk-xs .glyphicon,.ssk-xs>.ssk .glyphicon,.ssk.ssk-xs .fa,.ssk-xs>.ssk .fa{font-size:15px}.ssk.ssk-sm,.ssk-sm>.ssk{padding:5px}.ssk.ssk-sm:before,.ssk-sm>.ssk:before,.ssk.ssk-sm .glyphicon,.ssk-sm>.ssk .glyphicon,.ssk.ssk-sm .fa,.ssk-sm>.ssk .fa{font-size:20px}.ssk.ssk-lg,.ssk-lg>.ssk{padding:9px}.ssk.ssk-lg:before,.ssk-lg>.ssk:before,.ssk.ssk-lg .glyphicon,.ssk-lg>.ssk .glyphicon,.ssk.ssk-lg .fa,.ssk-lg>.ssk .fa{font-size:28px}.ssk:last-child{margin-right:0}.ssk:hover{background-color:#424242}.ssk:hover,.ssk:focus{color:#fff;text-decoration:none}.ssk.ssk-round,.ssk-round .ssk{border-radius:50%}.ssk.ssk-round:before,.ssk-round .ssk:before{text-indent:0;margin-right:0}.ssk.ssk-rounded,.ssk-rounded .ssk{border-radius:15%}.ssk.ssk-icon{color:#757575;padding:2px;font-size:24px}.ssk.ssk-icon,.ssk.ssk-icon:hover{background-color:transparent}.ssk.ssk-icon:hover{color:#424242}.ssk.ssk-icon.ssk-xs,.ssk-xs>.ssk.ssk-icon{font-size:16px}.ssk.ssk-icon.ssk-sm,.ssk-sm>.ssk.ssk-icon{font-size:20px}.ssk.ssk-icon.ssk-lg,.ssk-lg>.ssk.ssk-icon{font-size:28px}.ssk.ssk-text{overflow:hidden;font-size:17px;line-height:normal;padding-right:10px}.ssk.ssk-text:before,.ssk.ssk-text .glyphicon,.ssk.ssk-text .fa{margin:-7px 10px -7px -7px;padding:7px;background-color:rgba(0,0,0,0.15);vertical-align:bottom;text-indent:0}.ssk-block .ssk.ssk-text{display:block;margin-right:0;text-align:left}.ssk.ssk-text.ssk-xs,.ssk-xs>.ssk.ssk-text{font-size:12px;padding-right:6px}.ssk.ssk-text.ssk-xs:before,.ssk-xs>.ssk.ssk-text:before,.ssk.ssk-text.ssk-xs .glyphicon,.ssk-xs>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-xs .fa,.ssk-xs>.ssk.ssk-text .fa{margin:-4px 6px -4px -4px;padding:4px}.ssk.ssk-text.ssk-sm,.ssk-sm>.ssk.ssk-text{font-size:16px;padding-right:7px}.ssk.ssk-text.ssk-sm:before,.ssk-sm>.ssk.ssk-text:before,.ssk.ssk-text.ssk-sm .glyphicon,.ssk-sm>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-sm .fa,.ssk-sm>.ssk.ssk-text .fa{margin:-5px 7px -5px -5px;padding:5px}.ssk.ssk-text.ssk-lg,.ssk-lg>.ssk.ssk-text{font-size:22px;padding-right:13px}.ssk.ssk-text.ssk-lg:before,.ssk-lg>.ssk.ssk-text:before,.ssk.ssk-text.ssk-lg .glyphicon,.ssk-lg>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-lg .fa,.ssk-lg>.ssk.ssk-text .fa{margin:-9px 13px -9px -9px;padding:9px}.ssk-group,.ssk-sticky{font-size:0}.ssk-sticky{top:0;position:fixed;z-index:2000}.ssk-sticky .ssk{transition:padding .1s ease-out;-webkit-transition:padding .1s ease-out;-moz-transition:padding .1s ease-out;-ms-transition:padding .1s ease-out;-o-transition:padding .1s ease-out;margin:0}@media (min-width:768px){.ssk-sticky.ssk-left .ssk,.ssk-sticky.ssk-right .ssk{display:block;clear:both}.ssk-sticky.ssk-left.ssk-center,.ssk-sticky.ssk-right.ssk-center{top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%)}.ssk-sticky.ssk-left{left:0}.ssk-sticky.ssk-left .ssk{float:left}.ssk-sticky.ssk-left .ssk:hover{padding-left:15px}.ssk-sticky.ssk-right{right:0}.ssk-sticky.ssk-right .ssk{float:right}.ssk-sticky.ssk-right .ssk:hover{padding-right:15px}}.ssk-sticky.ssk-bottom{font-size:0;top:auto;bottom:0}.ssk-sticky.ssk-bottom.ssk-center{left:50%;right:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-moz-transform:translateX(-50%);-ms-transform:translateX(-50%);-o-transform:translateX(-50%)}.ssk-sticky.ssk-bottom .ssk{vertical-align:bottom}.ssk-sticky.ssk-bottom .ssk:hover{padding-bottom:15px}.ssk-sticky.ssk-round.ssk-xs .ssk:hover{padding:8px}.ssk-sticky.ssk-round.ssk-sm .ssk:hover{padding:9px}.ssk-sticky.ssk-round .ssk:hover{padding:11px}.ssk-sticky.ssk-round.ssk-lg .ssk:hover{padding:13px}@media (max-width:767px){.ssk-sticky{left:0;right:0;bottom:0;top:auto;width:100%;display:flex !important;flex-direction:row;flex-wrap:nowrap}.ssk-sticky.ssk-sticky-hide-xs{display:none !important}.ssk-sticky .ssk{flex:1;width:auto}.ssk-sticky .ssk .ssk-num{display:none}}.ssk-count{padding-top:20px}.ssk-count .ssk{position:relative}.ssk-count .ssk-num{border-radius:4px;color:#8f8f8f;background-color:rgba(50,50,50,0.03);display:block;font-size:12px;left:0;line-height:20px;position:absolute;right:0;text-align:center;top:-20px}@media (min-width:768px){.ssk-count.ssk-sticky{padding-top:0}.ssk-count.ssk-sticky.ssk-left .ssk-num,.ssk-count.ssk-sticky.ssk-right .ssk-num{top:20%;background-color:transparent}.ssk-count.ssk-sticky.ssk-left .ssk-num{left:100%;margin-left:5px}.ssk-count.ssk-sticky.ssk-right .ssk-num{right:115%;margin-left:-100%;text-align:right}}.ssk-facebook{background-color:#3B5998}.ssk-grayscale>.ssk-facebook{background-color:#757575}.ssk-facebook:hover{background-color:#2d4373}.ssk-facebook:hover{background-color:#2d4373}.ssk-grayscale>.ssk-facebook:hover{background-color:#3B5998}.ssk-facebook.ssk-icon{color:#3B5998}.ssk-facebook.ssk-icon:hover{color:#2d4373}.ssk-facebook.ssk-icon:before{text-indent:0;margin-right:0}.ssk-twitter{background-color:#1DA1F2}.ssk-grayscale>.ssk-twitter{background-color:#757575}.ssk-twitter:hover{background-color:#0c85d0}.ssk-twitter:hover{background-color:#0c85d0}.ssk-grayscale>.ssk-twitter:hover{background-color:#1DA1F2}.ssk-twitter.ssk-icon{color:#1DA1F2}.ssk-twitter.ssk-icon:hover{color:#0c85d0}.ssk-google-plus{background-color:#EA4335}.ssk-grayscale>.ssk-google-plus{background-color:#757575}.ssk-google-plus:hover{background-color:#d62516}.ssk-google-plus:hover{background-color:#d62516}.ssk-grayscale>.ssk-google-plus:hover{background-color:#EA4335}.ssk-google-plus.ssk-icon{color:#EA4335}.ssk-google-plus.ssk-icon:hover{color:#d62516}.ssk-pinterest{background-color:#BD081C}.ssk-grayscale>.ssk-pinterest{background-color:#757575}.ssk-pinterest:hover{background-color:#8c0615}.ssk-pinterest:hover{background-color:#8c0615}.ssk-grayscale>.ssk-pinterest:hover{background-color:#BD081C}.ssk-pinterest.ssk-icon{color:#BD081C}.ssk-pinterest.ssk-icon:hover{color:#8c0615}.ssk-tumblr{background-color:#395773}.ssk-grayscale>.ssk-tumblr{background-color:#757575}.ssk-tumblr:hover{background-color:#283d51}.ssk-tumblr:hover{background-color:#283d51}.ssk-grayscale>.ssk-tumblr:hover{background-color:#395773}.ssk-tumblr.ssk-icon{color:#395773}.ssk-tumblr.ssk-icon:hover{color:#283d51}.ssk-email{background-color:#757575}.ssk-grayscale>.ssk-email{background-color:#757575}.ssk-email:hover{background-color:#5b5b5b}.ssk-email:hover{background-color:#5b5b5b}.ssk-grayscale>.ssk-email:hover{background-color:#757575}.ssk-grayscale>.ssk-email:hover{background-color:#5b5b5b}.ssk-email.ssk-icon{color:#757575}.ssk-email.ssk-icon:hover{color:#5b5b5b}.ssk-vk{background-color:#54769a}.ssk-grayscale>.ssk-vk{background-color:#757575}.ssk-vk:hover{background-color:#425d79}.ssk-vk:hover{background-color:#425d79}.ssk-grayscale>.ssk-vk:hover{background-color:#54769a}.ssk-vk.ssk-icon{color:#54769a}.ssk-vk.ssk-icon:hover{color:#425d79}.ssk-linkedin{background-color:#1c87bd}.ssk-grayscale>.ssk-linkedin{background-color:#757575}.ssk-linkedin:hover{background-color:#156791}.ssk-linkedin:hover{background-color:#156791}.ssk-grayscale>.ssk-linkedin:hover{background-color:#1c87bd}.ssk-linkedin.ssk-icon{color:#1c87bd}.ssk-linkedin.ssk-icon:hover{color:#156791}.ssk-whatsapp{background-color:#34AF23}.ssk-grayscale>.ssk-whatsapp{background-color:#757575}.ssk-whatsapp:hover{background-color:#27851a}.ssk-whatsapp:hover{background-color:#27851a}.ssk-grayscale>.ssk-whatsapp:hover{background-color:#34AF23}.ssk-whatsapp.ssk-icon{color:#34AF23}.ssk-whatsapp.ssk-icon:hover{color:#27851a}.ssk-reddit{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit{background-color:#757575}.ssk-reddit:hover{background-color:#3a80c1}.ssk-reddit:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit:hover{background-color:#5f99cf}.ssk-reddit.ssk-icon{color:#5f99cf}.ssk-reddit.ssk-icon:hover{color:#3a80c1}.ssk-reddit2{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit2{background-color:#757575}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit2:hover{background-color:#5f99cf}.ssk-reddit2.ssk-icon{color:#5f99cf}.ssk-reddit2.ssk-icon:hover{color:#3a80c1}.ssk-turquoise{background-color:#1abc9c}.ssk-turquoise:hover{background-color:#148f77}.ssk-emerald{background-color:#2ecc71}.ssk-emerald:hover{background-color:#25a25a}.ssk-peter-river{background-color:#3498db}.ssk-peter-river:hover{background-color:#217dbb}.ssk-belize-hole{background-color:#2980b9}.ssk-belize-hole:hover{background-color:#20638f}.ssk-amethyst{background-color:#9b59b6}.ssk-amethyst:hover{background-color:#804399}.ssk-wisteria{background-color:#8e44ad}.ssk-wisteria:hover{background-color:#703688}.ssk-wet-asphalt{background-color:#34495e}.ssk-wet-asphalt:hover{background-color:#222f3d}.ssk-midnight-blue{background-color:#2c3e50}.ssk-midnight-blue:hover{background-color:#1a242f}.ssk-green-sea{background-color:#16a085}.ssk-green-sea:hover{background-color:#107360}.ssk-nephritis{background-color:#27ae60}.ssk-nephritis:hover{background-color:#1e8449}.ssk-sunflower{background-color:#f1c40f}.ssk-sunflower:hover{background-color:#c29d0b}.ssk-orange{background-color:#f39c12}.ssk-orange:hover{background-color:#c87f0a}.ssk-carrot{background-color:#e67e22}.ssk-carrot:hover{background-color:#bf6516}.ssk-pumpkin{background-color:#d35400}.ssk-pumpkin:hover{background-color:#a04000}.ssk-alizarin{background-color:#e74c3c}.ssk-alizarin:hover{background-color:#d62c1a}.ssk-pomegranate{background-color:#c0392b}.ssk-pomegranate:hover{background-color:#962d22}.ssk-clouds{background-color:#cfd9db}.ssk-clouds:hover{background-color:#b1c2c6}.ssk-concrete{background-color:#95a5a6}.ssk-concrete:hover{background-color:#798d8f}.ssk-silver{background-color:#bdc3c7}.ssk-silver:hover{background-color:#a1aab0}.ssk-asbestos{background-color:#7f8c8d}.ssk-asbestos:hover{background-color:#667273}.ssk-dark-gray{background-color:#555}.ssk-dark-gray:hover{background-color:#3b3b3b}.ssk-black{background-color:#333}.ssk-black:hover{background-color:#1a1a1a}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    a {
+    color: #527fc1f;
+}
+
+a:hover {
+    color: #1a3152;
+}
+
+div.main .content .markdown, div.header .name, div.header nav ul a:hover {
+    color: #181d2a;
+}
+
+div.header nav ul a {
+    color: #6a7a8b;
+}
+
+div.main .content .markdown code {
+    background-color: #f9f9f9;
+    color: #527fc1f;
+}
+
+div.main .content .markdown pre, div.main .content .markdown pre code {
+    background-color: #F6F8FA;
+    color: #87a5d2;
+}
+
+.hljs, .hljs-subst, .hljs-variable {
+    color: #87a5d2;
+}
+
+.hljs-type {
+    color: #97d28b;
+}
+
+.hljs-quote {
+    color: #ffcb8d;
+}
+
+.hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-template-tag, .hljs-deletion {
+    color: #96c2d7;
+}
+
+.hljs-comment {
+    color: #6a7a8b;
+}
+
+.hljs-regexp, .hljs-symbol, .hljs-template-variable {
+    color: #ffcb8d;
+}
+
+.hljs-keyword, .hljs-attribute, .hljs-meta-keyword, .hljs-doctag, .hljs-name {
+    color: #97d28b;
+}
+
+.hljs-link, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-title, .hljs-section {
+    color: #ff8e91;
+}
+
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+    color: #97d28b;
+}
+
+.ssk {
+    background-color: #6a7a8b;
+}
+
+  </style>
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/Enric_Escorsa.png"
+
+>
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <a href="/"><img class="logo" src="/img/logo.png" alt="logo"></a>
+        
+        <div class="content">
+            <a href="/"><div class="name"><h1>Enric Escorsa O&#39;Callaghan</h1></div></a>
+            <nav>
+                <ul>
+                    
+                            <li><a href="/blog/">Blog</a></li>
+                    
+                    
+                        
+                            
+                        
+                    
+                        
+                            
+                            <li><a href="/projects">projects</a></li>
+                            
+                        
+                    
+                    
+                        
+                            <li><a href="/about/">About</a></li>
+                        
+                    
+                        
+                    
+                        
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    Text mining poetry
+    
+
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Sun Apr 5 2020 00:00:00 UTC">Apr 5, 2020</div>
+                    
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">23 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/poetry">Poetry</a> </li>
+                          
+                            <li class="middot"><a href="/tags/slam">Slam</a> </li>
+                          
+                            <li class="middot"><a href="/tags/text-mining">Text mining</a> </li>
+                          
+                            <li class="middot"><a href="/tags/nlp">nlp</a> </li>
+                          
+                            <li class="middot"><a href="/tags/sentiment-analysis">sentiment analysis</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>Quins temes evoquen els poetes? Quin vocabulari fan servir? com hi juguen?
+Quin sentiment transmeten?</p>
+<p>És possible respondre a aquestes preguntes?
+Em proposo fer un petit experiment a partir d’un anàlisi dels textos de poetes actuals. Sé que perdré mil matissos. La part interpretativa de la declamació dels poemes, per començar, no quedarà reflectida. I, al capdavall, cal analitzar la poesia? O tan sols sentir-la?</p>
+<p>Intentem tanmateix veure què passa i juguem amb aquesta dissecció mecànica de les paraules vives dels poetes al nostre laboratori frankenstein de dades.</p>
+<p>Com a dades per a l’estudi prendré els textos de la competició poètica <a href="https://www.cccb.org/ca/projectes/fitxa/poetry-slam-barcelona/45755"><em>Poetry slam barcelona</em></a> que es fa mensualment al <em>Centre de Cultura Contemporànea de Barcelona (cccb)</em>. Es un acte amb un format interessant, en què els poetes tenen 3 minuts per declamar les seves creacions poètiques originals i acte seguit, representants escollits a l’atzar d’entre el públic puntuen la seva performance en pissarres. S’escullen uns finalistes que passen a una segona ronda de la qual en sorgeix finalment un guanyador d’aquella edició.</p>
+<div id="obtenir-i-examinar-les-dades-a-analitzar" class="section level2">
+<h2>Obtenir i examinar les dades a analitzar</h2>
+<p><em>Poetry Slam Barcelona</em> enregistra les intervencions dels poetes que participen en cada competició i penja els videos al seu canal <em>Youtube</em> <a href="https://www.youtube.com/user/PoetrySlamBarcelona">https://www.youtube.com/user/PoetrySlamBarcelona</a>. Hi ha una opció a <em>Youtube</em> que permet obtenir una transcripció automàtica de l’audio de la representació poètica en format de text. M’he entretingut a descarregar-me’ls. N’hi ha 331 en total, corresponents a les interpretacions de tots els poetes que han quedat finalistes o han guanyat cada competició celebrada, des que va iniciar l’any 2011.</p>
+<ul>
+<li><p>Nota: A dia d’avui encara no he aconseguit obtenir el text de tots ells. Me’n falten encara més de 100; per tant, mentre no els tingui tots els resultats que obtingui seran incomplerts…</p></li>
+<li><p>Nota: A més m’adono esgarrifat que la transcripció que fa Google és força deficient. Cal corregir paraules del text manualment en la majoria dels casos (més feina de la que em pensava…)</p></li>
+</ul>
+<p>Llegeixo del meu directori l’arxiu “poetryslambcn.csv” obtingut de volcar els resultats de la cerca feta a youtube en una taula; per cada poeta tinc el mes i any de la intervenció, si va quedar finalista o guanyador, la llengua amb què va recitar i la transcripció del text recitat.</p>
+<ul>
+<li>Nota: No voldria ofendre cap poeta que no volgués aparèixer, així que per preservar la seva identitat he substituit els seus nom per inicials.</li>
+</ul>
+<p>Vet aquí una mostra:</p>
+<pre class="r"><code>lesmevesdades &lt;- read.csv(&quot;poetryslambcn.csv&quot;,  sep = &quot;,&quot;)
+lesmevesdades &lt;- lesmevesdades %&gt;% select(-poetafullname)
+head(lesmevesdades)</code></pre>
+<pre><code>##   poeta       mes  año categoria    llengua
+## 1    ES     enero 2020 finalista castellano
+## 2    AG     enero 2020 finalista castellano
+## 3    PO     enero 2020 finalista castellano
+## 4    GC     enero 2020   ganador castellano
+## 5    PW diciembre 2019 finalista castellano
+## 6    PO diciembre 2019 finalista castellano
+##                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         texto
+## 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               esta noche mi espejo será el desencanto que viaje pegado a las luces de coches perdidos la nada en mis manos buscará un Amante que ahuyente el dolor embestidas  que me muerda el yugo que me ata hasta  hacerlo estallar en placer  hoy a pesar de todo he perdido mis  constantes ganas de morir las garras de  miedo a una araña en el propio dolor se  clavan deseos de vida la vida me animan  al rezo entregado a la brisa del mar  esta noche el mal no existe sé que  alguien luchará por mí y la imagen en la  niebla de aquel pero loco  por fin desaparecerá  esta noche quiero que prenda amor que  amor inyecte amor que trozos de amor  libre en mi cuerpo y que cubran el  silencio sordo los gritos que gritos te  llenen de orgasmos y el cielo se llena  de luz solo eso  los gritos mi cuerpo y la luz volverán a  hacer otra vez el resto no es más que  perfume de tiempo marchito mi madre  esta noche las palomas borrachas que  queden en el puerto me escucharán  atentas  también las moribundas las iniciadas  como yo las palomas más feas  les contaré que un día yo también tuve a  las que todas fuimos fuertes contra  desesperanza que abracen a sus hijos  chicos tienen que saquen el orgullo a  fuera que no mueran  esta noche al canal de este encanto  entre luces de coches perdidos orgasmos  prohibidos palomas borrachas claveles  abuelas lo gritaré mirando al mar  quiero logrado no tengo ni un puto oro y  no es triunfado try sigo la vida me  sonríe  mis manos lo llevan esposas que están  mutiladas por cócteles de horas pasadas  limpiando los baños de familias ricas  no vuelo a lejía abrazo mucho  escribo versos  mis manos reside en la herida del mundo  en el cuerpo de un hombre y reencuentran  refugio en mis hijos de roble tres  árboles fuertes que envuelven mi triste  existir hasta hacerme vivir lo que nunca  soñé que podría llegar a sentir  ser infinitamente amada  esta noche quiero que prenda amor que  morir de amor que trozos de mora liberen  mi cuerpo y que cubra del silencio sordo  caricias que gritos se llenan de risas y  el cielo se llenen de luz solo eso la  risa y la luz volverán a hacer otra vez  en mis hijos las manos de un alma  invadiendo mi cuerpo con palomas libres  el resto no es más que perfume de tiempo  marchito el resto no existe  a  
+## 2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   a mariona  ayer mariona llegó a casa de mi mano  tenía niebla en los ojos y arena en los  labios pisaba los cristales con los pies  descalzos variables de una niña mariana  tiene 9 años  hay veces que la piel se pone flores por  vestidos y en sus ojos está la mañana y  en su balcón mira el sol con la cara  descubierta  pero él  ayer la tuve que cuidar para que no  viera las flores cortadas en la cera y  es que a veces del vértigo a crecer es  más fuerte que la caída y mariona cae  cae cae y se encuentra de niñas sola en  las escaleras y con lápices de colores 9 rotos entre las piernas cada calle y ve  como pinta girasoles tristes y se desata  los cordones cuando escuchan gritos y  por el suelo los cristales así que 9 vuelven a caer y de camino a la escuela  hacen la mano de su padre la rodilla  recoger las piedras de un parque es la  prieta la suelta y cae cae caer y cuando  se beben cuando se ve de noche entre  alcohol y peleas y nadie la amiga ni la  escucha que no veis estoy una niña así  que vuelve a caer y ya solo conocen los  abrazos de su abuelo los días sin  primavera y el agua gris entre las rejas 9 cae cae cae cae no entiende porque su  cuerpo está oscuro porque hay tanto  los ojos de sus padres kai kai kai y en  la última caída se encuentra arrinconado  en una esquina de la que quiso un día  hacer su casa y entre la respiración  abocada de lágrima contenida mariola  tiene 9 años y sigue cayendo  y sigue cayendo 9 así que ahora a todas las madres y  padres con una hija como mariona  decirles a un abrazo tarde es mejor que 9 uno nunca dado que un perdón tarde es  mejor que uno nunca pronunciado que los  errores pesan menos si son enmendados  ya todas las niñas como mariona aunque  se miren al espejo y vea su infancia  rota de siete años de mala suerte no se 9 los quita nadie pero que crece se crece  siempre porque tu mariona  y una niña  pero tienes 9 años  y no hay nada más fuerte  lo más bonito que una niña en cuerpo de  mujer con una mujer con corazón de niño    
+## 3   canto de amonal  yo no escribo poemas sociales mi boca  sólo canta la rabia desgarrando esta nueva energía  que brota de la tierra a nuestros  muertos con sus trozos de rostro rotos  derramando pobreza por los poros  vestidos de mortaja y olvido para  recoger con nuestros brazos de mimbre  sus cuerpos de algodón que se desprendan 9 del cielo como un amanecer de nieve  nuestras muertas con sus labios de  sangre y sus cabezas rapadas vestidas de  mortaja y olvido para coser los pechos  cercenados que echaron a una tinaja con  formol de la carne a la interperie ahor 9 que el silencio y las niñas se deshagan  sus negras trenzas y los niños se  descansen para juntos cojear como una  milicia de golondrinas crucificadas por  el terror de una sola lengua  somos los nietos de los jornaleros del  loma o de eso a sol como bueyes conjugó  en la sien y traemos alma de olivo  hinojo y de adif irán los surcos de la  mano hemos heredado la bravura en la  mirada y desde las entrañas la  solidaridad con nuestros hermanos y 9 hermanas somos las nietas de un vientre  de mar con la identidad silenciada y la  sal por conserva y nuestra voz es canto  de nana y rabia madres y abuelas en  nuestras gargantas comiendo tierra y  lamento de desesperanza pero somos un  pobre orgullos de la nuestra lengua es  cortesía grados la memoria de los  bancales la hilera partido entre  volantes cannes de madres advent y la  mirada compra cesa así que ya es hora de  que crédit en como castañas ardiendo las  nucas de los traidores sobre el frío  canto de la pila bautismal hasta  convertirla en una sopa enorme para  ofrecerle al silencio su incómodo eco  que sabemos que nuestros muertos no  descansan en paz porque bajo tierra la  lucha de clase sigue diferenciando entre  tumba fosa común y cuneta que sabemos  que nuestra virtud no  y no hacer de las migajas panes con  memoria sino haber crecido mutilamos y  convivir con los sepultureros de  despliego y la lavanda que las hijas  encendidas caminen descalzos sobre las  cenizas rugiendo ante la geografía de la  muerte y le pongan al futuro la mirada  que separe la piel fría de lo terrible  que la victoria comienza donde acaba  este poemas todo poeta entiende la 9 responsabilidad que esconde el sendero  de hambre y sangre que dejaron las  frentes abiertas como granadas de  octubre que se deben a ver los bancales  de arriba si los montes y escribir 9 también sobre la belleza de cuchillos y  hojas en cuellos de escarcha no yo no  escribo poemas sociales porque mi tierra  alicante debería oler a patria y a 9 orgullo a manos cebolla y siembra y sin  embargo huele a cáncer tradición y  tuberculosis no yo no escribo poemas  sociales porque como dicho enrique  falcón en el estado español hay más  presas por delitos de pobreza que  lectoras de poesía y ellas no necesitan  poesía sino justicia yo no escribo  poemas sociales ni soy la voz de nadie 9 porque todavía no soy digno de ser  invitado  casa de los pobres  no no  
+## 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 hiciste sentir raro si no es ahora que  está como caído en mi nombre al pie de  mí y bloquea y pregunta a dios porque  nadie si no es ahora cuando moriré  leopoldo maría panero  angustia vital quemazón en el pecho frío  en los pies humedad en los ojos en las  mejillas recuerdo disco rayado vela  apagadas sobre mi maestra romper la hoja  romper el gob y lento cádiz corromper mi  alma alma en los pies  pero se vote el ies cartas sobre la mesa  cara apagada sueño encendido casi ceniza  romper la puta canción feliz y ahora  suena romper mis penas mi techo mi alma  alma en los pies romper mis pies caminar  seguir morir de dolor recrearme escribir  romper la taza en la que toma una  infusión para parecer una persona normal  porque no soy una persona normal romper  la cuchara que un puto culo para  clavárselo al poema a ver si así el  romántico tonto humano del todo que me  conforma se muere y me deja tranquilo  con la nada las de sus ojos conformes  matar al miedo matar al sueño matar al  dueño dios no ha muerto sentimiento de  culpa y que si no te quiero perdonar si  me has clavado puñal en la espalda a  millón material y me has hecho sentir  más y escribir más y que si eres musa y  que si no quiero perdonarte  y que es pide amor y que si le amo y le  odio a la vez y que si le pollo y le  temo a la vez y que es tiene sueño sólo 9 le sueño y no me atrevo ni a mirarle y  que si sueño con romperme mil pedazos y  que existe y que me tragué jce y que se  soñó con romper mi alma y que si sueño  con un cuchillo y un hilo rojo filo  negro y caliente de tus ojos de mi frío  pecho 9 ojalá frío pecho pecho en el suelo suelo  escribir mejor hoy alma suelo pies ojos  culpa rompo pena alba suelo pies ojos  culpa rompo pera alma suelo piel ojos  culpa ron ofelia garcía nito muero  así que suficiente tengo con escribirme  muchas gracias    
+## 5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      iluminas mis vueltas a casa porque todas  sabemos que nunca son fáciles y aprieto  los párpados pretendiendo pensar cosas  bonitas y lo consigo aquella primera vez  en la que de verdad tome abrazada mis  monstruos y no me dieron miedo aquella  Noche en la que puse puntos finales y  suspensivos a tantos interrogantes  y entonces vuelvo a casa  solo sana y salva que somos lo más  hambrientas y navegamos descaradamente  por la piel de nuestros opresores que no  nos lo discutan que somos las locas  estas que van por la calle más cuentas  que nadie  y no nos contamos ni un pelo 9 literalmente tampoco si no nos da la  gana ahora que ya no nos callamos ahora  que decidimos ahora que radicamos  nuestros miedos ahora que nos reprimimos 9 cada vez menos ahora que se nos puede  resistir hemos hecho lo más difícil que  es aguantar y tragar en contra de  nuestra propia libertad ahora ya no nos  pueden parar que no estamos mendigando  nada porque todo lo que reclamamos es  nuestro que nacimos siendo seres humanas 9 como vosotros y nos pertenece en los  mismos derechos y que nos llamen  histéricas cada vez que gritemos  nuestros derechos que nos llamen  radicales cada vez que nos pongamos 9 firmes y nos amemos que digan lo que  quieran porque el machismo ya no nos  dejará atadas de manos ya no  que tengo sed  estoy además hambrienta de todo poco que  la transformación está en nuestras manos  que lo coges o lo dejas o lo dejas y te  olvidas o lo olvidas o te habrán pillado  que sigo teniendo sed más no lo dudo  jauría compartida que somos salvajes  pero fieles salvajes pero fieles que las  armas están ahí fuera a mi alcance 9 pese a no parecerme lo que no nos engaña    navegaremos como loba sedientas nuestra  condición de humanas  que sigo teniendo sed y esta vez podemos  saciar la  
+## 6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                la habitación  si le hubiera cortado las alas habría  sido mío pero así habría dejado de ser  pájaro y yo lo que amaba era el pájaro  josean h  nos advirtieron  la historia universal en carne viva como  precedente y nosotros ahí tumbados ante  la mediocridad del mundo como gea y  urano mordiéndole las entrañas a lo  imposible sin que el resto de los  mortales fueran testigos de nuestro  estudio y con esto  nos hemos atrevido a luchar contra la  hegemonía de la derrota  contradiciendo a tu instinto con el  hambre en la duda  yo tapando mis traumas con saliva y las  heridas en voz baja  ambos con el mismo miedo triángulo al  estrépito de un adiós silencioso entre  los dedos  me has ayudado a destruir los  constructos y reinventar los conceptos  sintiéndonos libres de escribir lo que 9 no está para no olvidar que fuimos y  gracias a eso por primera vez he elegido  la memoria antes que las cicatrices para  recordar y es que después de todo lo  aprendido no hubiese sido justo pedirte  que no te marchas es nunca por el pánico  a no saber dormir solo sintiendo la  silueta helada de tu ausencia entre mis  sábanas y es que me hiciste ver que  echar de menos o necesitar a alguien es  en realidad tiempo para estar conmigo  mismo conocerme y más tarde  como tú lo llamas  saber querer bonito  ahora  ahora me veo aquí preguntándome si  nuestra osadía de intentar reinventarnos  es igual de admirable que abrazarnos por  última vez como lo hicimos con una  sonrisa y si mirarnos la espalda  y luego intentamos lo intentamos y sólo  por eso vencimos lo intentamos y jamás  nos quedará la duda  así que por favor  por favor  no te sientas culpable por la libertad  extrema de tus alas porque me han  enseñado que amar no es proyectar me en 9 otras sino sentirme cielo ámbar en buró  de incierto de golondrina sin mirar el  precipicio  y sabes 9 creo que puedo conseguirlo titánica  aunque me encantaría que estuviese estoy  aquí viéndome temblar ante la inmensidad  para poder coger tu mano y decirte  ayúdame a mirar  sí</code></pre>
+<p>Tenim dades desde 2011 fins al febrer del 2020.</p>
+<pre class="r"><code>library(lubridate)
+ggplot(data = lesmevesdades) + 
+  geom_bar(mapping = aes(x = as.factor(año), fill= categoria), width = 0.9) + theme_minimal() +  xlab(&quot;poetes participants en cada edició&quot;)+ ylab(&quot;&quot;)</code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>La llengua predominant que escullen els poetes al <em>Poetry Slam Barcelona</em> és la castellana, però n’hi ha alguns, pocs, que reciten en català i algún altre en anglès i italià.</p>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el “circuit” segur que sabrà qui són ;):</p>
+<pre class="r"><code>guanyadors &lt;- lesmevesdades %&gt;%
+  group_by(poeta, categoria) %&gt;%
+  filter(categoria==&quot;ganador&quot;) %&gt;%
+  summarise(vegades = n()) %&gt;% 
+  arrange(desc(vegades))
+
+head(guanyadors, n = 8)</code></pre>
+<pre><code>## # A tibble: 8 x 3
+## # Groups:   poeta [8]
+##   poeta categoria vegades
+##   &lt;fct&gt; &lt;fct&gt;       &lt;int&gt;
+## 1 DO    ganador        23
+## 2 SS    ganador        15
+## 3 CS    ganador         4
+## 4 IG    ganador         4
+## 5 DA    ganador         3
+## 6 DM    ganador         3
+## 7 MB    ganador         3
+## 8 PO    ganador         3</code></pre>
+</div>
+<div id="analitzar-el-text" class="section level2">
+<h2>Analitzar el text</h2>
+<p>Anem ara a analitzar els textos dels poetes.</p>
+<pre class="r"><code>#filtro per idioma per poder analitzar els texts homogèniament.
+#Per ara només prenc les poesies en castellà, que son la majoria
+lesmevesdades &lt;- lesmevesdades %&gt;%
+  filter(llengua == &quot;castellano&quot;)
+ 
+#N&#39;extrec el text que és el que m&#39;interessa
+elmeutext &lt;- lesmevesdades$texto </code></pre>
+<p>Provem d’analitzar-ne el contingut. Per fer-ho em baso en l’enfocament tidy textmining segons proposat per la científica de dades <strong><span class="citation">@JuliaSilge</span></strong>. Creem un corpus amb el text i el transformem en una matriu document-terme (dtm). N’extraiem els termes.</p>
+<pre><code>## [1] &quot;abracen&quot;  &quot;abrazo&quot;   &quot;abuelas&quot;  &quot;ahuyente&quot; &quot;alguien&quot;  &quot;alma&quot;</code></pre>
+<p>Ara posem la matriu en format net -és a dir, una taula amb columnes: terme i frequència d’aparició- mitjançant la funció <em>tidy</em>, elimino stopwords (paraules irrellevants tals com preposicions i alguna altra- i ordeno per freqüència.</p>
+<pre class="r"><code>net &lt;- tidy(dtm)
+
+#ordeno els termes més frequents de net
+net %&gt;%
+  count(term, sort = TRUE)</code></pre>
+<pre><code>## # A tibble: 10,680 x 2
+##    term         n
+##    &lt;chr&gt;    &lt;int&gt;
+##  1 &quot;que&quot;      155
+##  2 &quot;con&quot;      147
+##  3 &quot;los&quot;      145
+##  4 &quot;las&quot;      136
+##  5 &quot;por&quot;      136
+##  6 &quot;del&quot;      135
+##  7 &quot;para&quot;     133
+##  8 &quot;una&quot;      131
+##  9 &quot;m\xe1s&quot;   122
+## 10 &quot;como&quot;     121
+## # ... with 10,670 more rows</code></pre>
+<pre class="r"><code>net$term &lt;- iconv(net$term, &#39;LATIN1&#39;, &#39;LATIN1&#39;) 
+
+#creo una llista de les paraules que no vull (stopwords)
+elsmeusstopwords &lt;- tibble(term = c(as.character(1:10), &quot;la&quot;, &quot;el&quot;, &quot;que&quot;,&quot;nos&quot;, &quot;los&quot;, &quot;las&quot;, &quot;por&quot;, &quot;un&quot;, &quot;una&quot;, &quot;de&quot;, &quot;del&quot;, &quot;como&quot;, &quot;para&quot;, &quot;sus&quot;, &quot;tus&quot;, &quot;pero&quot;, &quot;porque&quot;, &quot;con&quot;, &quot;sin&quot;, &quot;en&quot;, &quot;mis&quot;, &quot;hasta&quot;, &quot;más&quot;, &quot;desde&quot;, &quot;o&quot;, &quot;su&quot;, &quot;te&quot;, &quot;le&quot;, &quot;este&quot;, &quot;esta&quot;, &quot;tu&quot;, &quot;al&quot;, &quot;lo&quot;, &quot;me&quot;, &quot;se&quot;, &quot;a&quot;, &quot;y&quot;, &quot;[música]&quot;, &quot;[aplausos]&quot;))
+
+#i uso aquesta llista per filtrar-les (mitjançant &quot;anti_join&quot;) de les que tenia per a que em quedi un corpus net
+netissim &lt;- net %&gt;% anti_join(elsmeusstopwords)
+netissim$term &lt;- iconv(netissim$term, &#39;LATIN1&#39;, &#39;LATIN1&#39;) 
+
+#ara podem ordenar termes per freqüència
+netissim %&gt;%
+  count(term, sort = TRUE)</code></pre>
+<pre><code>## # A tibble: 10,659 x 2
+##    term       n
+##    &lt;chr&gt;  &lt;int&gt;
+##  1 todo      85
+##  2 ser       83
+##  3 cuando    80
+##  4 vida      79
+##  5 ahora     74
+##  6 así       70
+##  7 está      68
+##  8 donde     67
+##  9 cada      66
+## 10 solo      62
+## # ... with 10,649 more rows</code></pre>
+<div id="visualitzacions-del-contingut" class="section level3">
+<h3>Visualitzacions del contingut</h3>
+<p>Arribats a aquest punt podem fer un núvol de paraules dels termes amb el paquet <em>wordcloud</em> per tenir una primera visualització general dels continguts.</p>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Per percebre els continguts a un nivell més estructural analitzem coocurrències o parells de termes que apareixen més freqüentment junts en les sentències i podem representar-los en una xarxa de co-ocurrències.</p>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Si volguéssim podríem examinar els termes que més coocórren amb un terme en concret (p.ex. amor)</p>
+<pre class="r"><code>parells %&gt;%
+  filter(item1 == &quot;amor&quot;)</code></pre>
+<pre><code>## # A tibble: 4,475 x 3
+##    item1 item2      n
+##    &lt;chr&gt; &lt;chr&gt;  &lt;dbl&gt;
+##  1 amor  vida      29
+##  2 amor  ser       27
+##  3 amor  todo      26
+##  4 amor  cuando    25
+##  5 amor  ahora     24
+##  6 amor  cada      23
+##  7 amor  donde     22
+##  8 amor  son       21
+##  9 amor  día       20
+## 10 amor  mundo     20
+## # ... with 4,465 more rows</code></pre>
+</div>
+<div id="anàlisi-del-vocabulari" class="section level3">
+<h3>Anàlisi del vocabulari</h3>
+<p>Tot seguit intentaré veure quins poetes fan servir més vocabulari, quins son més repetitus, etc.</p>
+<pre><code>##   poeta       word
+## 1    ES      noche
+## 2    ES         mi
+## 3    ES     espejo
+## 4    ES       será
+## 5    ES desencanto
+## 6    ES      viaje</code></pre>
+<p>Paraules més mencionades:</p>
+<pre class="r"><code>library(ggplot2)
+wordcounts &lt;- paraulespoetes %&gt;%
+  group_by(word) %&gt;%
+  summarize(menciones = n())
+wordcounts &lt;- wordcounts %&gt;%
+  arrange(desc(menciones)) %&gt;%
+  slice(1:15) 
+
+#aquí no he eliminat els stopwords
+wordcounts %&gt;%
+  ggplot() + geom_bar(aes(x=reorder(word, menciones), y=menciones), stat = &quot;identity&quot;) + theme_minimal() + xlab(&quot;paraules&quot;)+ ylab(&quot;nº mencions&quot;) + coord_flip() + theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Quines son les paraules més usades cada any?</p>
+<pre class="r"><code>paraulesany &lt;- paraulespoetes %&gt;%
+  group_by(word, año) %&gt;%
+  summarize(menciones = n()) 
+
+topparaulesany &lt;- paraulesany %&gt;%
+  group_by(año) %&gt;% top_n(15) %&gt;% ungroup %&gt;%
+  mutate (año = as.factor(año), word = reorder_within(word, menciones, año)) %&gt;%
+  ggplot(aes(word, menciones, fill = año)) +
+  geom_col(show.legend = FALSE) +
+  scale_x_reordered() +
+facet_wrap(~año,  ncol=5, scales = &quot;free&quot;) +
+  coord_flip() +
+  labs(x = NULL, y = &quot;paraules més mencionades cada any&quot;) + theme_minimal()
+
+topparaulesany</code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Sembla que als poetes en general, els agrada dir “no”</p>
+<p>Poetes i paraules més repetides:</p>
+<pre class="r"><code>repetitiu &lt;- paraulespoetes %&gt;%
+  group_by(poeta, word) %&gt;%
+  summarize(n=n()) %&gt;%
+  arrange(desc(n)) 
+repetitiu %&gt;% select(word, n, poeta)</code></pre>
+<pre><code>## # A tibble: 22,188 x 3
+## # Groups:   poeta [47]
+##    word      n poeta
+##    &lt;chr&gt; &lt;int&gt; &lt;fct&gt;
+##  1 no      120 SS   
+##  2 no      113 DO   
+##  3 gente    79 SS   
+##  4 no       67 DA   
+##  5 no       67 PO   
+##  6 buena    66 SS   
+##  7 mi       57 JM   
+##  8 es       56 JM   
+##  9 es       54 CS   
+## 10 no       54 DM   
+## # ... with 22,178 more rows</code></pre>
+<p>Paraules més repetides per cada poeta:</p>
+<pre class="r"><code>toprepetits &lt;- repetitiu %&gt;% 
+  filter(n&gt;4) %&gt;%
+  group_by(poeta) %&gt;%
+  top_n(5, n) %&gt;%
+  ungroup() %&gt;%
+  arrange(poeta, -n)
+
+toprepetits %&gt;%
+  mutate(word = reorder_within(word, n, poeta)) %&gt;%
+  ggplot(aes(word, n, fill = factor(poeta))) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ poeta, nrow = 5, scales = &quot;free&quot;) +
+  scale_x_reordered() +
+  coord_flip() +
+  labs(x = NULL, y = &quot;paraules més repetides&quot;) + theme_minimal() + theme(legend.position = &quot;none&quot;, axis.text.x=element_blank(), axis.ticks.x=element_blank())</code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Quins són els poetes amb més riquesa de vocabulari?</p>
+<pre class="r"><code>uniques &lt;- paraulespoetes %&gt;%
+  group_by(poeta) %&gt;%
+  summarize(n = length(unique(word))) %&gt;%
+  arrange(desc(n))
+uniques</code></pre>
+<pre><code>## # A tibble: 47 x 2
+##    poeta     n
+##    &lt;fct&gt; &lt;int&gt;
+##  1 DO     2111
+##  2 DA     1880
+##  3 SS     1609
+##  4 PO     1147
+##  5 MB     1052
+##  6 AA      986
+##  7 CS      857
+##  8 O       825
+##  9 AG      804
+## 10 IG      708
+## # ... with 37 more rows</code></pre>
+<p>…però no tots els poetes tenen el mateix nombre de poemes. Cal normalitzar-ho en cada cas. Quants poemes tenia cada poeta?</p>
+<pre class="r"><code>poemespoeta &lt;- lesmevesdades %&gt;%
+ count(poeta, sort = TRUE)
+poemespoeta</code></pre>
+<pre><code>## # A tibble: 63 x 2
+##    poeta     n
+##    &lt;fct&gt; &lt;int&gt;
+##  1 DO       35
+##  2 SS       32
+##  3 EB       19
+##  4 DA       15
+##  5 CS       13
+##  6 PO       13
+##  7 CM       11
+##  8 IG       11
+##  9 MB       11
+## 10 AA       10
+## # ... with 53 more rows</code></pre>
+<p>Doncs divideixo el nombre de paraules pel nombre de poemes de cada poeta</p>
+<pre class="r"><code>#faig un join de la taula de paraules per poeta i la taula de nombre de poemes.
+ricvocab &lt;-  full_join (uniques, poemespoeta, by=&quot;poeta&quot;)
+
+#creo la columna absparaules resultant amb mutate
+ricvocab &lt;- ricvocab %&gt;%  mutate (riquesavocab = n.x/n.y) %&gt;% arrange(desc(riquesavocab))
+ricvocab</code></pre>
+<pre><code>## # A tibble: 63 x 4
+##    poeta   n.x   n.y riquesavocab
+##    &lt;fct&gt; &lt;int&gt; &lt;int&gt;        &lt;dbl&gt;
+##  1 AR      225     1         225 
+##  2 NH      635     3         212.
+##  3 DYS     211     1         211 
+##  4 XC      192     1         192 
+##  5 ES      178     1         178 
+##  6 RB      172     1         172 
+##  7 YB      166     1         166 
+##  8 GC      154     1         154 
+##  9 GA      152     1         152 
+## 10 N       442     3         147.
+## # ... with 53 more rows</code></pre>
+</div>
+</div>
+<div id="anàlisi-de-sentiments" class="section level2">
+<h2>Anàlisi de sentiments</h2>
+<p>Intentem finalment analitzar els “sentiments” implícits en els textos poètics. El <em>sentiment analysis</em> és una tècnica que s’utilitza en processament del llegnuatge per determinar emocions, intencions, estats, en volums de text. Utilitzarem el paquet <em>syuzhet</em> que usa quatre diccionaris i els desenvolupaments del grup de Processament del Llenguatge Natural de Stanford i en particular el lèxic d’emocions NRC elaborat per Saif Mohammad (disponible <a href="https://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm">aquí</a>) .</p>
+<pre class="r"><code>library(syuzhet)
+elmeutext = as.character(netissim$term)
+#eliminem signes de puntuació
+elmeutext&lt;-gsub(&quot;[[:punct:]]&quot;,&quot; &quot;, elmeutext)
+#eliminem números (alphanumeric)
+elmeutext&lt;-gsub(&quot;[^[:alnum:]]&quot;,&quot; &quot;, elmeutext)
+elsmeussentiments &lt;-get_nrc_sentiment((elmeutext))#aquesta funció extrau els sentiments (pot trigar una mica...)
+
+#creo una taula amb els sentiments i total de cadascun
+sentimentscores &lt;- data.frame(colSums(elsmeussentiments[,]))
+
+names(sentimentscores) &lt;- &quot;Score&quot;
+sentimentscores &lt;- cbind(&quot;sentiment&quot;=rownames(sentimentscores),sentimentscores)
+rownames(sentimentscores) &lt;- NULL
+
+library(stringr)
+#tradueixo el nom de les emocions en català
+sentimentscores$sentiment &lt;- sentimentscores$sentiment %&gt;% str_replace_all(&quot;positive&quot;, &quot;positiu&quot;) %&gt;% str_replace_all(&quot;anticipation&quot;, &quot;expectativa&quot;) %&gt;% str_replace_all(&quot;anger&quot;, &quot;enuig&quot;) %&gt;% str_replace_all(&quot;disgust&quot;, &quot;fàstic&quot;) %&gt;% str_replace_all(&quot;fear&quot;, &quot;por&quot;) %&gt;% str_replace_all(&quot;joy&quot;, &quot;joia&quot;) %&gt;% str_replace_all(&quot;sadness&quot;, &quot;tristor&quot;) %&gt;% str_replace_all(&quot;surprise&quot;, &quot;sorpresa&quot;) %&gt;% str_replace_all(&quot;trust&quot;, &quot;confiança&quot;)%&gt;% str_replace_all(&quot;negative&quot;, &quot;negatiu&quot;) 
+
+#genero una visualització en barres
+ggplot(data=sentimentscores,aes(x=sentiment,y=Score))+
+ geom_bar(aes(fill=sentiment),stat = &quot;identity&quot;)+
+ theme(legend.position=&quot;none&quot;)+
+ xlab(&quot;Emocions&quot;)+ylab(&quot;Nivell&quot;)+ ggtitle(&quot;Sentiments totals (segons el lèxic d&#39;emocions NRC)&quot;) + theme_minimal() + scale_fill_manual(&quot;sentiment&quot;, values = c(&quot;negatiu&quot; = &quot;red&quot;, &quot;positiu&quot; = &quot;green&quot;, &quot;expectativa&quot;= &quot;grey&quot;, &quot;enuig&quot;= &quot;grey&quot;,  &quot;fàstic&quot;= &quot;grey&quot;,  &quot;por&quot;= &quot;grey&quot;,  &quot;joia&quot;= &quot;grey&quot;,  &quot;tristor&quot;= &quot;grey&quot;,  &quot;sorpresa&quot;= &quot;grey&quot;, &quot;confiança&quot;= &quot;grey&quot;)) + theme(legend.position = &quot;none&quot;) </code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>Els poemes són -segons l’anàlisi mitjançant aquest lèxic- més aviat negatius que positius en general. La tristor, l’enuig i la por hi són sentiments freqüents, però també hi ha poemes positius on la confiança és el sentiment predominant.</p>
+<p>Anem a veure com evoluciona el sentiment general de cada poeta en el temps. He après de <strong>Chris Norval</strong> <span class="citation">@cnorval</span> a fer aquest tipus d’anàlisi.</p>
+<pre class="r"><code>#veure anàlisi de l&#39;evolució dels sentiments en el temps de Chris Norval: http://cnorval.github.io/2015/12/24/Sentiment_Analysis/ com fer aquest tipus d&#39;anàlisi de l&#39;evolució dels sentiments en el temps.
+  
+  
+lesmevesdades$texto &lt;- as.vector(lesmevesdades$texto)
+lesmevesdades$sentiment &lt;- get_sentiment(lesmevesdades$texto) %&gt;% as.numeric()
+
+lesmevesdades %&gt;%
+  group_by(poeta) %&gt;%
+  summarise(min = min(sentiment), 
+            max = max(sentiment), 
+            mitjana = round(mean(sentiment), 2), 
+            mediana = median(sentiment), 
+            poemes = n())</code></pre>
+<pre><code>## # A tibble: 63 x 6
+##    poeta   min    max mitjana mediana poemes
+##    &lt;fct&gt; &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;int&gt;
+##  1 &quot;AA&quot;  -1.75  1.1    -0.11     0        10
+##  2 &quot;AB&quot;  -0.25  0.5     0.06     0         4
+##  3 &quot;AG&quot;  -2.05 -0.75   -1.22    -1         6
+##  4 &quot;AL&quot;  -1.9   0.35   -0.52     0         3
+##  5 &quot;ALE&quot; -2.25  0      -1.12    -1.12      2
+##  6 &quot;ALU&quot; -1     0      -0.25     0         4
+##  7 &quot;AMR&quot; -2.75  0.75   -0.570    0         5
+##  8 &quot;AO&quot;  -1.5   0.100  -0.28     0         5
+##  9 &quot;AR&quot;  -1.8  -1.8    -1.8     -1.8       1
+## 10 &quot;AS &quot; -1.25  0      -0.83    -1.25      3
+## # ... with 53 more rows</code></pre>
+<p>Quina és l’evolució del sentiment dels poetes guanyadors de les edicions de <em>Poetry Slam Barcelona</em>?</p>
+<pre class="r"><code>lesmevesdades$order &lt;- as.numeric(NA)
+guanyadors &lt;- lesmevesdades %&gt;% filter(categoria == &quot;ganador&quot;) 
+
+guanyadors %&gt;% 
+  ggplot(aes(guanyadors$&quot;año&quot;, guanyadors$sentiment, color = poeta)) +
+    geom_line(size = 1) + 
+    scale_x_continuous(name = &quot;\nTemps (2011-2020)&quot;) +
+    scale_y_continuous(name = &quot;Sentiment\n&quot;, breaks = seq(-10, 10, by=5)) +
+    facet_wrap(~ poeta, scales = &quot;free&quot;) + theme_minimal() + theme(legend.position = &quot;none&quot;, axis.text.x=element_blank(), axis.ticks.x=element_blank()) </code></pre>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>Evolució del sentiment dels finalistes:</p>
+<p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<ul>
+<li>Nota: Com deia, em falten algunes dades -no he aconseguit descarregar encara els poemes de tothom (Per a alguns videos <em>Youtube</em> no genera la transcripció…)- i l’aport d’aquest anàlisi és més que discutible, però fa certa gràcia veure aquestes evolucions del sentiment que es transmet en el temps…</li>
+</ul>
+<p>Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la sutilesa de la poesia.</p>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/pdf-to-text/">Pdf to text</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        
+
+        <div class="copyright">
+
+        
+            
+                <a href="/license">Copyright ©2020</a>
+            
+        
+
+        </div>
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+            <a href="https://www.instagram.com/enricesc" rel=me target="_blank">
+                <img class="icon" src="/img/instagram.svg" alt="instagram" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/enricescorsa" rel=me target="_blank">
+                <img class="icon" src="/img/github.svg" alt="github" />
+            </a>
+        
+
+        
+            <a href="https://twitter.com/EnricEscorsa" rel=me target="_blank">
+                <img class="icon" src="/img/twitter.svg" alt="twitter" />
+            </a>
+        
+
+        
+            <a href="https://www.linkedin.com/in/enric-escorsa-o-callaghan-24b0966" rel=me target="_blank">
+                <img class="icon" src="/img/linkedin.svg" alt="linkedin" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="mailto:enricescorsa@gmail.com">
+                <img class="icon" src="/img/email.svg" alt="email" />
+            </a>
+        
+
+        
+            <a href="/index.xml">
+                <img class="icon" src="/img/rss.svg" alt="rss" />
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Raleway:400,600,700', 'Merriweather:300,300i,700,700i', 'Ubuntu+Mono:400,700']
+    }
+  });
+</script>
+
+
+
+  <script src="/js/highlight.min.js" defer></script>
+  
+
+
+
+  <script src="/js/progressively.min.js" defer></script>
+
+
+
+  <script src="/js/social-share-kit.min.js" defer></script>
+
+
+
+
+
+
+<script>
+  window.onload = function() {
+    
+      hljs.initHighlighting();
+    
+    
+      progressively.init({delay: 30, throttle: 50});
+    
+    
+      SocialShareKit.init({
+        twitter: {
+            text: '',
+            via: 'EnricEscorsa'
+        }
+      });
+    
+  };
+</script>
+
+
+
+
+</body>
+</html>
+
