@@ -83,7 +83,7 @@ ggplot(data = lesmevesdades) +
 
 
 
-En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el "circuit" segur que sabrà qui són ;):
+En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el "circuit slam" segur que sabrà qui són ;):
 
 ```{r warning=F, message=F}
 
@@ -424,5 +424,5 @@ finalistes %>%
 
 * Nota: Com deia, em falten algunes dades -no he aconseguit descarregar encara els poemes de tothom (Per a alguns videos *Youtube* no genera la transcripció...)- i l'aport d'aquest anàlisi és més que discutible, però fa certa gràcia veure aquestes evolucions del sentiment que es transmet en el temps...
 
-Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la sutilesa de la poesia.
+Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la subtilesa de la poesia.
 

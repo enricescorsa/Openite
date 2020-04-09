@@ -1217,7 +1217,7 @@ ggplot(data = lesmevesdades) +
 <p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>La llengua predominant que escullen els poetes al <em>Poetry Slam Barcelona</em> és la castellana, però n’hi ha alguns, pocs, que reciten en català i algún altre en anglès i italià.</p>
 <p><img src="/blog/2020-04-05-text-mining-poetry_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el “circuit” segur que sabrà qui són ;):</p>
+<p>En total, els poetes que han guanyat més vegades són, amb diferència els poetes DO i SS (qui estigui en el “circuit slam” segur que sabrà qui són ;):</p>
 <pre class="r"><code>guanyadors &lt;- lesmevesdades %&gt;%
   group_by(poeta, categoria) %&gt;%
   filter(categoria==&quot;ganador&quot;) %&gt;%
@@ -1533,7 +1533,7 @@ guanyadors %&gt;%
 <ul>
 <li>Nota: Com deia, em falten algunes dades -no he aconseguit descarregar encara els poemes de tothom (Per a alguns videos <em>Youtube</em> no genera la transcripció…)- i l’aport d’aquest anàlisi és més que discutible, però fa certa gràcia veure aquestes evolucions del sentiment que es transmet en el temps…</li>
 </ul>
-<p>Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la sutilesa de la poesia.</p>
+<p>Fins aquí aquest petit experiment de minería de textos i de representació de les paraules declamades pels poetes slammers. Estem molt lluny encara de poder captar amb dades, la subtilesa de la poesia.</p>
 </div>
 
 
