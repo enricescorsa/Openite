@@ -79,6 +79,17 @@ library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;htt
     </item>
     
     <item>
+      <title>fer un mapa choropleth</title>
+      <link>/blog/fer-un-mapa-choropleth/</link>
+      <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/fer-un-mapa-choropleth/</guid>
+      <description>Vull mostrar aquí el procés d’elaborar un mapa amb dades recollides de fonts obertes. Normalment es tracta d’obtenir primer els contorns dels territoris que volem representar i després poblar el mapa amb les dades que ens interessa mostrar-hi. Fem-ho.
+Obtenir les formes dels territorisEl primer pas és obtenir les formes ( shapefiles ) de països i límits territorials.
+Mapes de tots els països del mónUn dels llocs on els podem obtenim és GADM, una pàgina que suministra dades espaials de tots els paísos del món.</description>
+    </item>
+    
+    <item>
       <title>Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R</title>
       <link>/blog/thoreau-henry-david/</link>
       <pubDate>Wed, 14 Mar 2018 00:00:00 +0000</pubDate>

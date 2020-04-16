@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="A blog about data &amp; landscapes.">
+
+
+    <meta property="twitter:site" content="@EnricEscorsa">
+
+<meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
+<meta property="og:locale" content="en-US" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/map-choropleth-experiments/" />
+<meta property="og:title" content="mapes" />
+<meta property="twitter:title" content="mapes">
+
+    <meta property="og:image" content="//images/image.jpg">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:image" content="//images/image.jpg">
+
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
+
+<title>
+
+
+     Enric Escorsa O&#39;Callaghan - mapes 
+
+</title>
+<link rel="canonical" href="/blog/map-choropleth-experiments/">
+
+
+<style media="screen">
+  @font-face {
+  font-family: 'Nexa Bold';
+  src: url('/fonts/Nexa Bold.otf');
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, div.column {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+a,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+html {
+  height: 100%;
+  font-size: 16px;
+}
+body {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 100%;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  color: #111111;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility !important;
+}
+.icon {
+  text-rendering: geometricPrecision !important;
+}
+section {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+div.column {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  width: 100%;
+}
+.container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  width: 100%;
+}
+div.header .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.header .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.header .container .logo {
+  
+  max-width: 100px;
+  
+  margin-left: -2em;
+}
+div.header .name {
+  padding-top: 20px;
+  font-size: 28px;
+  font-family: 'Nexa Bold', 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  
+  text-transform: uppercase;
+  
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+}
+div.header nav {
+  margin-bottom: 16px;
+}
+div.header nav ul {
+  list-style: none;
+  text-align: center;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: -ms-inline-flex;
+  display: inline-flex;
+}
+div.header nav ul li {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+div.header nav ul li:first-child {
+  margin-left: 0;
+}
+div.header nav ul li:last-child {
+  margin-right: 0;
+}
+div.header nav ul a {
+  color: #555555;
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.header nav ul a:hover {
+  color: #111111;
+}
+div.footer .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 100%;
+  text-align: center;
+}
+div.footer .container a {
+  font-size: 14px;
+  margin-left: 6px;
+  margin-right: 6px;
+  opacity: 0.6;
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.footer .container a:first-child {
+  margin-left: 0;
+}
+div.footer .container a:last-child {
+  margin-right: 0;
+}
+div.footer .container a:hover {
+  opacity: 0.8;
+}
+div.footer .container a .icon {
+  width: 16px;
+  height: 16px;
+}
+div.footer .container .copyright {
+  flex-grow: 0.5;
+  text-align: start;
+}
+div.footer .container .icons {
+  flex-grow: 0.5;
+  text-align: end;
+}
+div.main .container {
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  -webkit-justify-content: flex-start;
+  -moz-justify-content: flex-start;
+  -ms-justify-content: flex-start;
+  justify-content: flex-start;
+}
+div.main .content {
+  color: #111111;
+  font-size: 16px;
+}
+div.main .content .title-container {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+}
+div.main .content .posts {
+  
+  
+}
+div.main .content .page-heading {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  text-transform: uppercase;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  margin-bottom: 16px;
+}
+div.main .content .front-matter .page-heading {
+  margin-bottom: 0;
+}
+div.main .content .front-matter .meta {
+  font-size: 14px;
+  color: #666666;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  margin-bottom: 32px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+  display: none;
+}
+div.main .content .front-matter .middot:before {
+  font-size: 6px;
+  margin: 0 6px;
+  vertical-align: middle;
+  content: "•";
+}
+div.main .content .front-matter .tags ul {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .content .front-matter .tags ul li {
+  -webkit-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: opacity 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+div.main .content .front-matter .tags ul li:hover {
+  opacity: 0.7;
+}
+div.main .content .front-matter .tags ul li a {
+  color: #666666;
+}
+
+div.main .container.f04 {
+  -webkit-justify-content: center;
+  -moz-justify-content: center;
+  -ms-justify-content: center;
+  justify-content: center;
+}
+div.main .container.f04 .content {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+}
+div.main .container.f04 .content .num {
+  margin: 30px 0px 30px 0;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  font-size: 50px;
+}
+div.main .container.f04 .content .detail {
+  margin-bottom: 40px;
+}
+div.main .container .content .groupby {
+  margin-top: 1em;
+  padding-left: 0.5em;
+}
+div.main .container .content .post-item {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  display: list-item;
+  list-style: disc inside;
+}
+div.main .container .content .post-item .meta {
+  font-size: 14px;
+  color: #666666;
+  display: none;
+  min-width: 100px;
+}
+div.main .container .content .see-more {
+  font-style: italic;
+  float: right;
+  font-size: 0.9em;
+  margin-top: 2em;
+  color: #313537;
+}
+div.main .container .content .see-more:hover {
+  color: #666;
+}
+section {
+  padding: 0 16px;
+}
+div.column {
+  padding: 0 16px;
+}
+div.header {
+  padding-top: 10px;
+}
+div.header-home {
+  padding-top: 36px;
+}
+div.main {
+  padding-top: 32px;
+}
+div.main .container .content .post-item .meta {
+    display: block;
+}
+div.main .container .content .post-item {
+    display: flex;
+    list-style: none;
+}
+a {
+  color: #428bca;
+  -webkit-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -moz-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -ms-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+  -o-transition: color 0.1s cubic-bezier(0.47, 0, 0.75, 0.72);
+}
+a:hover {
+  color: #2a6496;
+}
+img {
+  max-width: 100%;
+}
+div.main .content {
+    width: 100%;
+}
+div.main .content .markdown {
+  font-size: 1.1em;
+  line-height: 1.75em;
+  color: #313537;
+  font-family: serif;
+  font-weight: 300;
+}
+div.main .content .markdown h1,
+div.main .content .markdown h2,
+div.main .content .markdown h3,
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 22px;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  letter-spacing: -0.005rem;
+  font-weight: 700;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  color: #333333;
+  text-transform: none;
+  margin-top: 1.75rem;
+}
+div.main .content .markdown h1 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+div.main .content .markdown h3 {
+  font-size: 1em;
+  margin-bottom: 1rem;
+}
+div.main .content .markdown h4,
+div.main .content .markdown h5,
+div.main .content .markdown h6 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: none;
+}
+div.main .content .markdown code,
+div.main .content .markdown pre {
+  font-family: 'Menlo', monospace;
+  font-size: 0.98rem;
+  background-color: #f7f7f7;
+}
+div.main .content .markdown code {
+  /* enclosed by single backtick (`) */
+  padding: .15em .5em;
+  border-radius: 2px;
+}
+div.main .content .markdown pre {
+  /* Hugo specific: consider using the 'highlight' shortcode */
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  line-height: 1.5em;
+  white-space: pre;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+div.main .content .markdown pre code {
+  /* enclosed by 4 backticks (````) */
+  padding: 0;
+  font-size: 0.9rem;
+}
+div.main .content .markdown a code {
+  color: #428bca !important;
+}
+div.main .content .markdown a code:hover {
+  text-decoration: underline;
+}
+div.main .content .markdown p {
+  
+  text-align: justify;
+  
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+div.main .content .markdown ul,
+div.main .content .markdown ol,
+div.main .content .markdown dl {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+div.main .content .markdown dt {
+  font-weight: bold;
+}
+div.main .content .markdown dd {
+  margin-bottom: .5rem;
+}
+div.main .content .markdown ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown ol {
+  list-style-type: decimal;
+  margin-bottom: 1.25rem;
+}
+div.main .content .markdown li {
+  margin-left: 2em;
+}
+div.main .content .markdown em {
+  font-style: italic;
+}
+div.main .content .markdown strong {
+  font-weight: 700;
+}
+div.main .content .markdown hr {
+  position: relative;
+  margin: 1.75rem 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-top: 1px solid #999999;
+}
+div.main .content .markdown abbr {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666666;
+  text-transform: uppercase;
+}
+div.main .content .markdown abbr[title] {
+  cursor: help;
+  border-bottom: 1px dotted #808080;
+}
+div.main .content .markdown blockquote {
+  padding: .5rem 1rem;
+  margin: .8rem 0;
+  color: #7a7a7a;
+  border-left: .25rem solid #e5e5e5;
+}
+div.main .content .markdown blockquote p:last-child {
+  margin-bottom: 0;
+}
+div.main .content .markdown figure {
+  width: 100%;
+  background: #fff;
+  margin-bottom: 1em;
+}
+div.main .content .markdown figure img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  display: block;
+  position: static;
+  margin: auto;
+}
+div.main .content .markdown table {
+  margin-bottom: 1rem;
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-collapse: collapse;
+}
+div.main .content .markdown td,
+div.main .content .markdown th {
+  padding: .25rem .5rem;
+  border: 1px solid #e5e5e5;
+}
+div.main .content .markdown tbody tr:nth-child(odd) td,
+div.main .content .markdown tbody tr:nth-child(odd) th {
+  background-color: #f7f7f7;
+}
+div.main .content .markdown .footnotes ol {
+  list-style-type: decimal;
+  margin-left: 16px;
+}
+div.main .content .markdown .footnotes li {
+  list-style-type: unset;
+}
+div.main .content .markdown .footnote-ref {
+  font-size: 0.7em;
+}
+div.main .content .navigation {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -moz-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  padding: 2em;
+}
+div.main .content .navigation div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  margin-top: 1em;
+}
+div.main .content .navigation .icon {
+  width: 16px;
+  height: 16px;
+}
+div.main .content .navigation a {
+  width: 250px;
+  margin: 0 1em;
+  text-align: center;
+  font-style: italic;
+  color: #313537;
+}
+div.main .content .share, div.main .content .share div {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  align-items: center;
+  justify-content: center;
+}
+div.main .content .share {
+  background-color: rgba(152, 152, 152, 0.07);
+  padding: 1em 0;
+}
+div.main .content .share a {
+  margin: 0 6px;
+}
+kbd {
+  padding: 0.1em 0.6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  box-shadow: 0 1px 0px rgba(0, 0, 0, 0.2),0 0 0 2px #ffffff inset;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 0.1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Fonts */
+
+
+.wf-raleway-n4-active body, 
+.wf-raleway-n4-active div.header nav ul a,
+.wf-raleway-n7-active div.main .content .page-heading,
+.wf-raleway-n2-active div.main .container.f04 .content .num,
+.wf-raleway-n7-active div.main .content .markdown h1,
+.wf-raleway-n7-active div.main .content .markdown h2,
+.wf-raleway-n7-active div.main .content .markdown h3,
+.wf-raleway-n7-active div.main .content .markdown h4,
+.wf-raleway-n7-active div.main .content .markdown h5,
+.wf-raleway-n7-active div.main .content .markdown h6 {
+      font-family: 'Raleway';
+}
+
+.wf-merriweather-n3-active div.main .content .markdown {
+      font-family: 'Merriweather';
+}
+
+.wf-ubuntu-mono-n4-active div.main .content .markdown code,
+.wf-ubuntu-mono-n4-active div.main .content .markdown pre {
+      font-family: 'Ubuntu Mono';
+}
+
+
+</style>
+<style media="(min-width: 600px)">
+  body {
+-webkit-justify-content: center;
+-moz-justify-content: center;
+-ms-justify-content: center;
+justify-content: center;
+}
+.non-narrow.zero-top-spacing {
+padding-top: 0 !important;
+}
+section {
+padding: 0 16px;
+margin-left: 100px;
+margin-right: 100px;
+
+max-width: 750px;
+
+}
+div.column {
+padding: 0 16px;
+
+max-width: 750px;
+
+}
+div.header {
+background-color: transparent;
+}
+div.header .container {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.header .container .logo {
+margin: 0;
+}
+div.header-home .container .logo {
+max-width: 216px;
+margin-left: 24px;
+}
+div.header-home .name-home {
+padding-top: 30px;
+font-size: 40px;
+}
+div.header-home nav ul a {
+font-size: 18px;
+}
+div.header .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.header .name {
+color: #333333;
+}
+div.header nav {
+font-size: 14px;
+margin-bottom: 0;
+}
+div.header nav ul {
+text-align: left;
+}
+div.header nav ul a {
+color: #666666;
+}
+div.header nav ul a:hover {
+color: #333333;
+}
+div.footer {
+background-color: transparent;
+}
+div.footer .container {
+flex-direction: row;
+}
+div.footer .container a {
+margin-left: 3px;
+margin-right: 3px;
+color: #666666;
+}
+div.footer .container a:hover {
+color: #333333;
+}
+div.footer .container a .icon {
+font-size: 18px;
+}
+div.footer .container a .icon.larger {
+font-size: 20px;
+}
+div.main .content .front-matter .date,
+div.main .content .front-matter .author,
+div.main .content .front-matter .tags,
+div.main .content .front-matter .word-count,
+div.main .content .front-matter .middot:before {
+display: initial;
+}
+div.main .container.f04 {
+-webkit-justify-content: flex-start;
+-moz-justify-content: flex-start;
+-ms-justify-content: flex-start;
+justify-content: flex-start;
+}
+div.main .container.f04 .content {
+-webkit-align-items: flex-start;
+-moz-align-items: flex-start;
+-ms-align-items: flex-start;
+align-items: flex-start;
+}
+div.main .container.f04 .content .num {
+margin: 0 0 10px 0;
+font-size: 32px;
+}
+div.main .container.f04 .content .detail {
+margin-bottom: 30px;
+}
+.container {
+padding: 0 30px;
+}
+div.header {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.footer {
+padding-top: 60px;
+padding-bottom: 60px;
+}
+div.main {
+padding-top: 0;
+}
+div.main .content {
+  
+  font-size: 16px;
+  
+}
+div.main .container .content .post-item {
+display: flex;
+list-style: none;
+padding-left: 1.5em;
+}
+div.main .container .content .post-item .meta {
+display: block;
+}
+div.main .content .markdown blockquote {
+padding-right: 5rem;
+padding-left: 1.25rem;
+}
+div.main .content .navigation {
+-webkit-flex-direction: row;
+-moz-flex-direction: row;
+-ms-flex-direction: row;
+flex-direction: row;
+}
+div.main .content .navigation div {
+margin-top: 0em;
+}
+
+</style>
+<style media="(min-width: 769px)">
+  div.main .content .markdown figure {
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown img {
+max-width: 110%;
+width: 110%;
+margin-left: -4%;
+}
+div.main .content .markdown pre {
+width: 110%;
+margin-left: -4%;
+}
+
+</style>
+
+<noscript>
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700" rel="stylesheet">
+</noscript>
+
+
+  <style type="text/css" media="screen">
+    .hljs{display:block;background:white;padding:0.5em;color:#333333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-string,.hljs-variable,.hljs-template-variable,.hljs-strong,.hljs-emphasis,.hljs-quote{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-literal,.hljs-symbol,.hljs-bullet,.hljs-attribute{color:#0086b3}.hljs-section,.hljs-name{color:#63a35c}.hljs-tag{color:#333333}.hljs-title,.hljs-attr,.hljs-selector-id,.hljs-selector-class,.hljs-selector-attr,.hljs-selector-pseudo{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    .progressive{overflow:hidden;position:relative;background:#efefef}.progressive__img{width:100%;height:100%;transform:translateZ(0)}.progressive--not-loaded{filter:blur(30px)}.progressive--is-loaded{filter:blur(20px);animation:a .5s both}@keyframes a{0%{filter:blur(20px)}to{filter:blur(0)}}
+
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    /*!
+ * Social Share Kit v1.0.7 (http://socialsharekit.com)
+ * Copyright 2015 Social Share Kit / Kaspars Sprogis.
+ * Licensed under Creative Commons Attribution-NonCommercial 3.0 license:
+ * https://github.com/darklow/social-share-kit/blob/master/LICENSE
+ * ---
+ */@font-face{font-family:'social-share-kit';src:url('/fonts/social-share-kit.eot');src:url('/fonts/social-share-kit.eot?#iefix') format('embedded-opentype'),url('/fonts/social-share-kit.woff') format('woff'),url('/fonts/social-share-kit.ttf') format('truetype'),url('/fonts/social-share-kit.svg#social-share-kit') format('svg');font-weight:normal;font-style:normal}.ssk:before{display:inline-block;font-family:"social-share-kit" !important;font-style:normal !important;font-weight:normal !important;font-variant:normal !important;text-transform:none !important;speak:none;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.ssk-facebook:before{content:"a";text-indent:4px;margin-right:-4px}.ssk-twitter:before{content:"b"}.ssk-google-plus:before{content:"v"}.ssk-google-plus-old:before{content:"c"}.ssk-email:before{content:"d";top:-1px;position:relative}.ssk-pinterest:before{content:"e"}.ssk-tumblr:before{content:"f"}.ssk-linkedin:before{content:"g"}.ssk-github:before{content:"h"}.ssk-vk:before{content:"i"}.ssk-instagram:before{content:"j"}.ssk-amazon:before{content:"k"}.ssk-skype:before{content:"s"}.ssk-youtube:before{content:"x"}.ssk-vimeo:before{content:"u"}.ssk-ebay:before{content:"p"}.ssk-apple:before{content:"l"}.ssk-behance:before{content:"q"}.ssk-dribble:before{content:"n"}.ssk-android:before{content:"o"}.ssk-whatsapp:before{content:"m"}.ssk-reddit:before{content:"r"}.ssk-reddit2:before{content:"t"}.ssk-link:before{content:"w"}.ssk{background-color:#757575;color:white;display:inline-block;font-size:22px;line-height:1px;margin-right:2px;margin-bottom:2px;padding:7px;text-align:center;text-decoration:none;transition:background-color .1s;-webkit-transition:background-color .1s;-moz-transition:background-color .1s;-ms-transition:background-color .1s;-o-transition:background-color .1s}.ssk:before,.ssk .glyphicon,.ssk .fa{position:relative;font-size:22px;top:0;vertical-align:middle}.ssk.ssk-xs,.ssk-xs>.ssk{padding:4px}.ssk.ssk-xs:before,.ssk-xs>.ssk:before,.ssk.ssk-xs .glyphicon,.ssk-xs>.ssk .glyphicon,.ssk.ssk-xs .fa,.ssk-xs>.ssk .fa{font-size:15px}.ssk.ssk-sm,.ssk-sm>.ssk{padding:5px}.ssk.ssk-sm:before,.ssk-sm>.ssk:before,.ssk.ssk-sm .glyphicon,.ssk-sm>.ssk .glyphicon,.ssk.ssk-sm .fa,.ssk-sm>.ssk .fa{font-size:20px}.ssk.ssk-lg,.ssk-lg>.ssk{padding:9px}.ssk.ssk-lg:before,.ssk-lg>.ssk:before,.ssk.ssk-lg .glyphicon,.ssk-lg>.ssk .glyphicon,.ssk.ssk-lg .fa,.ssk-lg>.ssk .fa{font-size:28px}.ssk:last-child{margin-right:0}.ssk:hover{background-color:#424242}.ssk:hover,.ssk:focus{color:#fff;text-decoration:none}.ssk.ssk-round,.ssk-round .ssk{border-radius:50%}.ssk.ssk-round:before,.ssk-round .ssk:before{text-indent:0;margin-right:0}.ssk.ssk-rounded,.ssk-rounded .ssk{border-radius:15%}.ssk.ssk-icon{color:#757575;padding:2px;font-size:24px}.ssk.ssk-icon,.ssk.ssk-icon:hover{background-color:transparent}.ssk.ssk-icon:hover{color:#424242}.ssk.ssk-icon.ssk-xs,.ssk-xs>.ssk.ssk-icon{font-size:16px}.ssk.ssk-icon.ssk-sm,.ssk-sm>.ssk.ssk-icon{font-size:20px}.ssk.ssk-icon.ssk-lg,.ssk-lg>.ssk.ssk-icon{font-size:28px}.ssk.ssk-text{overflow:hidden;font-size:17px;line-height:normal;padding-right:10px}.ssk.ssk-text:before,.ssk.ssk-text .glyphicon,.ssk.ssk-text .fa{margin:-7px 10px -7px -7px;padding:7px;background-color:rgba(0,0,0,0.15);vertical-align:bottom;text-indent:0}.ssk-block .ssk.ssk-text{display:block;margin-right:0;text-align:left}.ssk.ssk-text.ssk-xs,.ssk-xs>.ssk.ssk-text{font-size:12px;padding-right:6px}.ssk.ssk-text.ssk-xs:before,.ssk-xs>.ssk.ssk-text:before,.ssk.ssk-text.ssk-xs .glyphicon,.ssk-xs>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-xs .fa,.ssk-xs>.ssk.ssk-text .fa{margin:-4px 6px -4px -4px;padding:4px}.ssk.ssk-text.ssk-sm,.ssk-sm>.ssk.ssk-text{font-size:16px;padding-right:7px}.ssk.ssk-text.ssk-sm:before,.ssk-sm>.ssk.ssk-text:before,.ssk.ssk-text.ssk-sm .glyphicon,.ssk-sm>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-sm .fa,.ssk-sm>.ssk.ssk-text .fa{margin:-5px 7px -5px -5px;padding:5px}.ssk.ssk-text.ssk-lg,.ssk-lg>.ssk.ssk-text{font-size:22px;padding-right:13px}.ssk.ssk-text.ssk-lg:before,.ssk-lg>.ssk.ssk-text:before,.ssk.ssk-text.ssk-lg .glyphicon,.ssk-lg>.ssk.ssk-text .glyphicon,.ssk.ssk-text.ssk-lg .fa,.ssk-lg>.ssk.ssk-text .fa{margin:-9px 13px -9px -9px;padding:9px}.ssk-group,.ssk-sticky{font-size:0}.ssk-sticky{top:0;position:fixed;z-index:2000}.ssk-sticky .ssk{transition:padding .1s ease-out;-webkit-transition:padding .1s ease-out;-moz-transition:padding .1s ease-out;-ms-transition:padding .1s ease-out;-o-transition:padding .1s ease-out;margin:0}@media (min-width:768px){.ssk-sticky.ssk-left .ssk,.ssk-sticky.ssk-right .ssk{display:block;clear:both}.ssk-sticky.ssk-left.ssk-center,.ssk-sticky.ssk-right.ssk-center{top:50%;transform:translateY(-50%);-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%)}.ssk-sticky.ssk-left{left:0}.ssk-sticky.ssk-left .ssk{float:left}.ssk-sticky.ssk-left .ssk:hover{padding-left:15px}.ssk-sticky.ssk-right{right:0}.ssk-sticky.ssk-right .ssk{float:right}.ssk-sticky.ssk-right .ssk:hover{padding-right:15px}}.ssk-sticky.ssk-bottom{font-size:0;top:auto;bottom:0}.ssk-sticky.ssk-bottom.ssk-center{left:50%;right:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-moz-transform:translateX(-50%);-ms-transform:translateX(-50%);-o-transform:translateX(-50%)}.ssk-sticky.ssk-bottom .ssk{vertical-align:bottom}.ssk-sticky.ssk-bottom .ssk:hover{padding-bottom:15px}.ssk-sticky.ssk-round.ssk-xs .ssk:hover{padding:8px}.ssk-sticky.ssk-round.ssk-sm .ssk:hover{padding:9px}.ssk-sticky.ssk-round .ssk:hover{padding:11px}.ssk-sticky.ssk-round.ssk-lg .ssk:hover{padding:13px}@media (max-width:767px){.ssk-sticky{left:0;right:0;bottom:0;top:auto;width:100%;display:flex !important;flex-direction:row;flex-wrap:nowrap}.ssk-sticky.ssk-sticky-hide-xs{display:none !important}.ssk-sticky .ssk{flex:1;width:auto}.ssk-sticky .ssk .ssk-num{display:none}}.ssk-count{padding-top:20px}.ssk-count .ssk{position:relative}.ssk-count .ssk-num{border-radius:4px;color:#8f8f8f;background-color:rgba(50,50,50,0.03);display:block;font-size:12px;left:0;line-height:20px;position:absolute;right:0;text-align:center;top:-20px}@media (min-width:768px){.ssk-count.ssk-sticky{padding-top:0}.ssk-count.ssk-sticky.ssk-left .ssk-num,.ssk-count.ssk-sticky.ssk-right .ssk-num{top:20%;background-color:transparent}.ssk-count.ssk-sticky.ssk-left .ssk-num{left:100%;margin-left:5px}.ssk-count.ssk-sticky.ssk-right .ssk-num{right:115%;margin-left:-100%;text-align:right}}.ssk-facebook{background-color:#3B5998}.ssk-grayscale>.ssk-facebook{background-color:#757575}.ssk-facebook:hover{background-color:#2d4373}.ssk-facebook:hover{background-color:#2d4373}.ssk-grayscale>.ssk-facebook:hover{background-color:#3B5998}.ssk-facebook.ssk-icon{color:#3B5998}.ssk-facebook.ssk-icon:hover{color:#2d4373}.ssk-facebook.ssk-icon:before{text-indent:0;margin-right:0}.ssk-twitter{background-color:#1DA1F2}.ssk-grayscale>.ssk-twitter{background-color:#757575}.ssk-twitter:hover{background-color:#0c85d0}.ssk-twitter:hover{background-color:#0c85d0}.ssk-grayscale>.ssk-twitter:hover{background-color:#1DA1F2}.ssk-twitter.ssk-icon{color:#1DA1F2}.ssk-twitter.ssk-icon:hover{color:#0c85d0}.ssk-google-plus{background-color:#EA4335}.ssk-grayscale>.ssk-google-plus{background-color:#757575}.ssk-google-plus:hover{background-color:#d62516}.ssk-google-plus:hover{background-color:#d62516}.ssk-grayscale>.ssk-google-plus:hover{background-color:#EA4335}.ssk-google-plus.ssk-icon{color:#EA4335}.ssk-google-plus.ssk-icon:hover{color:#d62516}.ssk-pinterest{background-color:#BD081C}.ssk-grayscale>.ssk-pinterest{background-color:#757575}.ssk-pinterest:hover{background-color:#8c0615}.ssk-pinterest:hover{background-color:#8c0615}.ssk-grayscale>.ssk-pinterest:hover{background-color:#BD081C}.ssk-pinterest.ssk-icon{color:#BD081C}.ssk-pinterest.ssk-icon:hover{color:#8c0615}.ssk-tumblr{background-color:#395773}.ssk-grayscale>.ssk-tumblr{background-color:#757575}.ssk-tumblr:hover{background-color:#283d51}.ssk-tumblr:hover{background-color:#283d51}.ssk-grayscale>.ssk-tumblr:hover{background-color:#395773}.ssk-tumblr.ssk-icon{color:#395773}.ssk-tumblr.ssk-icon:hover{color:#283d51}.ssk-email{background-color:#757575}.ssk-grayscale>.ssk-email{background-color:#757575}.ssk-email:hover{background-color:#5b5b5b}.ssk-email:hover{background-color:#5b5b5b}.ssk-grayscale>.ssk-email:hover{background-color:#757575}.ssk-grayscale>.ssk-email:hover{background-color:#5b5b5b}.ssk-email.ssk-icon{color:#757575}.ssk-email.ssk-icon:hover{color:#5b5b5b}.ssk-vk{background-color:#54769a}.ssk-grayscale>.ssk-vk{background-color:#757575}.ssk-vk:hover{background-color:#425d79}.ssk-vk:hover{background-color:#425d79}.ssk-grayscale>.ssk-vk:hover{background-color:#54769a}.ssk-vk.ssk-icon{color:#54769a}.ssk-vk.ssk-icon:hover{color:#425d79}.ssk-linkedin{background-color:#1c87bd}.ssk-grayscale>.ssk-linkedin{background-color:#757575}.ssk-linkedin:hover{background-color:#156791}.ssk-linkedin:hover{background-color:#156791}.ssk-grayscale>.ssk-linkedin:hover{background-color:#1c87bd}.ssk-linkedin.ssk-icon{color:#1c87bd}.ssk-linkedin.ssk-icon:hover{color:#156791}.ssk-whatsapp{background-color:#34AF23}.ssk-grayscale>.ssk-whatsapp{background-color:#757575}.ssk-whatsapp:hover{background-color:#27851a}.ssk-whatsapp:hover{background-color:#27851a}.ssk-grayscale>.ssk-whatsapp:hover{background-color:#34AF23}.ssk-whatsapp.ssk-icon{color:#34AF23}.ssk-whatsapp.ssk-icon:hover{color:#27851a}.ssk-reddit{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit{background-color:#757575}.ssk-reddit:hover{background-color:#3a80c1}.ssk-reddit:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit:hover{background-color:#5f99cf}.ssk-reddit.ssk-icon{color:#5f99cf}.ssk-reddit.ssk-icon:hover{color:#3a80c1}.ssk-reddit2{background-color:#5f99cf}.ssk-grayscale>.ssk-reddit2{background-color:#757575}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-reddit2:hover{background-color:#3a80c1}.ssk-grayscale>.ssk-reddit2:hover{background-color:#5f99cf}.ssk-reddit2.ssk-icon{color:#5f99cf}.ssk-reddit2.ssk-icon:hover{color:#3a80c1}.ssk-turquoise{background-color:#1abc9c}.ssk-turquoise:hover{background-color:#148f77}.ssk-emerald{background-color:#2ecc71}.ssk-emerald:hover{background-color:#25a25a}.ssk-peter-river{background-color:#3498db}.ssk-peter-river:hover{background-color:#217dbb}.ssk-belize-hole{background-color:#2980b9}.ssk-belize-hole:hover{background-color:#20638f}.ssk-amethyst{background-color:#9b59b6}.ssk-amethyst:hover{background-color:#804399}.ssk-wisteria{background-color:#8e44ad}.ssk-wisteria:hover{background-color:#703688}.ssk-wet-asphalt{background-color:#34495e}.ssk-wet-asphalt:hover{background-color:#222f3d}.ssk-midnight-blue{background-color:#2c3e50}.ssk-midnight-blue:hover{background-color:#1a242f}.ssk-green-sea{background-color:#16a085}.ssk-green-sea:hover{background-color:#107360}.ssk-nephritis{background-color:#27ae60}.ssk-nephritis:hover{background-color:#1e8449}.ssk-sunflower{background-color:#f1c40f}.ssk-sunflower:hover{background-color:#c29d0b}.ssk-orange{background-color:#f39c12}.ssk-orange:hover{background-color:#c87f0a}.ssk-carrot{background-color:#e67e22}.ssk-carrot:hover{background-color:#bf6516}.ssk-pumpkin{background-color:#d35400}.ssk-pumpkin:hover{background-color:#a04000}.ssk-alizarin{background-color:#e74c3c}.ssk-alizarin:hover{background-color:#d62c1a}.ssk-pomegranate{background-color:#c0392b}.ssk-pomegranate:hover{background-color:#962d22}.ssk-clouds{background-color:#cfd9db}.ssk-clouds:hover{background-color:#b1c2c6}.ssk-concrete{background-color:#95a5a6}.ssk-concrete:hover{background-color:#798d8f}.ssk-silver{background-color:#bdc3c7}.ssk-silver:hover{background-color:#a1aab0}.ssk-asbestos{background-color:#7f8c8d}.ssk-asbestos:hover{background-color:#667273}.ssk-dark-gray{background-color:#555}.ssk-dark-gray:hover{background-color:#3b3b3b}.ssk-black{background-color:#333}.ssk-black:hover{background-color:#1a1a1a}
+  </style>
+
+
+
+  <style type="text/css" media="screen">
+    a {
+    color: #527fc1f;
+}
+
+a:hover {
+    color: #1a3152;
+}
+
+div.main .content .markdown, div.header .name, div.header nav ul a:hover {
+    color: #181d2a;
+}
+
+div.header nav ul a {
+    color: #6a7a8b;
+}
+
+div.main .content .markdown code {
+    background-color: #f9f9f9;
+    color: #527fc1f;
+}
+
+div.main .content .markdown pre, div.main .content .markdown pre code {
+    background-color: #F6F8FA;
+    color: #87a5d2;
+}
+
+.hljs, .hljs-subst, .hljs-variable {
+    color: #87a5d2;
+}
+
+.hljs-type {
+    color: #97d28b;
+}
+
+.hljs-quote {
+    color: #ffcb8d;
+}
+
+.hljs-string, .hljs-number, .hljs-selector-id, .hljs-selector-class, .hljs-template-tag, .hljs-deletion {
+    color: #96c2d7;
+}
+
+.hljs-comment {
+    color: #6a7a8b;
+}
+
+.hljs-regexp, .hljs-symbol, .hljs-template-variable {
+    color: #ffcb8d;
+}
+
+.hljs-keyword, .hljs-attribute, .hljs-meta-keyword, .hljs-doctag, .hljs-name {
+    color: #97d28b;
+}
+
+.hljs-link, .hljs-selector-attr, .hljs-selector-pseudo, .hljs-title, .hljs-section {
+    color: #ff8e91;
+}
+
+.hljs-built_in, .hljs-bullet, .hljs-code, .hljs-addition {
+    color: #97d28b;
+}
+
+.ssk {
+    background-color: #6a7a8b;
+}
+
+  </style>
+
+
+
+
+
+<link rel="shortcut icon"
+
+    href="/img/Enric_Escorsa.png"
+
+>
+
+
+
+
+</head>
+
+
+<body>
+
+
+<div class="header column">
+
+    <div class="container">
+        
+        <a href="/"><img class="logo" src="/img/logo.png" alt="logo"></a>
+        
+        <div class="content">
+            <a href="/"><div class="name"><h1>Enric Escorsa O&#39;Callaghan</h1></div></a>
+            <nav>
+                <ul>
+                    
+                            <li><a href="/blog/">Blog</a></li>
+                    
+                    
+                        
+                            
+                        
+                    
+                        
+                            
+                            <li><a href="/projects">projects</a></li>
+                            
+                        
+                    
+                    
+                        
+                            <li><a href="/about/">About</a></li>
+                        
+                    
+                        
+                    
+                        
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
+    <div class="container">
+        <div class="content">
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    mapes
+    
+
+</div>
+
+                </div>
+                <div class="meta">
+                    <div class="date" title="Tue Mar 12 2019 00:00:00 UTC">Mar 12, 2019</div>
+                    
+                        
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
+                        
+                    
+                    
+                    <div class="reading-time middot">10 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/visualization">Visualization</a> </li>
+                          
+                            <li class="middot"><a href="/tags/maps">maps</a> </li>
+                          
+                            <li class="middot"><a href="/tags/choropleth">choropleth</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>Vull mostrar aquí el procés d’elaborar un mapa amb dades recollides de fonts obertes. Normalment es tracta d’obtenir primer els contorns dels territoris que volem representar i després poblar el mapa amb les dades que ens interessa mostrar-hi. Fem-ho.</p>
+<div id="obtenir-les-formes-dels-territoris" class="section level2">
+<h2>Obtenir les formes dels territoris</h2>
+<p>El primer pas és obtenir les formes ( <em>shapefiles</em> ) de països i límits territorials.</p>
+<div id="mapes-de-tots-els-països-del-món" class="section level3">
+<h3>Mapes de tots els països del món</h3>
+<p>Un dels llocs on els podem obtenim és <a href="https://gadm.org">GADM</a>, una pàgina que suministra dades espaials de tots els paísos del món.</p>
+<pre class="r"><code>#primer carreguem els paquets que necessitarem
+library(tidyverse)
+library(&quot;sp&quot;)
+library(&quot;sf&quot;)
+library(&quot;RColorBrewer&quot;)
+library(&quot;tidyverse&quot;)
+
+#anem a la web de GADM https://gadm.org/download_country_v3.html, busquem per país i ens descarreguem les dades (ens donen vàries opcions de format de dades; en aquest cas triem Level 2 (nivell provincial)) 
+
+#com que les dades estan en format .rds les podem llegir amb readRDS
+espanya &lt;- readRDS(&quot;gadm36_ESP_2_sp.rds&quot;)
+
+#i representem el mapa amb un plot simple
+#faríem: plot(espanya)
+
+#o bé podem imprimir-lo en color
+plot(espanya, col = &quot;brown&quot;, border = &quot;lightgrey&quot;)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Les dades descarregades contenen una taula amb vàries files -52 en aquest cas- i vàries columnes tals com NAME_0 (país), NAME_1 (comunitats) i NAME_2 (provincies)</p>
+<p>Imaginem que volguéssim representar, només la península, sense les illes
+(faríem un subset filtrant les comunitats -NAME_1- insulars):</p>
+<pre class="r"><code>espanya_peninsular &lt;- subset(espanya, !espanya$NAME_1  %in% c(&quot;Islas Canarias&quot;, &quot;Islas Baleares&quot;))
+plot(espanya_peninsular, col = &quot;brown&quot;, border = &quot;lightgrey&quot;)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Tot i que podria ser que volguéssim representar només les Canàries:</p>
+<pre class="r"><code>canarias &lt;- subset(espanya, espanya$NAME_1  %in% c(&quot;Islas Canarias&quot;))
+plot(canarias)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>O Catalunya amb les seves provincies:</p>
+<pre class="r"><code>provincies_catalunya &lt;- espanya[espanya$NAME_1==&quot;Cataluña&quot;,]
+plot(provincies_catalunya)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Fent servir <em>ggplot2</em>, l’eina de visualització que ens dona més opcions, ho podríem visualitzar així:</p>
+<pre class="r"><code>#visualitzar-lo amb ggplo2
+library(&quot;ggplot2&quot;)
+ggplot()+
+  geom_polygon(data = provincies_catalunya, aes(x = long, y = lat, group = group)) + coord_fixed() + theme_minimal() #no vull llegenda</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>#hem de posar coord_fixed perquè sino se&#39;ns distorsiona la figura</code></pre>
+<p>En color millor:</p>
+<pre class="r"><code>ggplot(provincies_catalunya) +
+  theme_minimal() +
+  geom_polygon( aes(x = long, y = lat, group = group),
+                color = &quot;lightgrey&quot;,
+                fill = &quot;#EF9B0F&quot;)+ coord_fixed() + theme(axis.line = element_blank(),axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank()) # amb aquests arguments de theme elimino coordenades i eixos </code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Si ho volguéssim tenir per comarques hauriem de descarregar-nos l’arxiu de nivell 3:</p>
+<pre class="r"><code>espanya_comarcal &lt;- readRDS(&quot;gadm36_ESP_3_sp.rds&quot;)
+
+comarques_catalunya &lt;- espanya_comarcal[espanya_comarcal$NAME_1==&quot;Cataluña&quot;,]
+plot(comarques_catalunya)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>i el nivell 4 per a termes municipals:</p>
+<pre class="r"><code>espanya_municipal &lt;- readRDS(&quot;gadm36_ESP_4_sp.rds&quot;)
+
+termes_municipals_catalunya &lt;- espanya_municipal[espanya_municipal$NAME_1==&quot;Cataluña&quot;,]
+plot(termes_municipals_catalunya)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Però quan llegim la info que contenen els mapes veiem que en el mapa comarcal hi falta el nom de les comarques (veig uns codis “n.a.()” a la variable NAME_3 però no sé trobar a què corresponen…):</p>
+<pre class="r"><code>head(comarques_catalunya@data)</code></pre>
+<pre><code>##     GID_0 NAME_0   GID_1   NAME_1 NL_NAME_1     GID_2    NAME_2 NL_NAME_2
+## 313   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+## 317   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+## 318   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+## 319   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+## 320   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+## 321   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
+##           GID_3     NAME_3 VARNAME_3 NL_NAME_3  TYPE_3 ENGTYPE_3 CC_3 HASC_3
+## 313 ESP.6.1.1_1 n.a. (162)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
+## 317 ESP.6.1.2_1 n.a. (164)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
+## 318 ESP.6.1.3_1  n.a. (29)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
+## 319 ESP.6.1.4_1  n.a. (30)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
+## 320 ESP.6.1.5_1  n.a. (31)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
+## 321 ESP.6.1.6_1  n.a. (32)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;</code></pre>
+<p>En el de municipis sí que hi surten els noms dels municipis (NAME_4), però hi segueixen mancant els de les comarques…</p>
+<pre class="r"><code>head(termes_municipals_catalunya@data)</code></pre>
+<pre><code>##        GID_0 NAME_0   GID_1   NAME_1     GID_2    NAME_2       GID_3     NAME_3
+## 107556   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.1_1 n.a. (162)
+## 108250   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.2_1 n.a. (164)
+## 111341   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
+## 110872   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
+## 110605   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
+## 110873   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
+##                GID_4         NAME_4      VARNAME_4       TYPE_4    ENGTYPE_4
+## 107556 ESP.6.1.1.1_1           Bagà           Bagá Municipality Municipality
+## 108250 ESP.6.1.2.1_1      Montmajor           &lt;NA&gt; Municipality Municipality
+## 111341 ESP.6.1.3.1_1         Alella           &lt;NA&gt; Municipality Municipality
+## 110872 ESP.6.1.3.2_1  Arenys de Mar  Arénys de Mar Municipality Municipality
+## 110605 ESP.6.1.3.3_1 Arenys de Munt Arénys de Munt Municipality Municipality
+## 110873 ESP.6.1.3.4_1      Argentona           &lt;NA&gt; Municipality Municipality
+##        CC_4
+## 107556 &lt;NA&gt;
+## 108250 &lt;NA&gt;
+## 111341 &lt;NA&gt;
+## 110872 &lt;NA&gt;
+## 110605 &lt;NA&gt;
+## 110873 &lt;NA&gt;</code></pre>
+<p>mmm… Toca buscar altres opcions.</p>
+</div>
+<div id="mapa-de-municipis-despanya-desri" class="section level3">
+<h3>Mapa de municipis d’Espanya d’ESRI</h3>
+<p>Al portal de dades obertes de la plataforma GIS ESRI s’hi poden trobar les dades d’Espanya a nivell municipal: <a href="https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0" class="uri">https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0</a></p>
+<pre class="r"><code>#em descarrego les shapefiles i les llegeixo en aquest cas amb el paquet:
+library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
+#llegeixo
+municipis_espanya &lt;- readOGR(&quot;Municipios_IGN.shp&quot;)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;C:\Users\Usuario\Desktop\PROJECTES_R\blogdown_enric\content\blog\Municipios_IGN.shp&quot;, layer: &quot;Municipios_IGN&quot;
+## with 8205 features
+## It has 10 fields
+## Integer64 fields read as strings:  OBJECTID</code></pre>
+<pre class="r"><code>#mirem les dades
+head(municipis_espanya@data)</code></pre>
+<pre><code>##   OBJECTID                INSPIREID     NATCODE      NAMEUNIT CODNUT1 CODNUT2
+## 0     1001 ES.IGN.SIGLIM34153131164 34153131164       MÃ©lida     ES2    ES22
+## 1     1002 ES.IGN.SIGLIM34153131165 34153131165      Mendavia     ES2    ES22
+## 2     1003 ES.IGN.SIGLIM34153131166 34153131166       Mendaza     ES2    ES22
+## 3     1004 ES.IGN.SIGLIM34153131167 34153131167  MendigorrÃ­a     ES2    ES22
+## 4     1005 ES.IGN.SIGLIM34153131168 34153131168      Metauten     ES2    ES22
+## 5     1006 ES.IGN.SIGLIM34081919306 34081919306 Valderrebollo     ES4    ES42
+##   CODNUT3 CODIGOINE Shape__Are Shape__Len
+## 0   ES220     31164   47824938   44551.30
+## 1   ES220     31165  144216734   59482.88
+## 2   ES220     31166   60946410   51151.26
+## 3   ES220     31167   72847464   42575.78
+## 4   ES220     31168   41810929   30388.76
+## 5   ES424     19306   25533812   25083.49</code></pre>
+<p>Els codis NUT fan referència a les Unitats Territorials Estadístiques d’Espanya (veure: <a href="https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a" class="uri">https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a</a>)</p>
+<p>D’aquí em podría quedar només amb el territori de Catalunya (ES51).</p>
+</div>
+<div id="mapes-muc-del-departament-de-territori-i-sostenibilitat" class="section level3">
+<h3>Mapes MUC del Departament de Territori i Sostenibilitat</h3>
+<p>Una altra opció són les shapefiles del Mapa Urbanístic de Catalunya (MUC) que el Departament de Territori i Sostenibilitat de la Gencat posa a disposició aquí: <a href="http://territori.gencat.cat/ca/06_territori_i_urbanisme/observatori_territori/mapa_urbanistic_de_catalunya/serveis_web_i_dades_obertes/descarrega-de-dades/format-shapefile-shp/" class="uri">http://territori.gencat.cat/ca/06_territori_i_urbanisme/observatori_territori/mapa_urbanistic_de_catalunya/serveis_web_i_dades_obertes/descarrega-de-dades/format-shapefile-shp/</a></p>
+<p>A veure què hi tenim:</p>
+<pre class="r"><code>library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
+#llegeixo
+municipis_MUC&lt;- readOGR(&quot;MUC_TM.shp&quot;)</code></pre>
+<pre><code>## OGR data source with driver: ESRI Shapefile 
+## Source: &quot;C:\Users\Usuario\Desktop\PROJECTES_R\blogdown_enric\content\blog\MUC_TM.shp&quot;, layer: &quot;MUC_TM&quot;
+## with 1890 features
+## It has 3 fields
+## Integer64 fields read as strings:  ID</code></pre>
+<pre class="r"><code>plot(municipis_MUC)</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Aquí sí que hi ha el nom del municipi, l’ID i el CODI_INE:</p>
+<pre class="r"><code>head(municipis_MUC@data)</code></pre>
+<pre><code>##      ID CODI_INE                             MUNICIPI
+## 0 58906    17160                Sant Feliu de Guíxols
+## 1 54960    17182              Santa Llogaia d&#39;Àlguema
+## 2 58907    17160                Sant Feliu de Guíxols
+## 3 54962    43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant
+## 4 55220    08119                             Masquefa
+## 5 55222    08128                 Monistrol de Calders</code></pre>
+</div>
+</div>
+<div id="posar-les-dades-que-volem-representar-al-mapa" class="section level2">
+<h2>Posar les dades que volem representar al mapa</h2>
+<p>Provarem de representar-hi el preu mitjà del lloguer d’habitatges als diferents municipis de Catalunya. Les dades es troben disponibles al <a href="https://analisi.transparenciacatalunya.cat/Habitatge/Preu-mitj-del-lloguer-d-habitatges-per-municipi/qww9-bvhh/data">portal de transparència de Gencat</a></p>
+<p>Per accedir-hi, me les podria descarregar des del web i llegir-les amb R o també puc accedir-hi directament via l’API de Gencat. Així ho faig (el primer cop, m’he hagut de registrar abans al portal de desenvolupadors: <a href="https://dev.socrata.com/" class="uri">https://dev.socrata.com/</a> i obtenir unes credencials d’accés que guardo al meu entorn local).</p>
+<pre class="r"><code>library(&quot;RSocrata&quot;) #paquet que permet accedir al portals de dades obertes Socrata
+
+library(usethis) #paquet que et permet guardar contrasenyes localment al environment i no exposarles
+#edit_r_environ() per editar l&#39;arxiu de l&#39;entorn on guardes les teves credencials
+
+
+Sys.getenv(&quot;meu_app_token&quot;)
+Sys.getenv(&quot;meu_email&quot;)
+Sys.getenv(&quot;meu_password_gencat&quot;)
+
+dadeslloguer &lt;- read.socrata(
+  &quot;https://analisi.transparenciacatalunya.cat/Habitatge/Preu-mitj-del-lloguer-d-habitatges-per-municipi/qww9-bvhh/data&quot;)
+
+head(dadeslloguer)</code></pre>
+<p>La variable <em>renda</em> fa referència a l’import del lloguer mensual mitjà.
+Agafem les dades del darrer any complert (2018).</p>
+<pre class="r"><code>dadeslloguer2018 &lt;- dadeslloguer %&gt;% filter(any==&quot;2018&quot;, periode ==&quot;gener-desembre&quot;)
+head(dadeslloguer2018)</code></pre>
+<pre><code>##   ambit_territorial codi_territorial      nom_territori  any        periode
+## 1          Municipi            25001 Abella de la Conca 2018 gener-desembre
+## 2          Municipi             8001             Abrera 2018 gener-desembre
+## 3          Municipi            25002               Àger 2018 gener-desembre
+## 4          Municipi            25003           Agramunt 2018 gener-desembre
+## 5          Municipi             8002 Aguilar de Segarra 2018 gener-desembre
+## 6          Municipi            17001           Agullana 2018 gener-desembre
+##   habitatges    renda
+## 1          2       NA
+## 2        165 687.2488
+## 3          5       NA
+## 4         80 328.0719
+## 5          4       NA
+## 6         18 462.7778</code></pre>
+<p>Quan volem representar dades contínues quantitatives per regions (en aquest cas municipis), sovint un tipus de mapa interessant és el que es coneix com a <em>Choropleth</em>; es tracta d’usar un gradient cromàtic per representar la major o menor densitat d’una variable en cada àrea.</p>
+<div id="unir-el-mapa-amb-les-dades" class="section level3">
+<h3>unir el mapa amb les dades</h3>
+<p>Unim ara les dades dels lloguers al nostre mapa de municipis:</p>
+<pre class="r"><code>#Primer poso com a columna la id de les dades municipals, per no perdre aquesta id original
+municipis_MUC@data$id &lt;- rownames(municipis_MUC@data)
+
+#per unir-los puc fer servir l&#39;identificador CODI INE
+#però atenció! veig que les xifres del CODI_INE de la taula del mapa són factors i alguns d&#39;ells porten un 0 al davant, mentre que el codi_territorial de les dades de lloguers és mumèric (integer, sense 0 al davant), per tant canvio a numèric el del mapa per a que siguin iguals
+
+municipis_MUC@data$CODI_INE &lt;- as.numeric(as.character(municipis_MUC@data$CODI_INE))
+head(municipis_MUC@data)</code></pre>
+<pre><code>##      ID CODI_INE                             MUNICIPI id
+## 0 58906    17160                Sant Feliu de Guíxols  0
+## 1 54960    17182              Santa Llogaia d&#39;Àlguema  1
+## 2 58907    17160                Sant Feliu de Guíxols  2
+## 3 54962    43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant  3
+## 4 55220     8119                             Masquefa  4
+## 5 55222     8128                 Monistrol de Calders  5</code></pre>
+<pre class="r"><code>#i ara canvio el nom de CODI_INE per a que coincideixi amb el de la taula de dades que vull representar 
+
+municipis_MUC@data &lt;- municipis_MUC@data %&gt;% rename(codi_territorial=CODI_INE)
+
+#uneixo les dues
+lloguersmunicipis2018 &lt;- municipis_MUC@data %&gt;% left_join(dadeslloguer2018, by = &quot;codi_territorial&quot;)
+head(lloguersmunicipis2018)</code></pre>
+<pre><code>##      ID codi_territorial                             MUNICIPI id
+## 1 58906            17160                Sant Feliu de Guíxols  0
+## 2 54960            17182              Santa Llogaia d&#39;Àlguema  1
+## 3 58907            17160                Sant Feliu de Guíxols  2
+## 4 54962            43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant  3
+## 5 55220             8119                             Masquefa  4
+## 6 55222             8128                 Monistrol de Calders  5
+##   ambit_territorial                        nom_territori  any        periode
+## 1          Municipi                Sant Feliu de Guíxols 2018 gener-desembre
+## 2          Municipi              Santa Llogaia d&#39;Àlguema 2018 gener-desembre
+## 3          Municipi                Sant Feliu de Guíxols 2018 gener-desembre
+## 4          Municipi Vandellòs i l&#39;Hospitalet de l&#39;Infant 2018 gener-desembre
+## 5          Municipi                             Masquefa 2018 gener-desembre
+## 6          Municipi                 Monistrol de Calders 2018 gener-desembre
+##   habitatges    renda
+## 1        460 535.2344
+## 2          4       NA
+## 3        460 535.2344
+## 4         70 463.7857
+## 5        144 566.3546
+## 6         11 367.1509</code></pre>
+<p>Un darrer obstacle: per poder representar les dades: les he de convertir a format tabular (per fer-ho uso la funció <em>fortify</em> ):</p>
+<pre class="r"><code>municipis_MUC_df &lt;- fortify(municipis_MUC) #(hem de fer servir la funció fortify de tidyverse per poder visualitzar les shapefiles amb ggplot).
+
+#mirem les dades
+head(municipis_MUC_df)</code></pre>
+<pre><code>##       long     lat order  hole piece id group
+## 1 503856.3 4625796     1 FALSE     1  0   0.1
+## 2 503856.4 4625796     2 FALSE     1  0   0.1
+## 3 503856.5 4625796     3 FALSE     1  0   0.1
+## 4 503856.5 4625796     4 FALSE     1  0   0.1
+## 5 503856.6 4625796     5 FALSE     1  0   0.1
+## 6 503856.6 4625796     6 FALSE     1  0   0.1</code></pre>
+<p>Però en convertir-ho amb <em>fortify</em> he perdut algunes columnes amb les dades que vull representar, per tant he de tornar a incorporar-los mitjançant la id</p>
+<pre class="r"><code>lloguers_cat_gg &lt;- left_join(municipis_MUC_df, lloguersmunicipis2018, by = &quot;id&quot;)
+head(lloguers_cat_gg)</code></pre>
+<pre><code>##       long     lat order  hole piece id group    ID codi_territorial
+## 1 503856.3 4625796     1 FALSE     1  0   0.1 58906            17160
+## 2 503856.4 4625796     2 FALSE     1  0   0.1 58906            17160
+## 3 503856.5 4625796     3 FALSE     1  0   0.1 58906            17160
+## 4 503856.5 4625796     4 FALSE     1  0   0.1 58906            17160
+## 5 503856.6 4625796     5 FALSE     1  0   0.1 58906            17160
+## 6 503856.6 4625796     6 FALSE     1  0   0.1 58906            17160
+##                MUNICIPI ambit_territorial         nom_territori  any
+## 1 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+## 2 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+## 3 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+## 4 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+## 5 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+## 6 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
+##          periode habitatges    renda
+## 1 gener-desembre        460 535.2344
+## 2 gener-desembre        460 535.2344
+## 3 gener-desembre        460 535.2344
+## 4 gener-desembre        460 535.2344
+## 5 gener-desembre        460 535.2344
+## 6 gener-desembre        460 535.2344</code></pre>
+<p>Finalment podem visualitzar els preus mitjos dels lloguers per municipi a Catalunya:</p>
+<pre class="r"><code>library(&quot;RColorBrewer&quot;)
+library(&quot;ggplot2&quot;)
+library(&quot;viridis&quot;) #uso la el paquet viridis per fer paletes de colors
+
+#finalment &quot;plotejo&quot;
+ggplot(lloguers_cat_gg)+
+  theme_minimal()+
+  geom_polygon(aes(x = long, y = lat, group = group, fill=renda),
+                color = &quot;white&quot;) + scale_fill_viridis(option = &quot;magma&quot;, direction = -1) + labs( title = &quot;Preus mitjos lloguers a Catalunya per Municipi&quot;, subtitle =&quot;Dades de Gener-Desembre 2018&quot;, caption = &quot;Font: Transparència Gencat&quot;) + coord_fixed() + theme(axis.line = element_blank(),axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank()) + guides(fill=guide_legend(title=&quot;Preus&quot;))</code></pre>
+<p><img src="/blog/2020-04-12-mapes_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/thoreau-henry-david/">Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/fer-un-mapa-choropleth/">fer un mapa choropleth</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div class="footer column">
+    <div class="container">
+
+        
+
+        
+
+        <div class="copyright">
+
+        
+            
+                <a href="/license">Copyright ©2020</a>
+            
+        
+
+        </div>
+        <div class="icons">
+
+        
+
+        
+
+        
+
+        
+            <a href="https://www.instagram.com/enricesc" rel=me target="_blank">
+                <img class="icon" src="/img/instagram.svg" alt="instagram" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="https://github.com/enricescorsa" rel=me target="_blank">
+                <img class="icon" src="/img/github.svg" alt="github" />
+            </a>
+        
+
+        
+            <a href="https://twitter.com/EnricEscorsa" rel=me target="_blank">
+                <img class="icon" src="/img/twitter.svg" alt="twitter" />
+            </a>
+        
+
+        
+            <a href="https://www.linkedin.com/in/enric-escorsa-o-callaghan-24b0966" rel=me target="_blank">
+                <img class="icon" src="/img/linkedin.svg" alt="linkedin" />
+            </a>
+        
+
+        
+
+        
+
+        
+            <a href="mailto:enricescorsa@gmail.com">
+                <img class="icon" src="/img/email.svg" alt="email" />
+            </a>
+        
+
+        
+            <a href="/index.xml">
+                <img class="icon" src="/img/rss.svg" alt="rss" />
+            </a>
+        
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+<script>
+  WebFont.load({
+    google: {
+      families: ['Raleway:400,600,700', 'Merriweather:300,300i,700,700i', 'Ubuntu+Mono:400,700']
+    }
+  });
+</script>
+
+
+
+  <script src="/js/highlight.min.js" defer></script>
+  
+
+
+
+  <script src="/js/progressively.min.js" defer></script>
+
+
+
+  <script src="/js/social-share-kit.min.js" defer></script>
+
+
+
+
+
+
+<script>
+  window.onload = function() {
+    
+      hljs.initHighlighting();
+    
+    
+      progressively.init({delay: 30, throttle: 50});
+    
+    
+      SocialShareKit.init({
+        twitter: {
+            text: '',
+            via: 'EnricEscorsa'
+        }
+      });
+    
+  };
+</script>
+
+
+
+
+</body>
+</html>
+
