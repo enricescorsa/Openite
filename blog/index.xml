@@ -79,7 +79,7 @@ library(rvest)#llegeixo la pàginapaginaecdc &amp;lt;- read_html(&amp;quot;htt
     </item>
     
     <item>
-      <title>fer un mapa choropleth</title>
+      <title>Fer un mapa choropleth</title>
       <link>/blog/fer-un-mapa-choropleth/</link>
       <pubDate>Tue, 12 Mar 2019 00:00:00 +0000</pubDate>
       

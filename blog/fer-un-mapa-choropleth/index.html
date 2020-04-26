@@ -16,8 +16,8 @@
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="/blog/fer-un-mapa-choropleth/" />
-<meta property="og:title" content="fer un mapa choropleth" />
-<meta property="twitter:title" content="fer un mapa choropleth">
+<meta property="og:title" content="Fer un mapa choropleth" />
+<meta property="twitter:title" content="Fer un mapa choropleth">
 
     <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
@@ -29,7 +29,7 @@
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - fer un mapa choropleth 
+     Enric Escorsa O&#39;Callaghan - Fer un mapa choropleth 
 
 </title>
 <link rel="canonical" href="/blog/fer-un-mapa-choropleth/">
@@ -1124,7 +1124,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
                     <div class="page-heading">
 
     
-    fer un mapa choropleth
+    Fer un mapa choropleth
     
 
 </div>
@@ -1275,7 +1275,7 @@ plot(termes_municipals_catalunya)</code></pre>
 ## 110872 &lt;NA&gt;
 ## 110605 &lt;NA&gt;
 ## 110873 &lt;NA&gt;</code></pre>
-<p>mmm… Toca buscar altres opcions.</p>
+<p>mmm… toca buscar altres opcions.</p>
 </div>
 <div id="mapa-de-municipis-despanya-desri" class="section level3">
 <h3>Mapa de municipis d’Espanya d’ESRI</h3>
@@ -1283,10 +1283,23 @@ plot(termes_municipals_catalunya)</code></pre>
 <pre class="r"><code>#em descarrego les shapefiles i les llegeixo en aquest cas amb el paquet:
 library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
 #llegeixo
-municipis_espanya &lt;- readOGR(&quot;Municipios_IGN.shp&quot;)
-
-#mirem les dades
+municipis_espanya &lt;- readOGR(&quot;Municipios_IGN.shp&quot;)</code></pre>
+<pre class="r"><code>#mirem les dades
 head(municipis_espanya@data)</code></pre>
+<pre><code>##   OBJECTID                INSPIREID     NATCODE      NAMEUNIT CODNUT1 CODNUT2
+## 0     1001 ES.IGN.SIGLIM34153131164 34153131164       MÃ©lida     ES2    ES22
+## 1     1002 ES.IGN.SIGLIM34153131165 34153131165      Mendavia     ES2    ES22
+## 2     1003 ES.IGN.SIGLIM34153131166 34153131166       Mendaza     ES2    ES22
+## 3     1004 ES.IGN.SIGLIM34153131167 34153131167  MendigorrÃ­a     ES2    ES22
+## 4     1005 ES.IGN.SIGLIM34153131168 34153131168      Metauten     ES2    ES22
+## 5     1006 ES.IGN.SIGLIM34081919306 34081919306 Valderrebollo     ES4    ES42
+##   CODNUT3 CODIGOINE Shape__Are Shape__Len
+## 0   ES220     31164   47824938   44551.30
+## 1   ES220     31165  144216734   59482.88
+## 2   ES220     31166   60946410   51151.26
+## 3   ES220     31167   72847464   42575.78
+## 4   ES220     31168   41810929   30388.76
+## 5   ES424     19306   25533812   25083.49</code></pre>
 <p>Els codis NUT fan referència a les Unitats Territorials Estadístiques d’Espanya (veure: <a href="https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a" class="uri">https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a</a>)</p>
 <p>D’aquí em podría quedar només amb el territori de Catalunya (ES51).</p>
 </div>
@@ -1297,13 +1310,8 @@ head(municipis_espanya@data)</code></pre>
 <pre class="r"><code>library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
 #llegeixo
 municipis_MUC&lt;- readOGR(&quot;MUC_TM.shp&quot;)</code></pre>
-<pre><code>## OGR data source with driver: ESRI Shapefile 
-## Source: &quot;C:\Users\Usuario\Desktop\PROJECTES_R\blogdown_enric\content\blog\MUC_TM.shp&quot;, layer: &quot;MUC_TM&quot;
-## with 1890 features
-## It has 3 fields
-## Integer64 fields read as strings:  ID</code></pre>
 <pre class="r"><code>plot(municipis_MUC)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Aquí sí que hi ha el nom del municipi, l’ID i el CODI_INE:</p>
 <pre class="r"><code>head(municipis_MUC@data)</code></pre>
 <pre><code>##      ID CODI_INE                             MUNICIPI
@@ -1444,7 +1452,7 @@ ggplot(lloguers_cat_gg)+
   theme_minimal()+
   geom_polygon(aes(x = long, y = lat, group = group, fill=renda),
                 color = &quot;white&quot;) + scale_fill_viridis(option = &quot;magma&quot;, direction = -1) + labs( title = &quot;Preus mitjos lloguers a Catalunya per Municipi&quot;, subtitle =&quot;Dades de Gener-Desembre 2018&quot;, caption = &quot;Font: Transparència Gencat&quot;) + coord_fixed() + theme(axis.line = element_blank(),axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank()) + guides(fill=guide_legend(title=&quot;Preus&quot;))</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 </div>
 </div>
 

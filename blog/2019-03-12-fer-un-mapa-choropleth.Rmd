@@ -1,5 +1,5 @@
 ---
-title: fer un mapa choropleth
+title: Fer un mapa choropleth
 author: Enric Escorsa
 date: '2019-03-12'
 slug: fer-un-mapa-choropleth
@@ -129,19 +129,21 @@ En el de municipis sí que hi surten els noms dels municipis (NAME_4), però hi 
 head(termes_municipals_catalunya@data)
 ```
 
-mmm... Toca buscar altres opcions.
+mmm... toca buscar altres opcions.
 
 
 ### Mapa de municipis d'Espanya d'ESRI
 
 Al portal de dades obertes de la plataforma GIS ESRI s'hi poden trobar les dades d'Espanya a nivell municipal: https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0
 
-```{r, echo = TRUE, , results="hide"}
+```{r, echo = TRUE, results ="hide", warning = FALSE, message = FALSE}
 #em descarrego les shapefiles i les llegeixo en aquest cas amb el paquet:
 library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
 #llegeixo
 municipis_espanya <- readOGR("Municipios_IGN.shp")
+```
 
+```{r, echo = TRUE, warning = FALSE, message = FALSE}
 #mirem les dades
 head(municipis_espanya@data)
 ```
@@ -158,10 +160,13 @@ Una altra opció són les shapefiles del Mapa Urbanístic de Catalunya (MUC) que
 
 A veure què hi tenim:
 
-```{r}
+```{r, echo = TRUE, results = "hide", warning = FALSE, message = FALSE}
 library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
 #llegeixo
 municipis_MUC<- readOGR("MUC_TM.shp")
+```
+
+```{r, warning = FALSE, message = FALSE}
 plot(municipis_MUC)
 ```
 
@@ -212,7 +217,7 @@ Quan volem representar dades contínues quantitatives per regions (en aquest cas
 
 Unim ara les dades dels lloguers al nostre mapa de municipis:
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 #Primer poso com a columna la id de les dades municipals, per no perdre aquesta id original
 municipis_MUC@data$id <- rownames(municipis_MUC@data)
 
