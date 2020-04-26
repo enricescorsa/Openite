@@ -15,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/blog/fer-un-mapa-choropleth/" />
-<meta property="og:title" content="fer un mapa choropleth" />
-<meta property="twitter:title" content="fer un mapa choropleth">
+<meta property="og:url" content="/projects/python_ecology_lesson_translation/" />
+<meta property="og:title" content="Python Ecology Lesson translation" />
+<meta property="twitter:title" content="Python Ecology Lesson translation">
 
-    <meta property="og:image" content="//images/image.jpg">
+    <meta property="og:image" content="/img/banner.png">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="//images/image.jpg">
+    <meta property="twitter:image" content="/img/banner.png">
 
-<meta property="og:description" content="Desc">
-<meta property="twitter:description" content="Desc">
+<meta property="og:description" content="Blah blah blah">
+<meta property="twitter:description" content="Blah blah blah">
 
 <title>
 
 
-     Enric Escorsa O&#39;Callaghan - fer un mapa choropleth 
+     Enric Escorsa O&#39;Callaghan - Python Ecology Lesson translation 
 
 </title>
-<link rel="canonical" href="/blog/fer-un-mapa-choropleth/">
+<link rel="canonical" href="/projects/python_ecology_lesson_translation/">
 
 
 <style media="screen">
@@ -1114,395 +1114,27 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-
-
-<div class="main post non-narrow zero-top-spacing column">
+<div class="main column">
     <div class="container">
         <div class="content">
-            <div class="front-matter">
-                <div class="title-container">
-                    <div class="page-heading">
+            <div class="page-heading">
 
     
-    fer un mapa choropleth
+    Python Ecology Lesson translation
     
 
 </div>
 
-                </div>
-                <div class="meta">
-                    <div class="date" title="Tue Mar 12 2019 00:00:00 UTC">Mar 12, 2019</div>
-                    
-                        
-                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
-                        
-                    
-                    
-                    <div class="reading-time middot">10 minute read</div>
-                    
-                    
-                      <div class="tags">
-                    
-                        <ul>
-                          
-                            <li class="middot"><a href="/tags/visualization">Visualization</a> </li>
-                          
-                            <li class="middot"><a href="/tags/maps">maps</a> </li>
-                          
-                            <li class="middot"><a href="/tags/choropleth">choropleth</a> </li>
-                          
-                        </ul>
-                    </div>
-                    <div class="tags">
-                        <ul>
-                          
-                            
-                          
-                          
-                            
-                          
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div class="markdown">
                 
     
-    
-
-
-<p>Vull mostrar aquí el procés d’elaborar un mapa amb dades recollides de fonts obertes. Normalment es tracta d’obtenir primer els contorns dels territoris que volem representar i després poblar el mapa amb les dades que ens interessa mostrar-hi. Fem-ho.</p>
-<div id="obtenir-les-formes-dels-territoris" class="section level2">
-<h2>Obtenir les formes dels territoris</h2>
-<p>El primer pas és obtenir les formes ( <em>shapefiles</em> ) de països i límits territorials.</p>
-<div id="mapes-de-tots-els-països-del-món" class="section level3">
-<h3>Mapes de tots els països del món</h3>
-<p>Un dels llocs on els podem obtenim és <a href="https://gadm.org">GADM</a>, una pàgina que suministra dades espaials de tots els paísos del món.</p>
-<pre class="r"><code>#primer carreguem els paquets que necessitarem
-library(tidyverse)
-library(&quot;sp&quot;)
-library(&quot;sf&quot;)
-library(&quot;RColorBrewer&quot;)
-library(&quot;tidyverse&quot;)
-
-#anem a la web de GADM https://gadm.org/download_country_v3.html, busquem per país i ens descarreguem les dades (ens donen vàries opcions de format de dades; en aquest cas triem Level 2 (nivell provincial)) 
-
-#com que les dades estan en format .rds les podem llegir amb readRDS
-espanya &lt;- readRDS(&quot;gadm36_ESP_2_sp.rds&quot;)
-
-#i representem el mapa amb un plot simple
-#faríem: plot(espanya)
-
-#o bé podem imprimir-lo en color
-plot(espanya, col = &quot;brown&quot;, border = &quot;lightgrey&quot;)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>Les dades descarregades contenen una taula amb vàries files -52 en aquest cas- i vàries columnes tals com NAME_0 (país), NAME_1 (comunitats) i NAME_2 (provincies)</p>
-<p>Imaginem que volguéssim representar, només la península, sense les illes
-(faríem un subset filtrant les comunitats -NAME_1- insulars):</p>
-<pre class="r"><code>espanya_peninsular &lt;- subset(espanya, !espanya$NAME_1  %in% c(&quot;Islas Canarias&quot;, &quot;Islas Baleares&quot;))
-plot(espanya_peninsular, col = &quot;brown&quot;, border = &quot;lightgrey&quot;)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-<p>Tot i que podria ser que volguéssim representar només les Canàries:</p>
-<pre class="r"><code>canarias &lt;- subset(espanya, espanya$NAME_1  %in% c(&quot;Islas Canarias&quot;))
-plot(canarias)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>O Catalunya amb les seves provincies:</p>
-<pre class="r"><code>provincies_catalunya &lt;- espanya[espanya$NAME_1==&quot;Cataluña&quot;,]
-plot(provincies_catalunya)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>Fent servir <em>ggplot2</em>, l’eina de visualització que ens dona més opcions, ho podríem visualitzar així:</p>
-<pre class="r"><code>#visualitzar-lo amb ggplo2
-library(&quot;ggplot2&quot;)
-ggplot()+
-  geom_polygon(data = provincies_catalunya, aes(x = long, y = lat, group = group)) + coord_fixed() + theme_minimal() #no vull llegenda</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<pre class="r"><code>#hem de posar coord_fixed perquè sino se&#39;ns distorsiona la figura</code></pre>
-<p>En color millor:</p>
-<pre class="r"><code>ggplot(provincies_catalunya) +
-  theme_minimal() +
-  geom_polygon( aes(x = long, y = lat, group = group),
-                color = &quot;lightgrey&quot;,
-                fill = &quot;#EF9B0F&quot;)+ coord_fixed() + theme(axis.line = element_blank(),axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank()) # amb aquests arguments de theme elimino coordenades i eixos </code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>Si ho volguéssim tenir per comarques hauriem de descarregar-nos l’arxiu de nivell 3:</p>
-<pre class="r"><code>espanya_comarcal &lt;- readRDS(&quot;gadm36_ESP_3_sp.rds&quot;)
-
-comarques_catalunya &lt;- espanya_comarcal[espanya_comarcal$NAME_1==&quot;Cataluña&quot;,]
-plot(comarques_catalunya)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>i el nivell 4 per a termes municipals:</p>
-<pre class="r"><code>espanya_municipal &lt;- readRDS(&quot;gadm36_ESP_4_sp.rds&quot;)
-
-termes_municipals_catalunya &lt;- espanya_municipal[espanya_municipal$NAME_1==&quot;Cataluña&quot;,]
-plot(termes_municipals_catalunya)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>Però quan llegim la info que contenen els mapes veiem que en el mapa comarcal hi falta el nom de les comarques (veig uns codis “n.a.()” a la variable NAME_3 però no sé trobar a què corresponen…):</p>
-<pre class="r"><code>head(comarques_catalunya@data)</code></pre>
-<pre><code>##     GID_0 NAME_0   GID_1   NAME_1 NL_NAME_1     GID_2    NAME_2 NL_NAME_2
-## 313   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-## 317   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-## 318   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-## 319   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-## 320   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-## 321   ESP  Spain ESP.6_1 Cataluña      &lt;NA&gt; ESP.6.1_1 Barcelona      &lt;NA&gt;
-##           GID_3     NAME_3 VARNAME_3 NL_NAME_3  TYPE_3 ENGTYPE_3 CC_3 HASC_3
-## 313 ESP.6.1.1_1 n.a. (162)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
-## 317 ESP.6.1.2_1 n.a. (164)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
-## 318 ESP.6.1.3_1  n.a. (29)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
-## 319 ESP.6.1.4_1  n.a. (30)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
-## 320 ESP.6.1.5_1  n.a. (31)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;
-## 321 ESP.6.1.6_1  n.a. (32)      &lt;NA&gt;      &lt;NA&gt; Comarca   Comarca &lt;NA&gt;   &lt;NA&gt;</code></pre>
-<p>En el de municipis sí que hi surten els noms dels municipis (NAME_4), però hi segueixen mancant els de les comarques…</p>
-<pre class="r"><code>head(termes_municipals_catalunya@data)</code></pre>
-<pre><code>##        GID_0 NAME_0   GID_1   NAME_1     GID_2    NAME_2       GID_3     NAME_3
-## 107556   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.1_1 n.a. (162)
-## 108250   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.2_1 n.a. (164)
-## 111341   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
-## 110872   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
-## 110605   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
-## 110873   ESP  Spain ESP.6_1 Cataluña ESP.6.1_1 Barcelona ESP.6.1.3_1  n.a. (29)
-##                GID_4         NAME_4      VARNAME_4       TYPE_4    ENGTYPE_4
-## 107556 ESP.6.1.1.1_1           Bagà           Bagá Municipality Municipality
-## 108250 ESP.6.1.2.1_1      Montmajor           &lt;NA&gt; Municipality Municipality
-## 111341 ESP.6.1.3.1_1         Alella           &lt;NA&gt; Municipality Municipality
-## 110872 ESP.6.1.3.2_1  Arenys de Mar  Arénys de Mar Municipality Municipality
-## 110605 ESP.6.1.3.3_1 Arenys de Munt Arénys de Munt Municipality Municipality
-## 110873 ESP.6.1.3.4_1      Argentona           &lt;NA&gt; Municipality Municipality
-##        CC_4
-## 107556 &lt;NA&gt;
-## 108250 &lt;NA&gt;
-## 111341 &lt;NA&gt;
-## 110872 &lt;NA&gt;
-## 110605 &lt;NA&gt;
-## 110873 &lt;NA&gt;</code></pre>
-<p>mmm… Toca buscar altres opcions.</p>
-</div>
-<div id="mapa-de-municipis-despanya-desri" class="section level3">
-<h3>Mapa de municipis d’Espanya d’ESRI</h3>
-<p>Al portal de dades obertes de la plataforma GIS ESRI s’hi poden trobar les dades d’Espanya a nivell municipal: <a href="https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0" class="uri">https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0</a></p>
-<pre class="r"><code>#em descarrego les shapefiles i les llegeixo en aquest cas amb el paquet:
-library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
-#llegeixo
-municipis_espanya &lt;- readOGR(&quot;Municipios_IGN.shp&quot;)
-
-#mirem les dades
-head(municipis_espanya@data)</code></pre>
-<p>Els codis NUT fan referència a les Unitats Territorials Estadístiques d’Espanya (veure: <a href="https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a" class="uri">https://es.wikipedia.org/wiki/NUTS_de_Espa%C3%B1a</a>)</p>
-<p>D’aquí em podría quedar només amb el territori de Catalunya (ES51).</p>
-</div>
-<div id="mapes-muc-del-departament-de-territori-i-sostenibilitat" class="section level3">
-<h3>Mapes MUC del Departament de Territori i Sostenibilitat</h3>
-<p>Una altra opció són les shapefiles del Mapa Urbanístic de Catalunya (MUC) que el Departament de Territori i Sostenibilitat de la Gencat posa a disposició aquí: <a href="http://territori.gencat.cat/ca/06_territori_i_urbanisme/observatori_territori/mapa_urbanistic_de_catalunya/serveis_web_i_dades_obertes/descarrega-de-dades/format-shapefile-shp/" class="uri">http://territori.gencat.cat/ca/06_territori_i_urbanisme/observatori_territori/mapa_urbanistic_de_catalunya/serveis_web_i_dades_obertes/descarrega-de-dades/format-shapefile-shp/</a></p>
-<p>A veure què hi tenim:</p>
-<pre class="r"><code>library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
-#llegeixo
-municipis_MUC&lt;- readOGR(&quot;MUC_TM.shp&quot;)</code></pre>
-<pre><code>## OGR data source with driver: ESRI Shapefile 
-## Source: &quot;C:\Users\Usuario\Desktop\PROJECTES_R\blogdown_enric\content\blog\MUC_TM.shp&quot;, layer: &quot;MUC_TM&quot;
-## with 1890 features
-## It has 3 fields
-## Integer64 fields read as strings:  ID</code></pre>
-<pre class="r"><code>plot(municipis_MUC)</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Aquí sí que hi ha el nom del municipi, l’ID i el CODI_INE:</p>
-<pre class="r"><code>head(municipis_MUC@data)</code></pre>
-<pre><code>##      ID CODI_INE                             MUNICIPI
-## 0 58906    17160                Sant Feliu de Guíxols
-## 1 54960    17182              Santa Llogaia d&#39;Àlguema
-## 2 58907    17160                Sant Feliu de Guíxols
-## 3 54962    43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant
-## 4 55220    08119                             Masquefa
-## 5 55222    08128                 Monistrol de Calders</code></pre>
-</div>
-</div>
-<div id="posar-les-dades-que-volem-representar-al-mapa" class="section level2">
-<h2>Posar les dades que volem representar al mapa</h2>
-<p>Provarem de representar-hi el preu mitjà del lloguer d’habitatges als diferents municipis de Catalunya. Les dades es troben disponibles al <a href="https://analisi.transparenciacatalunya.cat/Habitatge/Preu-mitj-del-lloguer-d-habitatges-per-municipi/qww9-bvhh/data">portal de transparència de Gencat</a></p>
-<p>Per accedir-hi, me les podria descarregar des del web i llegir-les amb R o també puc accedir-hi directament via l’API de Gencat. Així ho faig (el primer cop, m’he hagut de registrar abans al portal de desenvolupadors: <a href="https://dev.socrata.com/" class="uri">https://dev.socrata.com/</a> i obtenir unes credencials d’accés que guardo al meu entorn local).</p>
-<pre class="r"><code>library(&quot;RSocrata&quot;) #paquet que permet accedir al portals de dades obertes Socrata
-
-library(usethis) #paquet que et permet guardar contrasenyes localment al environment i no exposarles
-#edit_r_environ() per editar l&#39;arxiu de l&#39;entorn on guardes les teves credencials
-
-
-Sys.getenv(&quot;meu_app_token&quot;)
-Sys.getenv(&quot;meu_email&quot;)
-Sys.getenv(&quot;meu_password_gencat&quot;)
-
-dadeslloguer &lt;- read.socrata(
-  &quot;https://analisi.transparenciacatalunya.cat/Habitatge/Preu-mitj-del-lloguer-d-habitatges-per-municipi/qww9-bvhh/data&quot;)
-
-head(dadeslloguer)</code></pre>
-<p>La variable <em>renda</em> fa referència a l’import del lloguer mensual mitjà.
-Agafem les dades del darrer any complert (2018).</p>
-<pre class="r"><code>dadeslloguer2018 &lt;- dadeslloguer %&gt;% filter(any==&quot;2018&quot;, periode ==&quot;gener-desembre&quot;)
-head(dadeslloguer2018)</code></pre>
-<pre><code>##   ambit_territorial codi_territorial      nom_territori  any        periode
-## 1          Municipi            25001 Abella de la Conca 2018 gener-desembre
-## 2          Municipi             8001             Abrera 2018 gener-desembre
-## 3          Municipi            25002               Àger 2018 gener-desembre
-## 4          Municipi            25003           Agramunt 2018 gener-desembre
-## 5          Municipi             8002 Aguilar de Segarra 2018 gener-desembre
-## 6          Municipi            17001           Agullana 2018 gener-desembre
-##   habitatges    renda
-## 1          2       NA
-## 2        165 687.2488
-## 3          5       NA
-## 4         80 328.0719
-## 5          4       NA
-## 6         18 462.7778</code></pre>
-<p>Quan volem representar dades contínues quantitatives per regions (en aquest cas municipis), sovint un tipus de mapa interessant és el que es coneix com a <em>Choropleth</em>; es tracta d’usar un gradient cromàtic per representar la major o menor densitat d’una variable en cada àrea.</p>
-<div id="unir-el-mapa-amb-les-dades" class="section level3">
-<h3>unir el mapa amb les dades</h3>
-<p>Unim ara les dades dels lloguers al nostre mapa de municipis:</p>
-<pre class="r"><code>#Primer poso com a columna la id de les dades municipals, per no perdre aquesta id original
-municipis_MUC@data$id &lt;- rownames(municipis_MUC@data)
-
-#per unir-los puc fer servir l&#39;identificador CODI INE
-#però atenció! veig que les xifres del CODI_INE de la taula del mapa són factors i alguns d&#39;ells porten un 0 al davant, mentre que el codi_territorial de les dades de lloguers és mumèric (integer, sense 0 al davant), per tant canvio a numèric el del mapa per a que siguin iguals
-
-municipis_MUC@data$CODI_INE &lt;- as.numeric(as.character(municipis_MUC@data$CODI_INE))
-head(municipis_MUC@data)</code></pre>
-<pre><code>##      ID CODI_INE                             MUNICIPI id
-## 0 58906    17160                Sant Feliu de Guíxols  0
-## 1 54960    17182              Santa Llogaia d&#39;Àlguema  1
-## 2 58907    17160                Sant Feliu de Guíxols  2
-## 3 54962    43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant  3
-## 4 55220     8119                             Masquefa  4
-## 5 55222     8128                 Monistrol de Calders  5</code></pre>
-<pre class="r"><code>#i ara canvio el nom de CODI_INE per a que coincideixi amb el de la taula de dades que vull representar 
-
-municipis_MUC@data &lt;- municipis_MUC@data %&gt;% rename(codi_territorial=CODI_INE)
-
-#uneixo les dues
-lloguersmunicipis2018 &lt;- municipis_MUC@data %&gt;% left_join(dadeslloguer2018, by = &quot;codi_territorial&quot;)
-head(lloguersmunicipis2018)</code></pre>
-<pre><code>##      ID codi_territorial                             MUNICIPI id
-## 1 58906            17160                Sant Feliu de Guíxols  0
-## 2 54960            17182              Santa Llogaia d&#39;Àlguema  1
-## 3 58907            17160                Sant Feliu de Guíxols  2
-## 4 54962            43162 Vandellòs i l&#39;Hospitalet de l&#39;Infant  3
-## 5 55220             8119                             Masquefa  4
-## 6 55222             8128                 Monistrol de Calders  5
-##   ambit_territorial                        nom_territori  any        periode
-## 1          Municipi                Sant Feliu de Guíxols 2018 gener-desembre
-## 2          Municipi              Santa Llogaia d&#39;Àlguema 2018 gener-desembre
-## 3          Municipi                Sant Feliu de Guíxols 2018 gener-desembre
-## 4          Municipi Vandellòs i l&#39;Hospitalet de l&#39;Infant 2018 gener-desembre
-## 5          Municipi                             Masquefa 2018 gener-desembre
-## 6          Municipi                 Monistrol de Calders 2018 gener-desembre
-##   habitatges    renda
-## 1        460 535.2344
-## 2          4       NA
-## 3        460 535.2344
-## 4         70 463.7857
-## 5        144 566.3546
-## 6         11 367.1509</code></pre>
-<p>Un darrer obstacle: per poder representar les dades: les he de convertir a format tabular (per fer-ho uso la funció <em>fortify</em> ):</p>
-<pre class="r"><code>municipis_MUC_df &lt;- fortify(municipis_MUC) #(hem de fer servir la funció fortify de tidyverse per poder visualitzar les shapefiles amb ggplot).
-
-#mirem les dades
-head(municipis_MUC_df)</code></pre>
-<pre><code>##       long     lat order  hole piece id group
-## 1 503856.3 4625796     1 FALSE     1  0   0.1
-## 2 503856.4 4625796     2 FALSE     1  0   0.1
-## 3 503856.5 4625796     3 FALSE     1  0   0.1
-## 4 503856.5 4625796     4 FALSE     1  0   0.1
-## 5 503856.6 4625796     5 FALSE     1  0   0.1
-## 6 503856.6 4625796     6 FALSE     1  0   0.1</code></pre>
-<p>Però en convertir-ho amb <em>fortify</em> he perdut algunes columnes amb les dades que vull representar, per tant he de tornar a incorporar-los mitjançant la id</p>
-<pre class="r"><code>lloguers_cat_gg &lt;- left_join(municipis_MUC_df, lloguersmunicipis2018, by = &quot;id&quot;)
-head(lloguers_cat_gg)</code></pre>
-<pre><code>##       long     lat order  hole piece id group    ID codi_territorial
-## 1 503856.3 4625796     1 FALSE     1  0   0.1 58906            17160
-## 2 503856.4 4625796     2 FALSE     1  0   0.1 58906            17160
-## 3 503856.5 4625796     3 FALSE     1  0   0.1 58906            17160
-## 4 503856.5 4625796     4 FALSE     1  0   0.1 58906            17160
-## 5 503856.6 4625796     5 FALSE     1  0   0.1 58906            17160
-## 6 503856.6 4625796     6 FALSE     1  0   0.1 58906            17160
-##                MUNICIPI ambit_territorial         nom_territori  any
-## 1 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-## 2 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-## 3 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-## 4 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-## 5 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-## 6 Sant Feliu de Guíxols          Municipi Sant Feliu de Guíxols 2018
-##          periode habitatges    renda
-## 1 gener-desembre        460 535.2344
-## 2 gener-desembre        460 535.2344
-## 3 gener-desembre        460 535.2344
-## 4 gener-desembre        460 535.2344
-## 5 gener-desembre        460 535.2344
-## 6 gener-desembre        460 535.2344</code></pre>
-<p>Finalment podem visualitzar els preus mitjos dels lloguers per municipi a Catalunya:</p>
-<pre class="r"><code>library(&quot;RColorBrewer&quot;)
-library(&quot;ggplot2&quot;)
-library(&quot;viridis&quot;) #uso la el paquet viridis per fer paletes de colors
-
-#finalment &quot;plotejo&quot;
-ggplot(lloguers_cat_gg)+
-  theme_minimal()+
-  geom_polygon(aes(x = long, y = lat, group = group, fill=renda),
-                color = &quot;white&quot;) + scale_fill_viridis(option = &quot;magma&quot;, direction = -1) + labs( title = &quot;Preus mitjos lloguers a Catalunya per Municipi&quot;, subtitle =&quot;Dades de Gener-Desembre 2018&quot;, caption = &quot;Font: Transparència Gencat&quot;) + coord_fixed() + theme(axis.line = element_blank(),axis.text = element_blank(), axis.title = element_blank(), axis.ticks = element_blank()) + guides(fill=guide_legend(title=&quot;Preus&quot;))</code></pre>
-<p><img src="/blog/2019-03-12-fer-un-mapa-choropleth_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-</div>
-</div>
+    <p>I was happy to contribute to the community for the translation into Spanish of The Python Ecology Lesson by the <a href="https://carpentries.org/about/#about-the-carpentries">Carpentry Project</a> (Thanks a lot Paula Andrea @orchid00 for the introduction and guidance). You can check the process followed and results here:</p>
+<ul>
+<li><a href="https://carpentries.org/blog/2019/01/python-ecologia-es/">Traducción al español de Ecología con Python, una lección de Data Carpentry</a></li>
+</ul>
 
 
             </div>
-            
-            <br>
-            <div class="share">
-                  
-                  <a href="" class="ssk ssk-facebook"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-twitter"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-google-plus"></a>
-                  
-                  
-                  <a href="" class="ssk ssk-linkedin"></a>
-                  
-            </div>
-            
-            
-            <br>
-            <div class="navigation">
-                
-                <div>
-                    <img class="icon" src="/img/back.svg" alt="back" />
-                    <a href="/blog/thoreau-henry-david/">Llegint l&#39;obra de Thoreau des del projecte Gutemberg amb R</a>
-                </div>
-                
-                <div style="width: 100%;"></div>
-                
-                <div>
-                    <a href="/blog/coronavirus/">Mapa interactiu de l&#39;expansió del COVID-19</a>
-                    <img class="icon" src="/img/next.svg" alt="next" />
-                </div>
-                
-            </div>
-            
-            
-
-            
-            
-            <div class="post bg-white">
-                <script src="https://utteranc.es/client.js"
-                    repo= "mtn/cocoa-eh-hugo-theme"
-                    issue-term="title"
-                    theme="github-light"
-                    crossorigin="anonymous"
-                    async>
-                </script>
-            </div>
-            
-
-            
-
-            
         </div>
     </div>
 </div>

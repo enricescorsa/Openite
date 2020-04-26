@@ -6,10 +6,20 @@
     <description>Recent content in Projects on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python Ecology Lesson translation</title>
+      <link>/projects/python_ecology_lesson_translation/</link>
+      <pubDate>Thu, 01 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/python_ecology_lesson_translation/</guid>
+      <description>I was happy to contribute to the community for the translation into Spanish of The Python Ecology Lesson by the Carpentry Project (Thanks a lot Paula Andrea @orchid00 for the introduction and guidance). You can check the process followed and results here:
+ Traducción al español de Ecología con Python, una lección de Data Carpentry  </description>
+    </item>
     
     <item>
       <title>R que R</title>

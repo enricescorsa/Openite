@@ -136,7 +136,7 @@ mmm... Toca buscar altres opcions.
 
 Al portal de dades obertes de la plataforma GIS ESRI s'hi poden trobar les dades d'Espanya a nivell municipal: https://opendata.esri.es/datasets/53229f5912e04f1ba6dddb70a5abeb72_0
 
-```{r}
+```{r, echo = TRUE, , results="hide"}
 #em descarrego les shapefiles i les llegeixo en aquest cas amb el paquet:
 library(rgdal) #per importar les shapefiles (format .shp) i llegir-les amb readOGR
 #llegeixo
