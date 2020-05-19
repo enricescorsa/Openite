@@ -1,0 +1,328 @@
+---
+title: "Democracia, Corrupción y Covid-19"
+author: "Enric Escorsa"
+date: '2020-05-15'
+output:
+  html_document:
+    df_print: paged
+  always_allow_html: yes
+  pdf_document: default
+  word_document: default
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+description: Desc
+slug: corrupcion-y-covid-19
+tags:
+- coronavirus
+- covid-19
+- coronavirus
+- correlación
+categories: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Algunas hipótesis
+
+Parece que esta pandemia está siendo gestionada de forma muy distinta por cada país y los resultados de esta gestión estan siendo también muy distintos. Entonces ¿de qué depende el que la respuesta sea mejor en un lado que en otro? Supongo que de varios factores, pero...¿cuáles de ellos son más determinantes?  
+¿Habrá alguna relación entre calidad democrática o nivel de corrupción y cómo se está gestionando esta crisis de alcance global?  
+Estaría bien saber, por ejemplo ¿por qué Portugal ha gestionado mejor la crisis -o así lo parece almenos- que España?  
+
+En base a estas hipótesis, voy a intentar contrastar indicadores y datos, a ver si encuentro algo interesante.
+
+Tomaré, por un lado, datos relacionados con indicadores de la calidad democrática y de la corrupción de los países. Los primeros se pueden encontrar en el [Democracy Index](https://es.wikipedia.org/wiki/%C3%8Dndice_de_democracia), clasificación hecha por la Unidad de Inteligencia del diario *The Economist* y los segundos en el [Corruption Perception Index (CPI)](https://es.wikipedia.org/wiki/%C3%8Dndice_de_democracia), que publica anualmente *Transparency International*.
+
+Por otro lado, tomaré datos relativos al nivel de afectación a causa del coronavirus (datos de casos y de muertes por número de habitantes en un país).
+
+No sé si éstos son los indicadores más definitorios, pero entiendo que son suficientemente sencillos de obtener, contrastar y analizar. Veamos si descubrimos alguna relación entre ellos.
+
+## Obtenemos los datos
+
+Empecemos recuperando los datos de las fuentes donde se encuentran publicados. Primero obtengo los datos del Indice de democracia, de la [página de wikipedia](https://es.wikipedia.org/wiki/%C3%8Dndice_de_democracia")
+
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+#cargo los paquetes para hacer webscrapping y manipular datos
+library(tidyverse)
+library(rvest)
+
+#leo la página de Wikipedia
+paginawiki<- "https://en.wikipedia.org/wiki/Democracy_Index"
+
+#extraigo las tablas
+pagina_democracia <- 
+  paginawiki %>% 
+  read_html() %>% 
+  html_nodes(xpath='//*[@id="mw-content-text"]/div/table') %>% 
+  html_table()
+
+#tomo la segunda tabla
+tabla_indice_democracia <- pagina_democracia[[2]] %>% 
+  as_tibble()
+
+#transformar en 0 los datos NA
+tabla_indice_democracia[is.na(tabla_indice_democracia)] <- 0
+
+#cambio el nombre de las columnas
+colnames(tabla_indice_democracia) <- c("Ranking", "Country","Score",
+                            "Procesos electorales y pluralismo", "Gobierno funcional", "Participacion", "Cultura política", "Libertades civiles", "Regimen", "Region", "Cambios año previo")
+
+```
+
+Aquí los tengo.
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+#paso a numerico las columnas que me interesan
+tabla_indice_democracia$Score <- as.numeric(tabla_indice_democracia$Score)
+
+tabla_indice_democracia$`Procesos electorales y pluralismo` <- as.numeric(as.character(tabla_indice_democracia$`Procesos electorales y pluralismo`))
+
+tabla_indice_democracia$`Gobierno funcional` <- as.numeric(as.character(tabla_indice_democracia$`Gobierno funcional`))
+
+tabla_indice_democracia$`Participacion` <- as.numeric(as.character(tabla_indice_democracia$`Participacion`))
+
+tabla_indice_democracia$`Libertades civiles` <- as.numeric(as.character(tabla_indice_democracia$`Libertades civiles`))
+
+tabla_indice_democracia$`Cultura política` <- as.numeric(as.character(tabla_indice_democracia$`Cultura política`))
+
+head(tabla_indice_democracia) 
+
+```
+
+
+A continación me descargo los datos sobre la percepción de la corrupción que estan disponibles en formato Excel desde la página web de [Transparency.org](https:transparency.org). Los leo.
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+#cargo los paquetes para hacer webscrapping y manipular datos
+library(tidyverse)
+
+#leo la página de Wikipedia
+library(readxl)
+cpi <- read_excel("CPI2019.xlsx", skip = 2)
+
+cpi <- cpi %>% select("Country", "CPI score 2019")
+head(cpi)
+```
+
+
+Luego, tomo los datos actualizados de la afectación por causa del covid-19 -tal y como he hecho en [anteriores posts](https://enricescorsa.netlify.app/blog/bubble-chart-for-covid-19-cases/)- de la  [European Centre for Disease Prevention and Control](https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases).
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+
+#proceso de igual forma que anteriormente
+paginaecdc <- read_html("https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases")
+
+lista_de_tablas <- paginaecdc %>%
+        html_nodes("table") %>%
+        .[1] %>%
+        html_table(fill = TRUE)
+
+#tomo la que me interesa
+tabla_coronavirus <-lista_de_tablas[[1]]
+
+#cambio el nombre de las columnas
+colnames(tabla_coronavirus) <- c("Continent", "Country","Casos", 
+                            "Muertes", "casos confirmados últimos 14 días")
+
+head(tabla_coronavirus)
+```
+
+
+Si quiero dividir los casos por densidad de población, me faltan los datos de la población de los países... los puedo obtener también de wikipedia [aquí](https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population)
+
+Lo hago.
+
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+
+#leo la página de Wikipedia
+poblacionwiki<- "https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population"
+
+#extraigo las tablas
+tablas_poblacion <- 
+  poblacionwiki %>% 
+  read_html() %>% 
+  html_nodes(xpath='//*[@id="mw-content-text"]/div/table') %>% 
+  html_table()
+
+#tomo la primera tabla
+tabla_poblacion <- tablas_poblacion[[1]] %>% 
+  as_tibble()
+#cambio a numberico el valor de la columna poblacion
+tabla_poblacion$Population <- as.numeric(gsub(",","",tabla_poblacion$Population))
+
+colnames(tabla_poblacion) <- c("Ranking", "Country","poblacion", 
+                            "% de la población mundial", "fecha", "fuente")
+
+#elimino refs [a],etc. del nombre del país
+tabla_poblacion$Country <- tabla_poblacion$Country %>% str_remove("\\[[:alpha:]\\]")
+
+head(tabla_poblacion)
+```
+
+
+
+
+Ahora uno todas las tablas por el identificador "Country".
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+lasdostablas <- tabla_indice_democracia %>% inner_join(tabla_coronavirus, by = "Country")
+lastrestablas <- lasdostablas %>% inner_join(tabla_poblacion, by = "Country")
+lascuatrotablas <- lastrestablas %>% inner_join(cpi, by = "Country")
+```
+
+
+Modifiquemos por último esta tabla resultante para reflejar en las columnas de afectación los casos por 100.000 habitantes.
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+#calculamos el numero de casos y muertes por densidad de población de cada pais
+lascuatrotablas <- lascuatrotablas %>% mutate(muertespor100000habitantes = Muertes/poblacion*100000) %>% mutate(casospor100000habitante = Casos/poblacion*100000)
+```
+
+Podemos visualizar la tabla que hemos armado y explorar los datos recopilados para cada país (con el fantástico paquete *DT* podemos mostrar el contenido de tablas de forma interactiva permitiendo buscar, filtrar y ordenar columnas convenientemente para mostrar los ranquines de los países según cada variable).
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(DT)
+#saco columnas que no aportan
+lascuatrotablas <- lascuatrotablas %>% select(-Ranking.x, -fecha, -fuente, -Ranking.y)
+#cambio el nombre de DIS
+lascuatrotablas <- lascuatrotablas %>% rename("Democracy Index Score" = Score)
+datatable(lascuatrotablas)
+```
+
+## Análisis de correlaciones
+
+Una vez tenemos todos los datos integrados y acomodados, intentemos observar correlaciones entre los indicadores que hemos tenido en cuenta.  
+Intentemos observar si existe alguna relación por ejemplo entre nivel de Democracia y el nivel de afectación de la pandemia Covid-19. 
+
+Generamos un diagrama de dispersión situando los países:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(ggrepel)
+p <- ggplot(lascuatrotablas, aes(lascuatrotablas$"Democracy Index Score", muertespor100000habitantes))
+p + geom_point() + geom_text(aes(label=Country), size=3) + labs(title = "Relación entre Nivel de Democracia y afectación de la pandemia Covid-19") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("Democracy Index Score") + theme_minimal()
+
+```
+
+
+Fijémonos en Europa:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+
+lascuatrotablaseuropa <- lascuatrotablas %>% filter(Continent=="Europe")
+
+p <- ggplot(lascuatrotablaseuropa, aes(lascuatrotablaseuropa$'Democracy Index Score', muertespor100000habitantes))
+p + geom_point() + geom_text_repel(aes(label=Country), size = 3) + scale_x_continuous(limits=c(7, 10)) + geom_smooth() +
+labs(title = "Relación entre Nivel de Democracia y afectación de la pandemia Covid-19 en Europa") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("Democracy Index Score") + theme_minimal()
+
+```
+
+
+Ahora fijémonos en la percepción de la corrupción:
+
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+p <- ggplot(lascuatrotablas, aes(lascuatrotablas$"CPI score 2019", muertespor100000habitantes))
+p + geom_point() + geom_text(aes(label=Country), size = 3) + scale_x_continuous(limits=c(45, 90)) + 
+labs(title = "Relación entre nivel de Corrupción y afectación de la pandemia Covid-19") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("CPI") + theme_minimal()
+
+```
+
+
+Y la percepción de la corrupción en Europa:
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+
+p <- ggplot(lascuatrotablaseuropa, aes(lascuatrotablaseuropa$"CPI score 2019", muertespor100000habitantes))
+p + geom_point(aes()) + geom_text_repel(aes(label=Country), size = 3) + scale_x_continuous(limits=c(35, 90)) + geom_smooth() +
+labs(title = "Relación entre nivel de Corrupción y afectación de la pandemia Covid-19 en Europa") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +  
+xlab("CPI")  + theme_minimal() + theme(legend.position = "none")
+
+```
+
+
+Ahora probemos de visualizar un correlograma para relacionar los indicadores que tenemos:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(ggcorrplot)
+lascuatrotablas <- lascuatrotablas %>% select(c("Procesos electorales y pluralismo", "Gobierno funcional", "Participacion", "Cultura política", "Libertades civiles", "muertespor100000habitantes", "CPI score 2019", "Democracy Index Score"))
+corr = cor(lascuatrotablas)
+
+ggcorrplot(corr, hc.order = T,
+           type = "lower",
+           lab =T,
+           lab_size =3,
+           method="circle",
+           colors = c("tomato3","thistle","springgreen3"),
+           title="correlaciones",
+           ggtheme=theme_minimal)
+```
+
+Quizás el nivel de corrupción influye en el número de muertes producidas. Quizás también las libertades civiles, el nivel de cultura política o el que el gobierno funcione puede afectar algo a como se gestiona una pandemia?
+
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+
+# library(widyr)
+# corscorr <- lascuatrotablaseuropa %>% pairwise_cor(Country, Score)
+# corscorr %>% arrange(correlation)
+```
+
+
+```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
+#en base a https://mran.microsoft.com/snapshot/2017-08-21/web/packages/widyr/vignettes/united_nations.html
+# library(ggraph)
+# library(igraph)
+# corscorr %>%
+#   filter (correlation >.4) %>%
+#   graph_from_data_frame() %>%
+#   ggraph(layout ="fr") +
+#   geom_edge_link(aes(alpha = correlation, width =correlation), edge_colour = "tomato3") +
+#   geom_node_point(size = 2, color ="black") +
+#   geom_node_text(aes(label = name), repel = T) +
+#   theme_void() +
+#   labs(title = "Correlación entre países, Percepción de la Corrupción y número de muertes por covid-19")
+```
+
+
+## Algunas observaciones
+
+Podemos decir que países con más consenso, menos crispación, etc. toman mejores decisiones -p.ej. sobre confinamiento, compra y abastecimiento de materiales, etc.- para hacer frente a una situación de pandemia como la que estamos viviendo?  
+Los resultados de este experimento muestran algo creo, pero no son definitorios, sino más bien provisionales; hay que tomarlos con pinzas; los números de la afectación de la pandemia en cada país son muy variables, cambian de un dia a otro y los indicadores de calidad democrática y corrupción tienen un componente de subjetividad y desfases de actualización (no todos reflejan los últimos cambios de gobierno). No hemos mirado tampoco demografía (edad de la población, flujos,...), aspectos socio-culturales de cada país,... Otro día podemos mirar porcentaje de presupuesto dedicado a educación, género y formación científica de los jefes de gobierno,... también pueden ser muy interesantes de analizar.
+
+
+```{r, echo=F, warning=F, message=F, comment=FALSE}
+# library(maps)
+# library(fuzzyjoin)
+# library(countrycode)
+# library(ggplot2)
+# 
+# world_data <- map_data("world") %>%
+#   regex_full_join(iso3166, by = c("region" = "mapname")) %>%
+#   filter(region != "Antarctica")
+# 
+# #cors %>% arrange(correlation)
+# 
+# cors %>%
+#   mutate(a2 = countrycode(item2, "country.name", "iso2c")) %>%
+#   full_join(world_data, by = "a2") %>%
+#   ggplot(aes(long, lat, group = group, fill = correlation)) +
+#   geom_polygon(color = "gray", size = .1) +
+#   scale_fill_gradient2() +
+#   coord_quickmap() +
+#   theme_void() +
+#   labs(title = "Correlacion de cada país entre muertes por coronavirus y nivel de participación política",
+#        subtitle = "azul indica más correlación, rojo menos",
+#        fill = "Correlación")
+```
+
