@@ -1,0 +1,99 @@
+---
+title: Provant de fer un mapa amb Geofacet
+author: Enric Escorsa
+date: '2020-05-21'
+slug: fer-un-mapa-geofacet
+categories:
+  - experiments
+tags:
+  - google trends
+  - geofacet
+  - maps
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+## Geofacet
+
+Anem a provar el paquet *Geofacet* desenvolupat per Ryan Hafen (@hafenstats) de la Universitat de Purdue. És un paquet espectacular per mostrar tot tipus de visualitzacions per regions representades per recuadres (facets) dins un mapa. El paquet està disponible aquí: https://hafen.github.io/geofacet/
+
+```{r, warning=F, message=F, comment=FALSE}
+#install.packages("geofacet")
+library(geofacet)
+library(ggplot2)
+```
+
+El paquet inclou malles per representar les diferents regions del món en cuadrícules on puc posar-hi les dades que m'interessin. Aquestes són les grids d'Espanya:
+
+"spain_prov_grid1"
+"spain_ccaa_grid1"  
+"spain_prov_grid2"
+
+
+```{r, warning=F, message=F, comment=FALSE}
+lamevamalla <- spain_ccaa_grid1
+#si vull excloure alguna regió: my_grid$col[my_grid$code == "WI"] <- 7
+grid_preview(lamevamalla)
+
+
+```
+
+```{r}
+lamevamalla$name
+```
+
+Intentarem posar-hi els resultats d'una cerca a Google trends. Busquem, per exemple, què busca la gent des de diferents comunitats autònomes. Provarem amb un parell de paraules ("covid-19" i "coronavirus")
+
+```{r, warning=F, message=F, comment=FALSE}
+library(gtrendsR)
+library(maps)
+library(ggplot2)
+#library(lettercase)
+library(viridis)
+#library(pals) #paletes de colors
+#library(scico) #+ paletes de fabio cramieri
+library(ggrepel)
+library(tidyverse)
+
+cerca = gtrends(c("covid-19", "coronavirus"), 
+               gprop = "web", 
+               time = "all", 
+               geo = c("ES"))         
+
+cercaInterestByRegion <- dplyr::as_tibble(cerca$interest_by_region)
+#Poso com a columna la id de les dades regionals per no perdre aquesta id original
+cercaInterestByRegion$id <- rownames(cercaInterestByRegion)
+```
+
+Si miro les dades descarregades de Google, tenim una taula "interest_by_region" on les dades de les regions ("location") estan en anglès:
+
+```{r}
+cerca[["interest_by_region"]][["location"]]
+```
+
+
+Per tant canvio el nom de les dues taules i dels noms per a que coincideixin.
+
+```{r}
+cercaInterestByRegion[["name"]] <- cercaInterestByRegion[["location"]]
+cercaInterestByRegion[["name"]] <- cercaInterestByRegion[["name"]] %>% str_replace_all(c("Castile-La Mancha" = "Castilla - La Mancha", "Castile and LeÃ³n"= "Castilla y León", "Navarre"="Navarra","Aragon"= "Aragón", "La Rioja"="Rioja", "Region of Murcia"="Murcia", "Andalusia"="Andalucía", "Basque Country"="País Vasco", "Valencian Community"="Comunitat Valenciana", "Catalonia"="Cataluña", "Balearic Islands"="Balears", "Canary Islands"="Canarias", "Community of Madrid"="Madrid"))
+
+```
+
+Represento:
+
+```{r, warning=F, message=F, comment=FALSE}
+ggplot(cercaInterestByRegion, aes(keyword, hits, fill = keyword)) +
+  geom_col() +
+  scale_fill_manual(values = c("#4e79a7", "#e15759")) +
+  facet_geo(~ name, grid = lamevamalla) +
+  coord_flip() +
+  labs(title = "Volums de cerques de paraules Covid19 i Coronavirus a Google per CC.AA.",
+    caption = "Font: Google Trends",
+    x = NULL,
+    y = "Hits") +
+  theme(strip.text.x = element_text(size = 6))
+```
+

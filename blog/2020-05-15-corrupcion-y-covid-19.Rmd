@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Algunas hipótesis
 
-Parece que esta pandemia está siendo gestionada de forma muy distinta por cada país y los resultados de esta gestión estan siendo también muy distintos. Entonces ¿de qué depende el que la respuesta sea mejor en un lado que en otro? Supongo que de varios factores, pero...¿cuáles de ellos son más determinantes?  
+Parece que esta pandemia está siendo gestionada de forma muy distinta por cada país y los resultados de esta gestión estan siendo también muy distintos. Entonces ¿de qué depende el que la respuesta sea mejor en un lado que en otro?  
 ¿Habrá alguna relación entre calidad democrática o nivel de corrupción y cómo se está gestionando esta crisis de alcance global?  
 Estaría bien saber, por ejemplo ¿por qué Portugal ha gestionado mejor la crisis -o así lo parece almenos- que España?  
 
@@ -182,7 +182,12 @@ Modifiquemos por último esta tabla resultante para reflejar en las columnas de 
 lascuatrotablas <- lascuatrotablas %>% mutate(muertespor100000habitantes = Muertes/poblacion*100000) %>% mutate(casospor100000habitante = Casos/poblacion*100000)
 ```
 
-Podemos visualizar la tabla que hemos armado y explorar los datos recopilados para cada país (con el fantástico paquete *DT* podemos mostrar el contenido de tablas de forma interactiva permitiendo buscar, filtrar y ordenar columnas convenientemente para mostrar los ranquines de los países según cada variable).
+
+## Tabla final con todos los datos
+
+Ya podemos visualizar la tabla que hemos armado y explorar los datos recopilados para cada país 
+
+>nota: con el fantástico paquete *DT*, creado por *Yihui Xi* y otros colaboradores, podemos mostrar el contenido de tablas de forma interactiva permitiendo buscar, filtrar y ordenar columnas convenientemente para mostrar los ranquines de los países según cada variable. Puedes escribir, por ejemplo, el nombre de un país en el cuadro de búsqueda para filtrar y explorar sus datos.
 
 ```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
 library(DT)
@@ -297,8 +302,8 @@ Quizás el nivel de corrupción influye en el número de muertes producidas. Qui
 
 ## Algunas observaciones
 
-Podemos decir que países con más consenso, menos crispación, etc. toman mejores decisiones -p.ej. sobre confinamiento, compra y abastecimiento de materiales, etc.- para hacer frente a una situación de pandemia como la que estamos viviendo?  
-Los resultados de este experimento muestran algo creo, pero no son definitorios, sino más bien provisionales; hay que tomarlos con pinzas; los números de la afectación de la pandemia en cada país son muy variables, cambian de un dia a otro y los indicadores de calidad democrática y corrupción tienen un componente de subjetividad y desfases de actualización (no todos reflejan los últimos cambios de gobierno). No hemos mirado tampoco demografía (edad de la población, flujos,...), aspectos socio-culturales de cada país,... Otro día podemos mirar porcentaje de presupuesto dedicado a educación, género y formación científica de los jefes de gobierno,... también pueden ser muy interesantes de analizar.
+¿Podemos decir que países con más consenso, menos crispación, etc. toman mejores decisiones -p.ej. sobre confinamiento, compra y abastecimiento de materiales, etc.- para hacer frente a una situación de pandemia como la que estamos viviendo?  
+Los resultados de este pequeño experimento muestran algo creo, pero no son definitorios, sino más bien provisionales; hay que tomarlos con pinzas; los números de la afectación de la pandemia en cada país son muy variables, cambian de un dia a otro y los indicadores de calidad democrática y corrupción tienen un componente de subjetividad y desfases de actualización (no todos reflejan los últimos cambios de gobierno). No hemos mirado tampoco demografía (edad de la población, flujos,...), aspectos socio-culturales de cada país,... Otro día podemos mirar porcentaje de presupuesto dedicado a educación, género y formación científica de los jefes de gobierno,... también pueden ser muy interesantes de analizar.
 
 
 ```{r, echo=F, warning=F, message=F, comment=FALSE}

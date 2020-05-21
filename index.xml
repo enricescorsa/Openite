@@ -6,10 +6,20 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 15 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 21 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Provant de fer un mapa amb Geofacet</title>
+      <link>/blog/fer-un-mapa-geofacet/</link>
+      <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/fer-un-mapa-geofacet/</guid>
+      <description>GeofacetAnem a provar el paquet Geofacet desenvolupat per Ryan Hafen (@hafenstats) de la Universitat de Purdue. És un paquet espectacular per mostrar tot tipus de visualitzacions per regions representades per recuadres (facets) dins un mapa. El paquet està disponible aquí: https://hafen.github.io/geofacet/
+#install.packages(&amp;quot;geofacet&amp;quot;)library(geofacet)library(ggplot2)El paquet inclou malles per representar les diferents regions del món en cuadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</description>
+    </item>
     
     <item>
       <title>Democracia, Corrupción y Covid-19</title>
@@ -17,8 +27,9 @@
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/corrupcion-y-covid-19/</guid>
-      <description>Algunas hipótesisParece que esta pandemia está siendo gestionada de forma muy distinta por cada país y los resultados de esta gestión estan siendo también muy distintos. Entonces ¿de qué depende el que la respuesta sea mejor en un lado que en otro? Supongo que de varios factores, pero…¿cuáles de ellos son más determinantes?
-¿Habrá alguna relación entre calidad democrática o nivel de corrupción y cómo se está gestionando esta crisis de alcance global?</description>
+      <description>Algunas hipótesisParece que esta pandemia está siendo gestionada de forma muy distinta por cada país y los resultados de esta gestión estan siendo también muy distintos. Entonces ¿de qué depende el que la respuesta sea mejor en un lado que en otro?
+¿Habrá alguna relación entre calidad democrática o nivel de corrupción y cómo se está gestionando esta crisis de alcance global?
+Estaría bien saber, por ejemplo ¿por qué Portugal ha gestionado mejor la crisis -o así lo parece almenos- que España?</description>
     </item>
     
     <item>
