@@ -1177,7 +1177,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <pre class="r"><code>#install.packages(&quot;geofacet&quot;)
 library(geofacet)
 library(ggplot2)</code></pre>
-<p>El paquet inclou malles per representar les diferents regions del món en cuadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</p>
+<p>El paquet inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</p>
 <p>“spain_prov_grid1”
 “spain_ccaa_grid1”<br />
 “spain_prov_grid2”</p>
@@ -1193,7 +1193,7 @@ grid_preview(lamevamalla)</code></pre>
 ## [13] &quot;Madrid&quot;               &quot;Castilla - La Mancha&quot; &quot;Murcia&quot;              
 ## [16] &quot;Andalucía&quot;            &quot;Canarias&quot;             &quot;Melilla&quot;             
 ## [19] &quot;Ceuta&quot;</code></pre>
-<p>Intentarem posar-hi els resultats d’una cerca a Google trends. Busquem, per exemple, què busca la gent des de diferents comunitats autònomes. Provarem amb un parell de paraules (“covid-19” i “coronavirus”)</p>
+<p>Intentarem posar-hi els resultats d’una cerca a Google trends. Busquem, per exemple, què busca la gent des de diferents comunitats autònomes. Provarem amb un parell de paraules relacionades amb jocs d’ordinador.</p>
 <pre class="r"><code>library(gtrendsR)
 library(maps)
 library(ggplot2)
@@ -1204,7 +1204,7 @@ library(viridis)
 library(ggrepel)
 library(tidyverse)
 
-cerca = gtrends(c(&quot;covid-19&quot;, &quot;coronavirus&quot;), 
+cerca = gtrends(c(&quot;fornite&quot;, &quot;fifa 20&quot;, &quot;LOL&quot;, &quot;Minecraft&quot;), 
                gprop = &quot;web&quot;, 
                time = &quot;all&quot;, 
                geo = c(&quot;ES&quot;))         
@@ -1214,29 +1214,42 @@ cercaInterestByRegion &lt;- dplyr::as_tibble(cerca$interest_by_region)
 cercaInterestByRegion$id &lt;- rownames(cercaInterestByRegion)</code></pre>
 <p>Si miro les dades descarregades de Google, tenim una taula “interest_by_region” on les dades de les regions (“location”) estan en anglès:</p>
 <pre class="r"><code>cerca[[&quot;interest_by_region&quot;]][[&quot;location&quot;]]</code></pre>
-<pre><code>##  [1] &quot;Melilla&quot;             &quot;Ceuta&quot;               &quot;La Rioja&quot;           
-##  [4] &quot;Castile-La Mancha&quot;   &quot;Castile and LeÃ³n&quot;   &quot;Valencian Community&quot;
-##  [7] &quot;Catalonia&quot;           &quot;Canary Islands&quot;      &quot;Aragon&quot;             
-## [10] &quot;Region of Murcia&quot;    &quot;Navarre&quot;             &quot;Extremadura&quot;        
-## [13] &quot;Balearic Islands&quot;    &quot;Basque Country&quot;      &quot;Andalusia&quot;          
-## [16] &quot;Galicia&quot;             &quot;Asturias&quot;            &quot;Cantabria&quot;          
+<pre><code>##  [1] &quot;Ceuta&quot;               &quot;Melilla&quot;             &quot;Region of Murcia&quot;   
+##  [4] &quot;Castile-La Mancha&quot;   &quot;Andalusia&quot;           &quot;Canary Islands&quot;     
+##  [7] &quot;Extremadura&quot;         &quot;Valencian Community&quot; &quot;Cantabria&quot;          
+## [10] &quot;La Rioja&quot;            &quot;Galicia&quot;             &quot;Aragon&quot;             
+## [13] &quot;Balearic Islands&quot;    &quot;Castile and LeÃ³n&quot;   &quot;Asturias&quot;           
+## [16] &quot;Catalonia&quot;           &quot;Navarre&quot;             &quot;Basque Country&quot;     
 ## [19] &quot;Community of Madrid&quot; &quot;Ceuta&quot;               &quot;Melilla&quot;            
-## [22] &quot;Castile-La Mancha&quot;   &quot;Castile and LeÃ³n&quot;   &quot;Navarre&quot;            
-## [25] &quot;La Rioja&quot;            &quot;Cantabria&quot;           &quot;Extremadura&quot;        
-## [28] &quot;Aragon&quot;              &quot;Region of Murcia&quot;    &quot;Galicia&quot;            
-## [31] &quot;Asturias&quot;            &quot;Andalusia&quot;           &quot;Basque Country&quot;     
-## [34] &quot;Balearic Islands&quot;    &quot;Valencian Community&quot; &quot;Canary Islands&quot;     
-## [37] &quot;Catalonia&quot;           &quot;Community of Madrid&quot;</code></pre>
+## [22] &quot;Castile-La Mancha&quot;   &quot;Andalusia&quot;           &quot;Cantabria&quot;          
+## [25] &quot;Region of Murcia&quot;    &quot;Extremadura&quot;         &quot;Canary Islands&quot;     
+## [28] &quot;Aragon&quot;              &quot;Balearic Islands&quot;    &quot;Navarre&quot;            
+## [31] &quot;Asturias&quot;            &quot;Valencian Community&quot; &quot;Castile and LeÃ³n&quot;  
+## [34] &quot;Galicia&quot;             &quot;Basque Country&quot;      &quot;Catalonia&quot;          
+## [37] &quot;La Rioja&quot;            &quot;Community of Madrid&quot; &quot;Region of Murcia&quot;   
+## [40] &quot;Melilla&quot;             &quot;Valencian Community&quot; &quot;Aragon&quot;             
+## [43] &quot;Andalusia&quot;           &quot;Canary Islands&quot;      &quot;Galicia&quot;            
+## [46] &quot;Castile-La Mancha&quot;   &quot;Balearic Islands&quot;    &quot;La Rioja&quot;           
+## [49] &quot;Catalonia&quot;           &quot;Ceuta&quot;               &quot;Castile and LeÃ³n&quot;  
+## [52] &quot;Cantabria&quot;           &quot;Extremadura&quot;         &quot;Asturias&quot;           
+## [55] &quot;Navarre&quot;             &quot;Basque Country&quot;      &quot;Community of Madrid&quot;
+## [58] &quot;Melilla&quot;             &quot;Region of Murcia&quot;    &quot;Castile-La Mancha&quot;  
+## [61] &quot;Canary Islands&quot;      &quot;Andalusia&quot;           &quot;Balearic Islands&quot;   
+## [64] &quot;Valencian Community&quot; &quot;La Rioja&quot;            &quot;Aragon&quot;             
+## [67] &quot;Extremadura&quot;         &quot;Ceuta&quot;               &quot;Cantabria&quot;          
+## [70] &quot;Galicia&quot;             &quot;Catalonia&quot;           &quot;Castile and LeÃ³n&quot;  
+## [73] &quot;Navarre&quot;             &quot;Asturias&quot;            &quot;Basque Country&quot;     
+## [76] &quot;Community of Madrid&quot;</code></pre>
 <p>Per tant canvio el nom de les dues taules i dels noms per a que coincideixin.</p>
 <pre class="r"><code>cercaInterestByRegion[[&quot;name&quot;]] &lt;- cercaInterestByRegion[[&quot;location&quot;]]
 cercaInterestByRegion[[&quot;name&quot;]] &lt;- cercaInterestByRegion[[&quot;name&quot;]] %&gt;% str_replace_all(c(&quot;Castile-La Mancha&quot; = &quot;Castilla - La Mancha&quot;, &quot;Castile and LeÃ³n&quot;= &quot;Castilla y León&quot;, &quot;Navarre&quot;=&quot;Navarra&quot;,&quot;Aragon&quot;= &quot;Aragón&quot;, &quot;La Rioja&quot;=&quot;Rioja&quot;, &quot;Region of Murcia&quot;=&quot;Murcia&quot;, &quot;Andalusia&quot;=&quot;Andalucía&quot;, &quot;Basque Country&quot;=&quot;País Vasco&quot;, &quot;Valencian Community&quot;=&quot;Comunitat Valenciana&quot;, &quot;Catalonia&quot;=&quot;Cataluña&quot;, &quot;Balearic Islands&quot;=&quot;Balears&quot;, &quot;Canary Islands&quot;=&quot;Canarias&quot;, &quot;Community of Madrid&quot;=&quot;Madrid&quot;))</code></pre>
 <p>Represento:</p>
 <pre class="r"><code>ggplot(cercaInterestByRegion, aes(keyword, hits, fill = keyword)) +
   geom_col() +
-  scale_fill_manual(values = c(&quot;#4e79a7&quot;, &quot;#e15759&quot;)) +
+  scale_fill_manual(values = c(&quot;#F71E68&quot;, &quot;#19C3DD&quot;,  &quot;#AC6EE8&quot;, &quot;#A6D43D&quot;)) +
   facet_geo(~ name, grid = lamevamalla) +
   coord_flip() +
-  labs(title = &quot;Volums de cerques de paraules Covid19 i Coronavirus a Google per CC.AA.&quot;,
+  labs(title = &quot;Volums de cerques de paraules per CC.AA.&quot;,
     caption = &quot;Font: Google Trends&quot;,
     x = NULL,
     y = &quot;Hits&quot;) +

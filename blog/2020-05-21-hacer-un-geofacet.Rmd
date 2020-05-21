@@ -25,7 +25,7 @@ library(geofacet)
 library(ggplot2)
 ```
 
-El paquet inclou malles per representar les diferents regions del món en cuadrícules on puc posar-hi les dades que m'interessin. Aquestes són les grids d'Espanya:
+El paquet inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m'interessin. Aquestes són les grids d'Espanya:
 
 "spain_prov_grid1"
 "spain_ccaa_grid1"  
@@ -44,7 +44,7 @@ grid_preview(lamevamalla)
 lamevamalla$name
 ```
 
-Intentarem posar-hi els resultats d'una cerca a Google trends. Busquem, per exemple, què busca la gent des de diferents comunitats autònomes. Provarem amb un parell de paraules ("covid-19" i "coronavirus")
+Intentarem posar-hi els resultats d'una cerca a Google trends. Busquem, per exemple, què busca la gent des de diferents comunitats autònomes. Provarem amb un parell de paraules relacionades amb jocs d'ordinador.
 
 ```{r, warning=F, message=F, comment=FALSE}
 library(gtrendsR)
@@ -57,7 +57,7 @@ library(viridis)
 library(ggrepel)
 library(tidyverse)
 
-cerca = gtrends(c("covid-19", "coronavirus"), 
+cerca = gtrends(c("fornite", "fifa 20", "LOL", "Minecraft"), 
                gprop = "web", 
                time = "all", 
                geo = c("ES"))         
@@ -87,10 +87,10 @@ Represento:
 ```{r, warning=F, message=F, comment=FALSE}
 ggplot(cercaInterestByRegion, aes(keyword, hits, fill = keyword)) +
   geom_col() +
-  scale_fill_manual(values = c("#4e79a7", "#e15759")) +
+  scale_fill_manual(values = c("#F71E68", "#19C3DD",  "#AC6EE8", "#A6D43D")) +
   facet_geo(~ name, grid = lamevamalla) +
   coord_flip() +
-  labs(title = "Volums de cerques de paraules Covid19 i Coronavirus a Google per CC.AA.",
+  labs(title = "Volums de cerques de paraules per CC.AA.",
     caption = "Font: Google Trends",
     x = NULL,
     y = "Hits") +
