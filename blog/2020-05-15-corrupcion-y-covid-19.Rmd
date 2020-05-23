@@ -230,7 +230,7 @@ xlab("Democracy Index Score") + theme_minimal()
 ```
 
 
-Ahora fijémonos en la percepción de la corrupción:
+Ahora analizemos la relación entre la percepción de la corrupción y la afectación por covid-19:
 
 
 ```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
@@ -243,7 +243,7 @@ xlab("CPI") + theme_minimal()
 ```
 
 
-Y la percepción de la corrupción en Europa:
+Hagamos foco de nuevo en Europa:
 
 ```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
 
@@ -256,7 +256,7 @@ xlab("CPI")  + theme_minimal() + theme(legend.position = "none")
 ```
 
 
-Ahora probemos de visualizar un correlograma para relacionar los indicadores que tenemos:
+Finalmente intentemos visualizar un correlograma para relacionar todos los indicadores que tenemos:
 
 ```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
 library(ggcorrplot)
@@ -273,7 +273,7 @@ ggcorrplot(corr, hc.order = T,
            ggtheme=theme_minimal)
 ```
 
-Quizás el nivel de corrupción influye en el número de muertes producidas. Quizás también las libertades civiles, el nivel de cultura política o el que el gobierno funcione puede afectar algo a como se gestiona una pandemia?
+Quizás el nivel de corrupción influye en el número de muertes producidas. Quizás también las libertades civiles, el nivel de cultura política o el nivel funcional del gobierno puede afectar algo a como se gestiona una pandemia...
 
 
 ```{r, echo=FALSE, warning=F, message=F, comment=FALSE}
@@ -303,7 +303,7 @@ Quizás el nivel de corrupción influye en el número de muertes producidas. Qui
 ## Algunas observaciones
 
 ¿Podemos decir que países con más consenso, menos crispación, etc. toman mejores decisiones -p.ej. sobre confinamiento, compra y abastecimiento de materiales, etc.- para hacer frente a una situación de pandemia como la que estamos viviendo?  
-Los resultados de este pequeño experimento muestran algo creo, pero no son definitorios, sino más bien provisionales; hay que tomarlos con pinzas; los números de la afectación de la pandemia en cada país son muy variables, cambian de un dia a otro y los indicadores de calidad democrática y corrupción tienen un componente de subjetividad y desfases de actualización (no todos reflejan los últimos cambios de gobierno). No hemos mirado tampoco demografía (edad de la población, flujos,...), aspectos socio-culturales de cada país,... Otro día podemos mirar porcentaje de presupuesto dedicado a educación, género y formación científica de los jefes de gobierno,... también pueden ser muy interesantes de analizar.
+Los resultados de este pequeño experimento muestran algo creo, pero no son definitorios, sino más bien provisionales; hay que tomarlos con pinzas: los números de la afectación de la pandemia en cada país son muy variables, cambian de un dia a otro y los indicadores de calidad democrática y corrupción tienen un componente de subjetividad y desfases de actualización (no todos reflejan los últimos cambios de gobierno). No hemos mirado tampoco demografía (edad de la población, flujos,...), aspectos socio-culturales de cada país,... Otro día podemos fijarnos en el porcentaje de presupuesto dedicado a educación, género y formación científica de los jefes de gobierno,... también pueden ser muy interesantes de analizar.
 
 
 ```{r, echo=F, warning=F, message=F, comment=FALSE}

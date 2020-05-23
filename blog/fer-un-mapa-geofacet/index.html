@@ -1173,11 +1173,11 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 <div id="geofacet" class="section level2">
 <h2>Geofacet</h2>
-<p>Anem a provar el paquet <em>Geofacet</em> desenvolupat per Ryan Hafen (<span class="citation">@hafenstats</span>) de la Universitat de Purdue. És un paquet espectacular per mostrar tot tipus de visualitzacions per regions representades per recuadres (facets) dins un mapa. El paquet està disponible aquí: <a href="https://hafen.github.io/geofacet/" class="uri">https://hafen.github.io/geofacet/</a></p>
+<p>Anem a provar el paquet <em>Geofacet</em> desenvolupat per <strong>Ryan Hafen</strong> (<span class="citation">@hafenstats</span>) de la Universitat de Purdue. És una eina visual espectacular que permet representar tot tipus de visualitzacions de dades (diagrames de barres, de dispersió, etc.) per regions geogràfiques dins requadres (facets) situats en un mapa. El paquet està disponible aquí: <a href="https://hafen.github.io/geofacet/" class="uri">https://hafen.github.io/geofacet/</a></p>
 <pre class="r"><code>#install.packages(&quot;geofacet&quot;)
 library(geofacet)
 library(ggplot2)</code></pre>
-<p>El paquet inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</p>
+<p>Inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</p>
 <p>“spain_prov_grid1”
 “spain_ccaa_grid1”<br />
 “spain_prov_grid2”</p>
@@ -1215,30 +1215,30 @@ cercaInterestByRegion$id &lt;- rownames(cercaInterestByRegion)</code></pre>
 <p>Si miro les dades descarregades de Google, tenim una taula “interest_by_region” on les dades de les regions (“location”) estan en anglès:</p>
 <pre class="r"><code>cerca[[&quot;interest_by_region&quot;]][[&quot;location&quot;]]</code></pre>
 <pre><code>##  [1] &quot;Ceuta&quot;               &quot;Melilla&quot;             &quot;Region of Murcia&quot;   
-##  [4] &quot;Castile-La Mancha&quot;   &quot;Andalusia&quot;           &quot;Canary Islands&quot;     
-##  [7] &quot;Extremadura&quot;         &quot;Valencian Community&quot; &quot;Cantabria&quot;          
-## [10] &quot;La Rioja&quot;            &quot;Galicia&quot;             &quot;Aragon&quot;             
-## [13] &quot;Balearic Islands&quot;    &quot;Castile and LeÃ³n&quot;   &quot;Asturias&quot;           
-## [16] &quot;Catalonia&quot;           &quot;Navarre&quot;             &quot;Basque Country&quot;     
+##  [4] &quot;Andalusia&quot;           &quot;Castile-La Mancha&quot;   &quot;Canary Islands&quot;     
+##  [7] &quot;Extremadura&quot;         &quot;Cantabria&quot;           &quot;Valencian Community&quot;
+## [10] &quot;Aragon&quot;              &quot;Galicia&quot;             &quot;La Rioja&quot;           
+## [13] &quot;Castile and LeÃ³n&quot;   &quot;Balearic Islands&quot;    &quot;Asturias&quot;           
+## [16] &quot;Navarre&quot;             &quot;Catalonia&quot;           &quot;Basque Country&quot;     
 ## [19] &quot;Community of Madrid&quot; &quot;Ceuta&quot;               &quot;Melilla&quot;            
-## [22] &quot;Castile-La Mancha&quot;   &quot;Andalusia&quot;           &quot;Cantabria&quot;          
-## [25] &quot;Region of Murcia&quot;    &quot;Extremadura&quot;         &quot;Canary Islands&quot;     
-## [28] &quot;Aragon&quot;              &quot;Balearic Islands&quot;    &quot;Navarre&quot;            
-## [31] &quot;Asturias&quot;            &quot;Valencian Community&quot; &quot;Castile and LeÃ³n&quot;  
+## [22] &quot;Castile-La Mancha&quot;   &quot;Cantabria&quot;           &quot;Andalusia&quot;          
+## [25] &quot;Extremadura&quot;         &quot;Region of Murcia&quot;    &quot;Canary Islands&quot;     
+## [28] &quot;Balearic Islands&quot;    &quot;Aragon&quot;              &quot;Valencian Community&quot;
+## [31] &quot;Asturias&quot;            &quot;Castile and LeÃ³n&quot;   &quot;Navarre&quot;            
 ## [34] &quot;Galicia&quot;             &quot;Basque Country&quot;      &quot;Catalonia&quot;          
 ## [37] &quot;La Rioja&quot;            &quot;Community of Madrid&quot; &quot;Region of Murcia&quot;   
 ## [40] &quot;Melilla&quot;             &quot;Valencian Community&quot; &quot;Aragon&quot;             
 ## [43] &quot;Andalusia&quot;           &quot;Canary Islands&quot;      &quot;Galicia&quot;            
-## [46] &quot;Castile-La Mancha&quot;   &quot;Balearic Islands&quot;    &quot;La Rioja&quot;           
-## [49] &quot;Catalonia&quot;           &quot;Ceuta&quot;               &quot;Castile and LeÃ³n&quot;  
-## [52] &quot;Cantabria&quot;           &quot;Extremadura&quot;         &quot;Asturias&quot;           
+## [46] &quot;Castile-La Mancha&quot;   &quot;Balearic Islands&quot;    &quot;Catalonia&quot;          
+## [49] &quot;La Rioja&quot;            &quot;Castile and LeÃ³n&quot;   &quot;Cantabria&quot;          
+## [52] &quot;Extremadura&quot;         &quot;Ceuta&quot;               &quot;Asturias&quot;           
 ## [55] &quot;Navarre&quot;             &quot;Basque Country&quot;      &quot;Community of Madrid&quot;
-## [58] &quot;Melilla&quot;             &quot;Region of Murcia&quot;    &quot;Castile-La Mancha&quot;  
-## [61] &quot;Canary Islands&quot;      &quot;Andalusia&quot;           &quot;Balearic Islands&quot;   
-## [64] &quot;Valencian Community&quot; &quot;La Rioja&quot;            &quot;Aragon&quot;             
-## [67] &quot;Extremadura&quot;         &quot;Ceuta&quot;               &quot;Cantabria&quot;          
-## [70] &quot;Galicia&quot;             &quot;Catalonia&quot;           &quot;Castile and LeÃ³n&quot;  
-## [73] &quot;Navarre&quot;             &quot;Asturias&quot;            &quot;Basque Country&quot;     
+## [58] &quot;Region of Murcia&quot;    &quot;Melilla&quot;             &quot;Andalusia&quot;          
+## [61] &quot;Castile-La Mancha&quot;   &quot;Canary Islands&quot;      &quot;Balearic Islands&quot;   
+## [64] &quot;Valencian Community&quot; &quot;Aragon&quot;              &quot;Extremadura&quot;        
+## [67] &quot;La Rioja&quot;            &quot;Cantabria&quot;           &quot;Galicia&quot;            
+## [70] &quot;Ceuta&quot;               &quot;Castile and LeÃ³n&quot;   &quot;Catalonia&quot;          
+## [73] &quot;Asturias&quot;            &quot;Navarre&quot;             &quot;Basque Country&quot;     
 ## [76] &quot;Community of Madrid&quot;</code></pre>
 <p>Per tant canvio el nom de les dues taules i dels noms per a que coincideixin.</p>
 <pre class="r"><code>cercaInterestByRegion[[&quot;name&quot;]] &lt;- cercaInterestByRegion[[&quot;location&quot;]]
@@ -1249,7 +1249,7 @@ cercaInterestByRegion[[&quot;name&quot;]] &lt;- cercaInterestByRegion[[&quot;nam
   scale_fill_manual(values = c(&quot;#F71E68&quot;, &quot;#19C3DD&quot;,  &quot;#AC6EE8&quot;, &quot;#A6D43D&quot;)) +
   facet_geo(~ name, grid = lamevamalla) +
   coord_flip() +
-  labs(title = &quot;Volums de cerques de paraules per CC.AA.&quot;,
+  labs(title = &quot;Volums de cerques a Google sobre 4 jocs d&#39;ordinador populars per CC.AA.&quot;,
     caption = &quot;Font: Google Trends&quot;,
     x = NULL,
     y = &quot;Hits&quot;) +

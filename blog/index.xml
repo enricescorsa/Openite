@@ -17,8 +17,8 @@
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/fer-un-mapa-geofacet/</guid>
-      <description>GeofacetAnem a provar el paquet Geofacet desenvolupat per Ryan Hafen (@hafenstats) de la Universitat de Purdue. És un paquet espectacular per mostrar tot tipus de visualitzacions per regions representades per recuadres (facets) dins un mapa. El paquet està disponible aquí: https://hafen.github.io/geofacet/
-#install.packages(&amp;quot;geofacet&amp;quot;)library(geofacet)library(ggplot2)El paquet inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m’interessin. Aquestes són les grids d’Espanya:</description>
+      <description>GeofacetAnem a provar el paquet Geofacet desenvolupat per Ryan Hafen (@hafenstats) de la Universitat de Purdue. És una eina visual espectacular que permet representar tot tipus de visualitzacions de dades (diagrames de barres, de dispersió, etc.) per regions geogràfiques dins requadres (facets) situats en un mapa. El paquet està disponible aquí: https://hafen.github.io/geofacet/
+#install.packages(&amp;quot;geofacet&amp;quot;)library(geofacet)library(ggplot2)Inclou malles per representar les diferents regions del món en quadrícules on puc posar-hi les dades que m’interessin.</description>
     </item>
     
     <item>
