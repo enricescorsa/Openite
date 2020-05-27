@@ -22,16 +22,6 @@ Creació d’un model predictiu amb XGBoostUtilitzaré XGBoost; XGBoost (eXtrem
     </item>
     
     <item>
-      <title>Democracia, Corrupción, género y Covid-19 (parte 2)</title>
-      <link>/blog/corrupcion-y-covid-19-2/</link>
-      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/corrupcion-y-covid-19-2/</guid>
-      <description>En el post anterior, tomamos indicadores de democracia y corrupción de los países e intentamos detectar correlaciones con la gestión de la crisisi del covid-19 sin obtener resultados demasiado determinantes.
-Nos faltó considerar algunos aspectos tales como la edad de la población (que parece que seria una explicación del impacto menor del esperado de la pandemia en los países del continente africano), o el clima, entre otros.</description>
-    </item>
-    
-    <item>
       <title>Provant de fer un mapa amb Geofacet</title>
       <link>/blog/fer-un-mapa-geofacet/</link>
       <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>

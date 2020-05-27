@@ -1,11 +1,11 @@
 ---
 title: "Democracia, Corrupción, género y Covid-19 (parte 2)"
 author: "Enric Escorsa"
-date: '2020-05-22'
+date: '2025-05-22'
 output:
   html_document:
     df_print: paged
-  always_allow_html: yes
+  always_allow_html: no
   pdf_document: default
   word_document: default
 hacker_news_id: ''
@@ -19,7 +19,6 @@ tags:
 - coronavirus
 - correlación
 categories: experiments
-draft: true
 ---
 
 ```{r setup, include=FALSE}
