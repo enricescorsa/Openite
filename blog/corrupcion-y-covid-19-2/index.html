@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.63.2" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Enric Escorsa O&#39;Callaghan" />
-<meta property="twitter:title" content="Enric Escorsa O&#39;Callaghan">
+<meta property="og:url" content="/blog/corrupcion-y-covid-19-2/" />
+<meta property="og:title" content="Democracia, Corrupción, género y Covid-19 (parte 2)" />
+<meta property="twitter:title" content="Democracia, Corrupción, género y Covid-19 (parte 2)">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="A blog about data &amp; landscapes.">
-<meta property="twitter:description" content="A blog about data &amp; landscapes.">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Enric Escorsa O&#39;Callaghan
+     Enric Escorsa O&#39;Callaghan - Democracia, Corrupción, género y Covid-19 (parte 2) 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/corrupcion-y-covid-19-2/">
 
 
 <style media="screen">
@@ -1067,8 +1066,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Enric Escorsa O&#39;Callaghan" />
-
 
 </head>
 
@@ -1076,7 +1073,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1115,52 +1112,186 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p><em>A blog about data &amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go</em></p>
-<hr>
-<p><em>Un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprendre a programar en #Rstats i compartir el que aprenc sobre la marxa</em></p>
-<hr>
-<p><em>Un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</em></p>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    Draft::Democracia, Corrupción, género y Covid-19 (parte 2)
+    
+
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Fri May 22 2020 00:00:00 UTC">May 22, 2020</div>
                     
-                        <li class="groupby">May, 2020</li>
                         
-                            <li class="post-item">
-    <span class="meta">May 24, 2020</span>
-    
-    <a href="/blog/"><span>Blog</span></a>
-    
-</li>
-
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
                         
                     
-                    </ul>
-
                     
-                
+                    <div class="reading-time middot">4 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
+                          
+                            <li class="middot"><a href="/tags/covid-19">covid-19</a> </li>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
+                          
+                            <li class="middot"><a href="/tags/correlaci%C3%B3n">correlación</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
+<link href="/rmarkdown-libs/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/datatables-binding/datatables.js"></script>
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js"></script>
+<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
+
+
+<p>En el post anterior, tomamos indicadores de democracia y corrupción de los países e intentamos detectar correlaciones con la gestión de la crisisi del covid-19 sin obtener resultados demasiado determinantes.</p>
+<p>Nos faltó considerar algunos aspectos tales como la edad de la población (que parece que seria una explicación del impacto menor del esperado de la pandemia en los países del continente africano), o el clima, entre otros.</p>
+<p>Hoy quiero contrastar el hecho de si el resultado de la gestión es más o menos bueno considerando también si en los puestos de toma de decisión de los gobiernos hay más hombres o mujeres. Intentemos verlo con datos.</p>
+<p>Primero leemos la tabla de datos que habíamos armado con todos los indicadores por país.</p>
+<pre class="r"><code>library(tidyverse)
+democorrcov &lt;- read_csv(&quot;democorrcov.csv&quot;)</code></pre>
+<div id="añadir-datos-de-género-de-los-gobiernos." class="section level2">
+<h2>Añadir datos de género de los gobiernos.</h2>
+<p>He encontrado una tabla actualizada en la <a href="%22https://data.ipu.org/women-ranking?month=5&amp;year=2020%22">web de la Unión Inter-Parlamentaria (IPU)</a> en la que aparece un ranquin por países en función del porcentaje de mujeres en el parlamento que se puede descargar en formato tabular (Excel y csv). Obtengo los datos y los leo en R.</p>
+<pre class="r"><code>#leo la tabla y me quedo con el porcentaje de mujeres en la principal camara parlamentaria
+womenparlament &lt;- read_csv(&quot;chamber--current_women_percent.csv&quot;, skip = 4) %&gt;% select (Country, X6) 
+womenparlament &lt;- womenparlament [-1, ]
+
+#cambio el nombre de las columnas
+colnames(womenparlament) &lt;- c(&quot;Country&quot;, &quot;% de Mujeres en Parlamento&quot;)
+
+#cambio a numerica la columna de % de mujeres
+womenparlament$&quot;% de Mujeres en Parlamento&quot; &lt;- as.numeric(womenparlament$&quot;% de Mujeres en Parlamento&quot;)</code></pre>
+<pre class="r"><code>library(DT)
+datatable(womenparlament)</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193"],["Rwanda","Cuba","Bolivia (Plurinational State of)","United Arab Emirates","Mexico","Nicaragua","Sweden","Grenada","South Africa","Andorra","Finland","Costa Rica","Spain","Namibia","Senegal","Switzerland","Norway","Mozambique","Argentina","New Zealand","Belgium","Belarus","North Macedonia","Portugal","Denmark","France","Ecuador","Austria","Ethiopia","Timor-Leste","Iceland","Serbia","United Republic of Tanzania","Burundi","Italy","Uganda","Dominica","Cameroon","United Kingdom","El Salvador","Monaco","Netherlands","Nepal","Uzbekistan","Zimbabwe","San Marino","Suriname","Germany","Trinidad and Tobago","Australia","Angola","Latvia","Luxembourg","Montenegro","Albania","Canada","Estonia","Poland","South Sudan","Philippines","Dominican Republic","Mali","Slovenia","Lao People's Democratic Republic","Kazakhstan","Afghanistan","Viet Nam","Bulgaria","Iraq","Djibouti","Peru","Algeria","Cabo Verde","Israel","Turkmenistan","China","Tunisia","Republic of Moldova","Somalia","Lithuania","Singapore","Tajikistan","United States of America","Armenia","Lesotho","Malawi","Chile","Panama","Czech Republic","Ireland","Venezuela (Bolivarian Republic of)","Romania","Kenya","Bosnia and Herzegovina","Seychelles","Uruguay","Honduras","Equatorial Guinea","Bangladesh","Ukraine","Greece","Morocco","Indonesia","Mauritania","Pakistan","Barbados","Cambodia","Mauritius","Saint Kitts and Nevis","Slovakia","Saudi Arabia","Cyprus","Fiji","Guatemala","Croatia","Kyrgyzstan","Republic of Korea","Togo","Colombia","Democratic People's Republic of Korea","Jamaica","Azerbaijan","Mongolia","Turkey","Niger","Zambia","Comoros","Saint Lucia","Paraguay","Libya","Madagascar","Guinea","Russian Federation","Thailand","Chad","Jordan","Egypt","Bahrain","Bhutan","Gabon","Brazil","Sao Tome and Principe","Malaysia","India","Georgia","Guinea-Bissau","Malta","Burkina Faso","Ghana","Saint Vincent and the Grenadines","Bahamas","Democratic Republic of the Congo","Palau","Syrian Arab Republic","Liberia","Sierra Leone","Hungary","Liechtenstein","Côte d'Ivoire","Congo","Antigua and Barbuda","Myanmar","Botswana","Nauru","Samoa","Japan","Qatar","Eswatini","Belize","Brunei Darussalam","Kiribati","Gambia (The)","Central African Republic","Iran (Islamic Republic of)","Tonga","Benin","Kuwait","Tuvalu","Solomon Islands","Marshall Islands","Sri Lanka","Lebanon","Maldives","Nigeria","Oman","Yemen","Micronesia (Federated States of)","Papua New Guinea","Vanuatu","Eritrea","Guyana","Haiti","Sudan"],[61.25,53.22,53.08,50,48.2,47.25,46.99,46.67,46.58,46.43,46,45.61,44,43.27,43.03,41.5,41.42,41.2,40.86,40.83,40.67,40,40,40,39.66,39.51,39.42,39.34,38.76,38.46,38.1,37.65,36.9,36.36,35.71,34.86,34.38,33.89,33.85,33.33,33.33,33.33,32.73,32,31.85,31.67,31.37,31.17,30.95,30.46,30,30,30,29.63,29.51,28.99,28.71,28.7,28.46,27.96,27.89,27.89,27.78,27.52,27.1,27.02,26.72,26.67,26.44,26.15,26.15,25.76,25,25,25,24.94,24.88,24.75,24.36,24.11,24,23.81,23.78,23.48,23.33,22.92,22.58,22.54,22.5,22.5,22.16,21.88,21.78,21.43,21.21,21.21,21.09,21,20.92,20.8,20.67,20.51,20.35,20.26,20.18,20,20,20,20,20,19.87,19.64,19.61,19.38,19.21,19.17,19,18.68,18.34,17.61,17.46,17.36,17.33,17.32,16.96,16.77,16.67,16.67,16.25,15.96,15.89,15.79,15.78,15.75,15.43,15.38,15.1,15,14.89,14.79,14.62,14.55,14.41,14.36,14.09,13.73,13.43,13.39,13.09,13.04,12.82,12.8,12.5,12.4,12.33,12.33,12.06,12,11.37,11.26,11.11,11.11,10.77,10.53,10,9.91,9.76,9.59,9.38,9.09,8.89,8.62,8.57,8.17,7.41,7.23,6.35,6.25,6.12,6.06,5.33,4.69,4.6,3.63,2.33,0.33,0,0,0,null,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Country<\/th>\n      <th>% de Mujeres en Parlamento<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>Unimos esta tabla con la tabla original por el identificador país.</p>
+<pre class="r"><code>democorrcov &lt;- democorrcov  %&gt;% inner_join(womenparlament, by = &quot;Country&quot;)</code></pre>
+<p>Visualizamos</p>
+<pre class="r"><code>library(ggrepel)
+p &lt;- ggplot(democorrcov, aes(x= democorrcov$&quot;% de Mujeres en Parlamento&quot;, y = democorrcov$&quot;muertespor100000habitantes&quot;))
+p + geom_point() + geom_text(aes(label=Country), size=3) + scale_x_continuous() + labs(title = &quot;Relación entre % Mujeres en el gobierno y afectación del Covid-19&quot;) +
+ylab(&quot;Muertes por Covid-19 por 100.000 habitantes&quot;) +
+xlab(&quot;% Mujeres en Parlamento&quot;) + theme_minimal()</code></pre>
+<p><img src="/blog/2020-05-22-corrupcion-y-covid-19-parte-2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Si pongo el eje y a escala logarítimca a ver si lo veo mejor:</p>
+<pre class="r"><code>library(ggrepel)
+p &lt;- ggplot(democorrcov, aes(x= democorrcov$&quot;% de Mujeres en Parlamento&quot;, y = democorrcov$&quot;muertespor100000habitantes&quot;))
+p + geom_point() + geom_text(aes(label=Country), size=3) + scale_x_continuous() + scale_y_log10() + geom_smooth() +labs(title = &quot;Relación entre % Mujeres en el gobierno y afectación del Covid-19&quot;) +
+ylab(&quot;Muertes por Covid-19 por 100.000 habitantes&quot;) +
+xlab(&quot;% Mujeres en Parlamento&quot;) + theme_minimal()</code></pre>
+<p><img src="/blog/2020-05-22-corrupcion-y-covid-19-parte-2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Y en Europa:</p>
+<pre class="r"><code>democorrcoveuropa &lt;- democorrcov %&gt;% filter(Continent==&quot;Europe&quot;)
+
+p &lt;- ggplot(democorrcoveuropa, aes(democorrcoveuropa$&quot;% de Mujeres en Parlamento&quot;, democorrcoveuropa$&quot;muertespor100000habitantes&quot;))
+p + geom_point() + geom_text_repel(aes(label=Country), size = 3) + scale_x_continuous() + geom_smooth() +labs(title = &quot;Relación entre % Mujeres en el gobierno y afectación del Covid-19 en Europa&quot;) +
+ylab(&quot;Muertes por Covid-19 por 100.000 habitantes&quot;) +
+xlab(&quot;% de Mujeres en Parlamento&quot;) + theme_minimal()</code></pre>
+<p><img src="/blog/2020-05-22-corrupcion-y-covid-19-parte-2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Los resultados no parecen tampoco muy concluyentes. En países en que el porcentaje de mujeres en el gobierno es elevado no se demuestra que los resultados frente a la crisis hayan sido mejores. Además en éstos hay diferencias significativas; mientras que Finlandia y Noruega lo están gestionando mejor, parece que en Suecia no tanto. En España y Bélgica mucho peor todavía. Hay que tener en cuenta que hemos mostrado el % de mujeres en el parlamento y no si el jefe de gobierno es hombre o mujer. Quizás el carisma personal de una o un jefe de gobierno ejerce más influencia en la gestión, en las decisiones rápidas que hay que tomar en una crisis de este tipo o en convencer a la gente de cómo comportarse, que el porcentaje de mujeres que haya en el parlamento, no sé. Lo podemos ver otro día con datos de mandatarias actualizados.</p>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/fer-un-mapa-geofacet/">Provant de fer un mapa amb Geofacet</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+                <div>
+                    <a href="/blog/xgboost/">Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19</a>
+                    <img class="icon" src="/img/next.svg" alt="next" />
+                </div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

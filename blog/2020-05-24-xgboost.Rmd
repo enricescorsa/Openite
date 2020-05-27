@@ -1,0 +1,214 @@
+---
+title: "Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19"
+author: Enric Escorsa
+date: '2020-05-24'
+slug: xgboost
+categories: experiments
+tags:
+- XGBoost  
+- coronavirus
+- "covid-19"
+- coronavirus
+- correlación
+- supervised learning
+- machine learning
+- predictive model
+description: Desc
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Continuant en l'anàlisi de les relacions entre gestió de la crisi del coronavirus i nivells de democràcia i corrupció d'un país que vaig tractar en posts anteriors, avui vull veure si creo un model predictiu que se sostingui.
+
+
+## Creació d'un model predictiu amb XGBoost
+
+Utilitzaré *XGBoost*; *XGBoost* (*eXtreme Gradient Boosting*) és un paquet per aplicar algoritmes supervisats d'aprenentage automàtic -desenvolupat originalment per **Tianqi Chenper**, doctor en ciències de la computació de la Universitat de Washington i altres desenvolupadors- que, a grans trets, ens permet implementar alhora diversos models predictius i escollir el que millor s'ajusta al nostre cas, en base a arbres de decisió (fer això es coneix com a *Gradient Boosting, GBM*), tot plegat d'una forma eficient (alta rapidesa i rendiment) i força traçable i de relativament fàcil implementació. *XGBoost* és un algoritme molt utilitzat per problemes d'*aprenentatge supervisat* on usem un conjunt de variables per predir-ne una altra (la variable target) en funció d'aquelles. 
+
+En el meu cas, vull veure doncs si és possible apuntar com es gestionarà una crisi d'una pandèmia com el Covid-19 en un país en funció dels seus nivells de democràcia i de corrupció i averiguar quina variable hi afecta més.
+
+El primer pas és carregar els paquets necessaris i llegir les dades que vam recopilar en el post anterior.
+
+```{r, warning=F, message=F, comment=FALSE}
+#instal·lem i carreguem el paquet xgboost
+#install.packages("xgboost")
+library("xgboost")
+library("tidyverse")
+library("caret") #paquet per fer ML amb R que aquí utilitzem per crear matrius de confusió
+```
+
+Llegeixo les dades (es tracta d'un arxiu tabular en format .csv)
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(tidyverse)
+#filtro les columnes que vull
+democorrcovgend <- read_csv("democorrcovgend.csv") %>% select("Procesos electorales y pluralismo", "Gobierno funcional", "Participacion", "Cultura politica", "Libertades civiles", "CPI score 2019", "muertespor100000habitantes", "% de Mujeres en Parlamento")
+
+#amb str miro el tipus de dades que tinc
+str(democorrcovgend)
+```
+
+La pregunta que vull que el model respongui és bàsicament si un país gestionarà bé la crisi o no en funció de totes les altres variables que considero; per tant, primer defineixo una variable objectiu (*target*) que serà gestió bona o dolenta; què és gestionar bé? Ho defineixo com a tenir un ratio baix de nombre de morts per casos per 100.000 habitants. Explorem la distribució d'aquesta variable amb un histograma:
+
+```{r, warning=F, message=F, comment=FALSE}
+    # Distribució de la variable Target
+    library(ggplot2)
+    ggplot(democorrcovgend, aes(x=muertespor100000habitantes)) +
+    geom_histogram(binwidth = 1) + theme_minimal()
+```
+
+Podria definir la variable target -de forma una mica grollera- com a bona si el nombre de morts per 100.0000 habitants és inferior a la mitja i dolenta si és superior.
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+#creo nova columna target que sigui discreta binària.
+democorrcovgend <- democorrcovgend %>% mutate(target = ifelse(muertespor100000habitantes > mean(muertespor100000habitantes), "Malament", "Be")) %>% select(-muertespor100000habitantes) #i trec la variable original del model
+```
+
+
+
+*XGBoost* treballa amb valors numèrics, per tant hem de convertir totes les observacions que tenim a números (usem el paquet *purrr* i la funció *map_df* i en R és necessari convertir els caràcters -strings- textuals primer a factors -categories- i després a números)
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+democorrcovgend <- map_df(democorrcovgend, function(columna) {
+  columna %>% 
+    as.factor() %>% 
+    as.numeric %>% 
+    { . - 1 }
+})
+head(democorrcovgend)
+```
+
+Ens creem una llista i hi guardem les dades
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+dadesdcc <- list()
+dadesdcc$democorrcovgend <- democorrcovgend
+```
+
+
+
+Ara dividim les dades que tenim en dues parts: una que usarem per a entrenar el model (se sol prendre un 30% com a *test set*) i una altra de prova (el 70% de les meves dades l'usaré com a *train set*).
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+set.seed(1234) #definir una seed em serveix per asegurar que puc replicar aquestes dades
+#amb sample_frac fraccionem la mostra en 70%
+dadesdcc$train_df <- sample_frac(democorrcovgend, size = 0.7)
+#usem setdiff per seleccionar el 30% restant de les dades per test 
+dadesdcc$test_df <- setdiff(dadesdcc$democorrcovgend , dadesdcc$train_df)
+
+```
+
+Ara creem una matriu a partir de les dades (usem la funció *xgb.DMatrix* de *XGBoost*). Ens assegurem de treure abans la variable objectiu (*target*, ja que és la que volem predir) i guardem el resultat a la nostra llista que ens hem creat. Ho fem primer amb el set d'entrenament:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+
+dadesdcc$train_matriu <- 
+  dadesdcc$train_df %>% 
+  select(-target) %>% 
+  as.matrix() %>% 
+  xgb.DMatrix(data = ., label = dadesdcc$train_df$target)
+```
+
+I tot seguit amb el set de prova:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+dadesdcc$test_matriu <- 
+  dadesdcc$test_df %>% 
+  select(-target) %>% 
+  as.matrix() %>% 
+  xgb.DMatrix(data = ., label = dadesdcc$test_df$target)
+```
+
+
+Ja tenim acomodades les nostres dades per poder aplicar el model predictiu. Ara ja podem entrenar el model.
+
+
+## Entrenament del model
+
+Usem la funció *xgboost()* "tunejant" els hiperparametres que usarem per al nostre model ; això és un procés que implica conèixer que signifiquen tots aquests paràmetres (n'hi ha força); [aquí]("https://xgboost.readthedocs.io/en/latest/parameter.html") s'hi expliquen.
+
+
+```{r}
+dadesdcc$model1 <- xgboost(data = dadesdcc$train_matriu, 
+                           objective = "binary:logistic",
+                           nrounds = 100, # nombre d'iteracions, vegades que apliquem el model, és adir, el nombre d'arbres de decisió
+                           early_stopping_rounds = 20, # si despres de 20 iteracions ja no millora el model, que s'aturi
+                           max.depth = 4, # profunditat dels arbres de decisió
+                           eta = 0.3, #(entre 0 i 1) control del pes assignat en cada pas del procés de boosting
+                           nthread = 2) #nombre de branques paral·leles
+```
+
+
+
+## Generem prediccions
+
+Ara que hem entrenat el nostre model amb el set d'entrenament, prenem el set de prova i intentem predir
+
+```{r}
+dadesdcc$prediccio1 <- predict(dadesdcc$model1, dadesdcc$test_matriu) #posem l'objecte que hem entrenat i la matriu
+```
+
+Observem-ne els resultats:
+
+```{r}
+dadesdcc$prediccio1
+```
+
+
+Definim que una probabilitat que s'acosti més a 1 que a 0 pertany al valor 1 de la nostra target.
+
+```{r}
+head(dadesdcc$prediccio1 > 0.5)
+```
+
+
+
+## Avaluació del model
+
+Finalment comparem les nostres prediccions amb les categories del nostre test set mitjançant una matriu de confusió que generem amb el paquet de *Machine Learning* de R *caret*:
+
+```{r}
+#unim la nostra taula de prediccions amb el set d'entrenament amb cbind 
+cbind(dadesdcc$prediccio1 > 0.5, dadesdcc$test_df$target) %>% 
+  data.frame() %>% 
+  table() %>% 
+  confusionMatrix()
+```
+
+La matriu de confusió ens servei per veure com ha funcionat el nostre model. Ens surt una precisió del 83%... 
+  
+### Interpretació i alguns comentaris
+
+
+Finalment, podem representar de manera visual la importància de les variables
+
+```{r}
+importance_matrix <- xgb.importance(model = dadesdcc$model1)
+print(importance_matrix)
+xgb.plot.importance(importance_matrix = importance_matrix)
+```
+
+Sembla que els processos electorals i el pluralisme és la variable que més influeix.
+
+Segons el *Democracy Index Score*:  *Electoral process and pluralism (ELE): This factor measures  whether  national  elections  include  a  range of choices and if they are free. It also measures whether there are irregularities in voting and whether local elections are also free and fair. It measures whether there is universal suffrage; that is, that all adults have the right to vote, and voting is free. This factor  also  includes  whether  or  not  there  is  equality of opportunity in electoral campaigns. In addition it takes into account whether or not parties’ systems of financing are transparent. Once elections are carried out, there must  be  an  orderly  transfer  of  power.  The  population must also be able to form political parties that are independent of the government, as well as other types of political and civil organizations. Opposition parties have to  have  some  chance  of  being  elected.  It  measures whether political posts are open to all of the population without discrimination toward  certain  groups  or  individuals.*
+
+
+  
+### Refs
+
+Per introduir-se a XGBoost:
+
+- https://cran.csiro.au/web/packages/xgboost/vignettes/xgboostPresentation.html
+- https://www.slideshare.net/ShangxuanZhang/xgboost
+- https://xgboost.readthedocs.io/en/latest/parameter.html
+- https://boscomendoza.com/xgboost-en-r/
+- https://cran.r-project.org/web/packages/xgboost/vignettes/discoverYourData.html
+- https://www.hackerearth.com/practice/machine-learning/machine-learning-algorithms/beginners-tutorial-on-xgboost-parameter-tuning-r/tutorial/
+
+

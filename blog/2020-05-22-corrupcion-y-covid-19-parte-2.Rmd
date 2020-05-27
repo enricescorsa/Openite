@@ -1,0 +1,112 @@
+---
+title: "Democracia, Corrupción, género y Covid-19 (parte 2)"
+author: "Enric Escorsa"
+date: '2020-05-22'
+output:
+  html_document:
+    df_print: paged
+  always_allow_html: yes
+  pdf_document: default
+  word_document: default
+hacker_news_id: ''
+lobsters_id: ''
+meta_img: /images/image.jpg
+description: Desc
+slug: corrupcion-y-covid-19-2
+tags:
+- coronavirus
+- covid-19
+- coronavirus
+- correlación
+categories: experiments
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+En el post anterior, tomamos indicadores de democracia y corrupción de los países e intentamos detectar correlaciones con la gestión de la crisisi del covid-19 sin obtener resultados demasiado determinantes.
+
+Nos faltó considerar algunos aspectos tales como la edad de la población (que parece que seria una explicación del impacto  menor del esperado de la pandemia en los países del continente africano), o el clima, entre otros.
+
+Hoy quiero contrastar el hecho de si el resultado de la gestión es más o menos bueno considerando también si en los puestos de toma de decisión de los gobiernos hay más hombres o mujeres. Intentemos verlo con datos.  
+
+
+Primero leemos la tabla de datos que habíamos armado con todos los indicadores por país.
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(tidyverse)
+democorrcov <- read_csv("democorrcov.csv")
+```
+
+
+## Añadir datos de género de los gobiernos.
+
+He encontrado una tabla actualizada en la [web de la Unión Inter-Parlamentaria (IPU)]("https://data.ipu.org/women-ranking?month=5&year=2020") en la que aparece un ranquin por países en función del porcentaje de mujeres en el parlamento que se puede descargar en formato tabular (Excel y csv). Obtengo los datos y los leo en R.
+
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+#leo la tabla y me quedo con el porcentaje de mujeres en la principal camara parlamentaria
+womenparlament <- read_csv("chamber--current_women_percent.csv", skip = 4) %>% select (Country, X6) 
+womenparlament <- womenparlament [-1, ]
+
+#cambio el nombre de las columnas
+colnames(womenparlament) <- c("Country", "% de Mujeres en Parlamento")
+
+#cambio a numerica la columna de % de mujeres
+womenparlament$"% de Mujeres en Parlamento" <- as.numeric(womenparlament$"% de Mujeres en Parlamento")
+```
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(DT)
+datatable(womenparlament)
+```
+
+
+Unimos esta tabla con la tabla original por el identificador país.
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+democorrcov <- democorrcov  %>% inner_join(womenparlament, by = "Country")
+```
+
+Visualizamos
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(ggrepel)
+p <- ggplot(democorrcov, aes(x= democorrcov$"% de Mujeres en Parlamento", y = democorrcov$"muertespor100000habitantes"))
+p + geom_point() + geom_text(aes(label=Country), size=3) + scale_x_continuous() + labs(title = "Relación entre % Mujeres en el gobierno y afectación del Covid-19") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("% Mujeres en Parlamento") + theme_minimal()
+
+```
+
+Si pongo el eje y a escala logarítimca a ver si lo veo mejor:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+library(ggrepel)
+p <- ggplot(democorrcov, aes(x= democorrcov$"% de Mujeres en Parlamento", y = democorrcov$"muertespor100000habitantes"))
+p + geom_point() + geom_text(aes(label=Country), size=3) + scale_x_continuous() + scale_y_log10() + geom_smooth() +labs(title = "Relación entre % Mujeres en el gobierno y afectación del Covid-19") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("% Mujeres en Parlamento") + theme_minimal()
+
+```
+
+
+Y en Europa:
+
+```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
+
+democorrcoveuropa <- democorrcov %>% filter(Continent=="Europe")
+
+p <- ggplot(democorrcoveuropa, aes(democorrcoveuropa$"% de Mujeres en Parlamento", democorrcoveuropa$"muertespor100000habitantes"))
+p + geom_point() + geom_text_repel(aes(label=Country), size = 3) + scale_x_continuous() + geom_smooth() +labs(title = "Relación entre % Mujeres en el gobierno y afectación del Covid-19 en Europa") +
+ylab("Muertes por Covid-19 por 100.000 habitantes") +
+xlab("% de Mujeres en Parlamento") + theme_minimal()
+
+```
+
+
+Los resultados no parecen tampoco muy concluyentes. En países en que el porcentaje de mujeres en el gobierno es elevado no se demuestra que los resultados frente a la crisis hayan sido mejores. Además en éstos hay diferencias significativas; mientras que Finlandia y Noruega lo están gestionando mejor, parece que en Suecia no tanto. En España y Bélgica mucho peor todavía. Hay que tener en cuenta que hemos mostrado el % de mujeres en el parlamento y no si el jefe de gobierno es hombre o mujer. Quizás el carisma personal de una o un jefe de gobierno ejerce más influencia en la gestión, en las decisiones rápidas que hay que tomar en una crisis de este tipo o en convencer a la gente de cómo comportarse, que el porcentaje de mujeres que haya en el parlamento, no sé. Lo podemos ver otro día con datos de mandatarias actualizados.
+

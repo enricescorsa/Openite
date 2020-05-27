@@ -18,7 +18,7 @@ tags:
 - covid-19
 - coronavirus
 - correlación
-categories: []
+categories: experiments
 ---
 
 ```{r setup, include=FALSE}
@@ -180,6 +180,8 @@ Modifiquemos por último esta tabla resultante para reflejar en las columnas de 
 ```{r, echo=TRUE, warning=F, message=F, comment=FALSE}
 #calculamos el numero de casos y muertes por densidad de población de cada pais
 lascuatrotablas <- lascuatrotablas %>% mutate(muertespor100000habitantes = Muertes/poblacion*100000) %>% mutate(casospor100000habitante = Casos/poblacion*100000)
+#si quiero guardar la tabla
+#write.csv(lascuatrotablas,"democorrcov.csv", row.names = TRUE)
 ```
 
 

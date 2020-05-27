@@ -2,7 +2,6 @@
 <html lang="en-US">
 
 <head>
-	<meta name="generator" content="Hugo 0.63.2" />
 <meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="MobileOptimized" content="320">
@@ -16,24 +15,24 @@
 <meta property="og:site_name" content="Enric Escorsa O&#39;Callaghan" />
 <meta property="og:locale" content="en-US" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/" />
-<meta property="og:title" content="Enric Escorsa O&#39;Callaghan" />
-<meta property="twitter:title" content="Enric Escorsa O&#39;Callaghan">
+<meta property="og:url" content="/blog/xgboost/" />
+<meta property="og:title" content="Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19" />
+<meta property="twitter:title" content="Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19">
 
-    <meta property="og:image" content="/img/banner.png">
+    <meta property="og:image" content="//images/image.jpg">
     <meta property="twitter:card" content="summary">
-    <meta property="twitter:image" content="/img/banner.png">
+    <meta property="twitter:image" content="//images/image.jpg">
 
-<meta property="og:description" content="A blog about data &amp; landscapes.">
-<meta property="twitter:description" content="A blog about data &amp; landscapes.">
+<meta property="og:description" content="Desc">
+<meta property="twitter:description" content="Desc">
 
 <title>
 
 
-    Enric Escorsa O&#39;Callaghan
+     Enric Escorsa O&#39;Callaghan - Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19 
 
 </title>
-<link rel="canonical" href="/">
+<link rel="canonical" href="/blog/xgboost/">
 
 
 <style media="screen">
@@ -1067,8 +1066,6 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 
 
 
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Enric Escorsa O&#39;Callaghan" />
-
 
 </head>
 
@@ -1076,7 +1073,7 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
 <body>
 
 
-<div class="header header-home column">
+<div class="header column">
 
     <div class="container">
         
@@ -1115,52 +1112,388 @@ div.main .content .markdown pre, div.main .content .markdown pre code {
     </div>
 </div>
 
-<div class="main column">
+
+
+
+
+<div class="main post non-narrow zero-top-spacing column">
     <div class="container">
         <div class="content">
-            
-                <div class="markdown">
-                <p><em>A blog about data &amp; landscapes, an experiment and above all, an excuse to learn #Rstats programming language and sharing what I learn on the go</em></p>
-<hr>
-<p><em>Un blog sobre dades i paisatges, un experiment i sobretot, una excusa per aprendre a programar en #Rstats i compartir el que aprenc sobre la marxa</em></p>
-<hr>
-<p><em>Un blog sobre datos y paisajes, un experimento y sobretodo, una excusa para aprender a programar en #Rstats y compartir lo que aprendo sobre la marcha</em></p>
+            <div class="front-matter">
+                <div class="title-container">
+                    <div class="page-heading">
+
+    
+    Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19
+    
+
+</div>
 
                 </div>
-            
-
-            
-                <div class="posts">
-                
-                
-                    <div class="page-heading">Latest posts</div>
-                    <ul>
+                <div class="meta">
+                    <div class="date" title="Sun May 24 2020 00:00:00 UTC">May 24, 2020</div>
                     
-                        <li class="groupby">May, 2020</li>
                         
-                            <li class="post-item">
-    <span class="meta">May 24, 2020</span>
-    
-    <a href="/blog/"><span>Blog</span></a>
-    
-</li>
-
+                        <div class="author middot" title="Enric Escorsa">Enric Escorsa</div>
                         
                     
-                    </ul>
-
                     
-                
+                    <div class="reading-time middot">10 minute read</div>
+                    
+                    
+                      <div class="tags">
+                    
+                        <ul>
+                          
+                            <li class="middot"><a href="/tags/xgboost">XGBoost</a> </li>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
+                          
+                            <li class="middot"><a href="/tags/covid-19">covid-19</a> </li>
+                          
+                            <li class="middot"><a href="/tags/coronavirus">coronavirus</a> </li>
+                          
+                            <li class="middot"><a href="/tags/correlaci%C3%B3n">correlación</a> </li>
+                          
+                            <li class="middot"><a href="/tags/supervised-learning">supervised learning</a> </li>
+                          
+                            <li class="middot"><a href="/tags/machine-learning">machine learning</a> </li>
+                          
+                            <li class="middot"><a href="/tags/predictive-model">predictive model</a> </li>
+                          
+                        </ul>
+                    </div>
+                    <div class="tags">
+                        <ul>
+                          
+                            
+                          
+                          
+                            
+                          
+                        </ul>
+                    </div>
                 </div>
-            
-
-            <div class="best-posts">
-            
-            
             </div>
+            <div class="markdown">
+                
+    
+    
+
+
+<p>Continuant en l’anàlisi de les relacions entre gestió de la crisi del coronavirus i nivells de democràcia i corrupció d’un país que vaig tractar en posts anteriors, avui vull veure si creo un model predictiu que se sostingui.</p>
+<div id="creació-dun-model-predictiu-amb-xgboost" class="section level2">
+<h2>Creació d’un model predictiu amb XGBoost</h2>
+<p>Utilitzaré <em>XGBoost</em>; <em>XGBoost</em> (<em>eXtreme Gradient Boosting</em>) és un paquet per aplicar algoritmes supervisats d’aprenentage automàtic -desenvolupat originalment per <strong>Tianqi Chenper</strong>, doctor en ciències de la computació de la Universitat de Washington i altres desenvolupadors- que, a grans trets, ens permet implementar alhora diversos models predictius i escollir el que millor s’ajusta al nostre cas, en base a arbres de decisió (fer això es coneix com a <em>Gradient Boosting, GBM</em>), tot plegat d’una forma eficient (alta rapidesa i rendiment) i força traçable i de relativament fàcil implementació. <em>XGBoost</em> és un algoritme molt utilitzat per problemes d’<em>aprenentatge supervisat</em> on usem un conjunt de variables per predir-ne una altra (la variable target) en funció d’aquelles.</p>
+<p>En el meu cas, vull veure doncs si és possible apuntar com es gestionarà una crisi d’una pandèmia com el Covid-19 en un país en funció dels seus nivells de democràcia i de corrupció i averiguar quina variable hi afecta més.</p>
+<p>El primer pas és carregar els paquets necessaris i llegir les dades que vam recopilar en el post anterior.</p>
+<pre class="r"><code>#instal·lem i carreguem el paquet xgboost
+#install.packages(&quot;xgboost&quot;)
+library(&quot;xgboost&quot;)
+library(&quot;tidyverse&quot;)
+library(&quot;caret&quot;) #paquet per fer ML amb R que aquí utilitzem per crear matrius de confusió</code></pre>
+<p>Llegeixo les dades (es tracta d’un arxiu tabular en format .csv)</p>
+<pre class="r"><code>library(tidyverse)
+#filtro les columnes que vull
+democorrcovgend &lt;- read_csv(&quot;democorrcovgend.csv&quot;) %&gt;% select(&quot;Procesos electorales y pluralismo&quot;, &quot;Gobierno funcional&quot;, &quot;Participacion&quot;, &quot;Cultura politica&quot;, &quot;Libertades civiles&quot;, &quot;CPI score 2019&quot;, &quot;muertespor100000habitantes&quot;, &quot;% de Mujeres en Parlamento&quot;)
+
+#amb str miro el tipus de dades que tinc
+str(democorrcovgend)</code></pre>
+<pre><code>FALSE tibble [125 x 8] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+FALSE  $ Procesos electorales y pluralismo: num [1:125] 10 10 9.58 10 10 10 9.58 10 9.58 9.58 ...
+FALSE  $ Gobierno funcional               : num [1:125] 9.64 9.29 9.64 8.93 7.86 9.29 9.64 8.93 9.29 9.29 ...
+FALSE  $ Participacion                    : num [1:125] 10 8.89 8.33 8.89 8.33 8.33 7.78 7.78 7.78 8.33 ...
+FALSE  $ Cultura politica                 : num [1:125] 10 10 10 8.75 10 9.38 9.38 8.75 9.38 8.75 ...
+FALSE  $ Libertades civiles               : num [1:125] 9.71 9.71 9.41 9.71 10 9.12 9.71 10 9.12 9.12 ...
+FALSE  $ CPI score 2019                   : num [1:125] 84 78 85 86 74 87 77 77 85 82 ...
+FALSE  $ muertespor100000habitantes       : num [1:125] 4.38 2.73 38.59 5.57 32.59 ...
+FALSE  $ % de Mujeres en Parlamento       : num [1:125] 41.4 38.1 47 46 22.5 ...
+FALSE  - attr(*, &quot;spec&quot;)=
+FALSE   .. cols(
+FALSE   ..   X1 = col_double(),
+FALSE   ..   X1_1 = col_double(),
+FALSE   ..   Ranking.x = col_double(),
+FALSE   ..   Country = col_character(),
+FALSE   ..   Score = col_double(),
+FALSE   ..   `Procesos electorales y pluralismo` = col_double(),
+FALSE   ..   `Gobierno funcional` = col_double(),
+FALSE   ..   Participacion = col_double(),
+FALSE   ..   `Cultura politica` = col_double(),
+FALSE   ..   `Libertades civiles` = col_double(),
+FALSE   ..   Regimen = col_character(),
+FALSE   ..   Region = col_character(),
+FALSE   ..   Continent = col_character(),
+FALSE   ..   Casos = col_double(),
+FALSE   ..   Muertes = col_double(),
+FALSE   ..   Ranking.y = col_double(),
+FALSE   ..   poblacion = col_double(),
+FALSE   ..   `% de la poblacion mundial` = col_character(),
+FALSE   ..   fecha = col_character(),
+FALSE   ..   fuente = col_character(),
+FALSE   ..   `CPI score 2019` = col_double(),
+FALSE   ..   muertespor100000habitantes = col_double(),
+FALSE   ..   casospor100000habitante = col_double(),
+FALSE   ..   `% de Mujeres en Parlamento` = col_double()
+FALSE   .. )</code></pre>
+<p>La pregunta que vull que el model respongui és bàsicament si un país gestionarà bé la crisi o no en funció de totes les altres variables que considero; per tant, primer defineixo una variable objectiu (<em>target</em>) que serà gestió bona o dolenta; què és gestionar bé? Ho defineixo com a tenir un ratio baix de nombre de morts per casos per 100.000 habitants. Explorem la distribució d’aquesta variable amb un histograma:</p>
+<pre class="r"><code>    # Distribució de la variable Target
+    library(ggplot2)
+    ggplot(democorrcovgend, aes(x=muertespor100000habitantes)) +
+    geom_histogram(binwidth = 1) + theme_minimal()</code></pre>
+<p><img src="/blog/2020-05-24-xgboost_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Podria definir la variable target -de forma una mica grollera- com a bona si el nombre de morts per 100.0000 habitants és inferior a la mitja i dolenta si és superior.</p>
+<pre class="r"><code>#creo nova columna target que sigui discreta binària.
+democorrcovgend &lt;- democorrcovgend %&gt;% mutate(target = ifelse(muertespor100000habitantes &gt; mean(muertespor100000habitantes), &quot;Malament&quot;, &quot;Be&quot;)) %&gt;% select(-muertespor100000habitantes) #i trec la variable original del model</code></pre>
+<p><em>XGBoost</em> treballa amb valors numèrics, per tant hem de convertir totes les observacions que tenim a números (usem el paquet <em>purrr</em> i la funció <em>map_df</em> i en R és necessari convertir els caràcters -strings- textuals primer a factors -categories- i després a números)</p>
+<pre class="r"><code>democorrcovgend &lt;- map_df(democorrcovgend, function(columna) {
+  columna %&gt;% 
+    as.factor() %&gt;% 
+    as.numeric %&gt;% 
+    { . - 1 }
+})
+head(democorrcovgend)</code></pre>
+<pre><code>FALSE # A tibble: 6 x 8
+FALSE   `Procesos elect~ `Gobierno funci~ Participacion `Cultura politi~
+FALSE              &lt;dbl&gt;            &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+FALSE 1               42               39            14               12
+FALSE 2               42               38            13               12
+FALSE 3               41               39            12               12
+FALSE 4               42               37            13               10
+FALSE 5               42               34            12               12
+FALSE 6               42               38            12               11
+FALSE # ... with 4 more variables: `Libertades civiles` &lt;dbl&gt;, `CPI score
+FALSE #   2019` &lt;dbl&gt;, `% de Mujeres en Parlamento` &lt;dbl&gt;, target &lt;dbl&gt;</code></pre>
+<p>Ens creem una llista i hi guardem les dades</p>
+<pre class="r"><code>dadesdcc &lt;- list()
+dadesdcc$democorrcovgend &lt;- democorrcovgend</code></pre>
+<p>Ara dividim les dades que tenim en dues parts: una que usarem per a entrenar el model (se sol prendre un 30% com a <em>test set</em>) i una altra de prova (el 70% de les meves dades l’usaré com a <em>train set</em>).</p>
+<pre class="r"><code>set.seed(1234) #definir una seed em serveix per asegurar que puc replicar aquestes dades
+#amb sample_frac fraccionem la mostra en 70%
+dadesdcc$train_df &lt;- sample_frac(democorrcovgend, size = 0.7)
+#usem setdiff per seleccionar el 30% restant de les dades per test 
+dadesdcc$test_df &lt;- setdiff(dadesdcc$democorrcovgend , dadesdcc$train_df)</code></pre>
+<p>Ara creem una matriu a partir de les dades (usem la funció <em>xgb.DMatrix</em> de <em>XGBoost</em>). Ens assegurem de treure abans la variable objectiu (<em>target</em>, ja que és la que volem predir) i guardem el resultat a la nostra llista que ens hem creat. Ho fem primer amb el set d’entrenament:</p>
+<pre class="r"><code>dadesdcc$train_matriu &lt;- 
+  dadesdcc$train_df %&gt;% 
+  select(-target) %&gt;% 
+  as.matrix() %&gt;% 
+  xgb.DMatrix(data = ., label = dadesdcc$train_df$target)</code></pre>
+<p>I tot seguit amb el set de prova:</p>
+<pre class="r"><code>dadesdcc$test_matriu &lt;- 
+  dadesdcc$test_df %&gt;% 
+  select(-target) %&gt;% 
+  as.matrix() %&gt;% 
+  xgb.DMatrix(data = ., label = dadesdcc$test_df$target)</code></pre>
+<p>Ja tenim acomodades les nostres dades per poder aplicar el model predictiu. Ara ja podem entrenar el model.</p>
+</div>
+<div id="entrenament-del-model" class="section level2">
+<h2>Entrenament del model</h2>
+<p>Usem la funció <em>xgboost()</em> “tunejant” els hiperparametres que usarem per al nostre model ; això és un procés que implica conèixer que signifiquen tots aquests paràmetres (n’hi ha força); <a href="%22https://xgboost.readthedocs.io/en/latest/parameter.html%22">aquí</a> s’hi expliquen.</p>
+<pre class="r"><code>dadesdcc$model1 &lt;- xgboost(data = dadesdcc$train_matriu, 
+                           objective = &quot;binary:logistic&quot;,
+                           nrounds = 100, # nombre d&#39;iteracions, vegades que apliquem el model, és adir, el nombre d&#39;arbres de decisió
+                           early_stopping_rounds = 20, # si despres de 20 iteracions ja no millora el model, que s&#39;aturi
+                           max.depth = 4, # profunditat dels arbres de decisió
+                           eta = 0.3, #(entre 0 i 1) control del pes assignat en cada pas del procés de boosting
+                           nthread = 2) #nombre de branques paral·leles</code></pre>
+<pre><code>## [1]  train-error:0.102273 
+## Will train until train_error hasn&#39;t improved in 20 rounds.
+## 
+## [2]  train-error:0.068182 
+## [3]  train-error:0.079545 
+## [4]  train-error:0.068182 
+## [5]  train-error:0.068182 
+## [6]  train-error:0.056818 
+## [7]  train-error:0.056818 
+## [8]  train-error:0.056818 
+## [9]  train-error:0.045455 
+## [10] train-error:0.045455 
+## [11] train-error:0.045455 
+## [12] train-error:0.045455 
+## [13] train-error:0.045455 
+## [14] train-error:0.045455 
+## [15] train-error:0.045455 
+## [16] train-error:0.034091 
+## [17] train-error:0.022727 
+## [18] train-error:0.022727 
+## [19] train-error:0.022727 
+## [20] train-error:0.022727 
+## [21] train-error:0.022727 
+## [22] train-error:0.022727 
+## [23] train-error:0.022727 
+## [24] train-error:0.022727 
+## [25] train-error:0.022727 
+## [26] train-error:0.022727 
+## [27] train-error:0.022727 
+## [28] train-error:0.022727 
+## [29] train-error:0.022727 
+## [30] train-error:0.022727 
+## [31] train-error:0.022727 
+## [32] train-error:0.011364 
+## [33] train-error:0.022727 
+## [34] train-error:0.011364 
+## [35] train-error:0.022727 
+## [36] train-error:0.011364 
+## [37] train-error:0.011364 
+## [38] train-error:0.011364 
+## [39] train-error:0.011364 
+## [40] train-error:0.011364 
+## [41] train-error:0.011364 
+## [42] train-error:0.011364 
+## [43] train-error:0.011364 
+## [44] train-error:0.011364 
+## [45] train-error:0.011364 
+## [46] train-error:0.011364 
+## [47] train-error:0.011364 
+## [48] train-error:0.011364 
+## [49] train-error:0.011364 
+## [50] train-error:0.011364 
+## [51] train-error:0.011364 
+## [52] train-error:0.011364 
+## Stopping. Best iteration:
+## [32] train-error:0.011364</code></pre>
+</div>
+<div id="generem-prediccions" class="section level2">
+<h2>Generem prediccions</h2>
+<p>Ara que hem entrenat el nostre model amb el set d’entrenament, prenem el set de prova i intentem predir</p>
+<pre class="r"><code>dadesdcc$prediccio1 &lt;- predict(dadesdcc$model1, dadesdcc$test_matriu) #posem l&#39;objecte que hem entrenat i la matriu</code></pre>
+<p>Observem-ne els resultats:</p>
+<pre class="r"><code>dadesdcc$prediccio1</code></pre>
+<pre><code>##  [1] 0.228567138 0.344187379 0.945613146 0.935664237 0.048782118 0.916757405
+##  [7] 0.866779089 0.639235377 0.017691718 0.439090639 0.395155519 0.369483441
+## [13] 0.082288586 0.237627611 0.017570255 0.034853738 0.159050941 0.007861976
+## [19] 0.216807678 0.004356051 0.005025042 0.008052235 0.009286087 0.033855576
+## [25] 0.003074885 0.004876995 0.004933086 0.006075685 0.005847415 0.007181338
+## [31] 0.008718668 0.006172527 0.115701824 0.011185354 0.007181338 0.009757289
+## [37] 0.008766648</code></pre>
+<p>Definim que una probabilitat que s’acosti més a 1 que a 0 pertany al valor 1 de la nostra target.</p>
+<pre class="r"><code>head(dadesdcc$prediccio1 &gt; 0.5)</code></pre>
+<pre><code>## [1] FALSE FALSE  TRUE  TRUE FALSE  TRUE</code></pre>
+</div>
+<div id="avaluació-del-model" class="section level2">
+<h2>Avaluació del model</h2>
+<p>Finalment comparem les nostres prediccions amb les categories del nostre test set mitjançant una matriu de confusió que generem amb el paquet de <em>Machine Learning</em> de R <em>caret</em>:</p>
+<pre class="r"><code>#unim la nostra taula de prediccions amb el set d&#39;entrenament amb cbind 
+cbind(dadesdcc$prediccio1 &gt; 0.5, dadesdcc$test_df$target) %&gt;% 
+  data.frame() %&gt;% 
+  table() %&gt;% 
+  confusionMatrix()</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##    X2
+## X1   0  1
+##   0 30  2
+##   1  4  1
+##                                           
+##                Accuracy : 0.8378          
+##                  95% CI : (0.6799, 0.9381)
+##     No Information Rate : 0.9189          
+##     P-Value [Acc &gt; NIR] : 0.9727          
+##                                           
+##                   Kappa : 0.1654          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.6831          
+##                                           
+##             Sensitivity : 0.8824          
+##             Specificity : 0.3333          
+##          Pos Pred Value : 0.9375          
+##          Neg Pred Value : 0.2000          
+##              Prevalence : 0.9189          
+##          Detection Rate : 0.8108          
+##    Detection Prevalence : 0.8649          
+##       Balanced Accuracy : 0.6078          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+<p>La matriu de confusió ens servei per veure com ha funcionat el nostre model. Ens surt una precisió del 83%…</p>
+<div id="interpretació-i-alguns-comentaris" class="section level3">
+<h3>Interpretació i alguns comentaris</h3>
+<p>Finalment, podem representar de manera visual la importància de les variables</p>
+<pre class="r"><code>importance_matrix &lt;- xgb.importance(model = dadesdcc$model1)
+print(importance_matrix)</code></pre>
+<pre><code>##                              Feature       Gain      Cover  Frequency
+## 1: Procesos electorales y pluralismo 0.61091165 0.24353574 0.16393443
+## 2:                    CPI score 2019 0.13099025 0.24683267 0.26229508
+## 3:        % de Mujeres en Parlamento 0.10440894 0.18630590 0.24043716
+## 4:                Libertades civiles 0.07152939 0.17145993 0.13661202
+## 5:                Gobierno funcional 0.03615994 0.06602112 0.06557377
+## 6:                     Participacion 0.03126987 0.06050095 0.09289617
+## 7:                  Cultura politica 0.01472996 0.02534368 0.03825137</code></pre>
+<pre class="r"><code>xgb.plot.importance(importance_matrix = importance_matrix)</code></pre>
+<p><img src="/blog/2020-05-24-xgboost_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Sembla que els processos electorals i el pluralisme és la variable que més influeix.</p>
+<p>Segons el <em>Democracy Index Score</em>: <em>Electoral process and pluralism (ELE): This factor measures whether national elections include a range of choices and if they are free. It also measures whether there are irregularities in voting and whether local elections are also free and fair. It measures whether there is universal suffrage; that is, that all adults have the right to vote, and voting is free. This factor also includes whether or not there is equality of opportunity in electoral campaigns. In addition it takes into account whether or not parties’ systems of financing are transparent. Once elections are carried out, there must be an orderly transfer of power. The population must also be able to form political parties that are independent of the government, as well as other types of political and civil organizations. Opposition parties have to have some chance of being elected. It measures whether political posts are open to all of the population without discrimination toward certain groups or individuals.</em></p>
+</div>
+<div id="refs" class="section level3">
+<h3>Refs</h3>
+<p>Per introduir-se a XGBoost:</p>
+<ul>
+<li><a href="https://cran.csiro.au/web/packages/xgboost/vignettes/xgboostPresentation.html" class="uri">https://cran.csiro.au/web/packages/xgboost/vignettes/xgboostPresentation.html</a></li>
+<li><a href="https://www.slideshare.net/ShangxuanZhang/xgboost" class="uri">https://www.slideshare.net/ShangxuanZhang/xgboost</a></li>
+<li><a href="https://xgboost.readthedocs.io/en/latest/parameter.html" class="uri">https://xgboost.readthedocs.io/en/latest/parameter.html</a></li>
+<li><a href="https://boscomendoza.com/xgboost-en-r/" class="uri">https://boscomendoza.com/xgboost-en-r/</a></li>
+<li><a href="https://cran.r-project.org/web/packages/xgboost/vignettes/discoverYourData.html" class="uri">https://cran.r-project.org/web/packages/xgboost/vignettes/discoverYourData.html</a></li>
+<li><a href="https://www.hackerearth.com/practice/machine-learning/machine-learning-algorithms/beginners-tutorial-on-xgboost-parameter-tuning-r/tutorial/" class="uri">https://www.hackerearth.com/practice/machine-learning/machine-learning-algorithms/beginners-tutorial-on-xgboost-parameter-tuning-r/tutorial/</a></li>
+</ul>
+</div>
+</div>
+
+
+            </div>
+            
+            <br>
+            <div class="share">
+                  
+                  <a href="" class="ssk ssk-facebook"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-twitter"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-google-plus"></a>
+                  
+                  
+                  <a href="" class="ssk ssk-linkedin"></a>
+                  
+            </div>
+            
+            
+            <br>
+            <div class="navigation">
+                
+                <div>
+                    <img class="icon" src="/img/back.svg" alt="back" />
+                    <a href="/blog/corrupcion-y-covid-19-2/">Democracia, Corrupción, género y Covid-19 (parte 2)</a>
+                </div>
+                
+                <div style="width: 100%;"></div>
+                
+            </div>
+            
+            
+
+            
+            
+            <div class="post bg-white">
+                <script src="https://utteranc.es/client.js"
+                    repo= "mtn/cocoa-eh-hugo-theme"
+                    issue-term="title"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+                </script>
+            </div>
+            
+
+            
+
+            
         </div>
     </div>
 </div>
+
+
+
 <div class="footer column">
     <div class="container">
 

@@ -6,10 +6,30 @@
     <description>Recent content on Enric Escorsa O&#39;Callaghan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 21 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Un model predictiu amb XGBoost: democràcia, corrupció i gestió de la crisi del covid-19</title>
+      <link>/blog/xgboost/</link>
+      <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/xgboost/</guid>
+      <description>Continuant en l’anàlisi de les relacions entre gestió de la crisi del coronavirus i nivells de democràcia i corrupció d’un país que vaig tractar en posts anteriors, avui vull veure si creo un model predictiu que se sostingui.
+Creació d’un model predictiu amb XGBoostUtilitzaré XGBoost; XGBoost (eXtreme Gradient Boosting) és un paquet per aplicar algoritmes supervisats d’aprenentage automàtic -desenvolupat originalment per Tianqi Chenper, doctor en ciències de la computació de la Universitat de Washington i altres desenvolupadors- que, a grans trets, ens permet implementar alhora diversos models predictius i escollir el que millor s’ajusta al nostre cas, en base a arbres de decisió (fer això es coneix com a Gradient Boosting, GBM), tot plegat d’una forma eficient (alta rapidesa i rendiment) i força traçable i de relativament fàcil implementació.</description>
+    </item>
+    
+    <item>
+      <title>Democracia, Corrupción, género y Covid-19 (parte 2)</title>
+      <link>/blog/corrupcion-y-covid-19-2/</link>
+      <pubDate>Fri, 22 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/corrupcion-y-covid-19-2/</guid>
+      <description>En el post anterior, tomamos indicadores de democracia y corrupción de los países e intentamos detectar correlaciones con la gestión de la crisisi del covid-19 sin obtener resultados demasiado determinantes.
+Nos faltó considerar algunos aspectos tales como la edad de la población (que parece que seria una explicación del impacto menor del esperado de la pandemia en los países del continente africano), o el clima, entre otros.</description>
+    </item>
     
     <item>
       <title>Provant de fer un mapa amb Geofacet</title>
